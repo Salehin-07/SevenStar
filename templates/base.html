@@ -1,0 +1,301 @@
+{% load static pwa %}
+<!DOCTYPE html>
+<!--
+    ╔══════════════════════════════════════════════════════════════╗
+    ║   SevenStar Limo & Chauffeur — base.html                     ║
+    ║   SEO-hardened template · Melbourne, VIC, Australia          ║
+    ╚══════════════════════════════════════════════════════════════╝
+-->
+<html lang="en-AU"
+      prefix="og: https://ogp.me/ns#"
+      itemscope
+      itemtype="https://schema.org/LocalBusiness">
+<head>
+    <!-- ============================================================
+         CHARACTER SET & VIEWPORT
+    ============================================================ -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <!-- ============================================================
+         PRIMARY SEO META TAGS
+    ============================================================ -->
+    <title>{% block title %}SevenStar Limo & Chauffeur Melbourne | Luxury Chauffeur Car Hire 24/7{% endblock %}</title>
+
+    <meta name="description"
+          content="{% block meta_description %}SevenStar Limo & Chauffeur — Melbourne's #1 luxury chauffeur and limousine service. Premium airport transfers to Tullamarine & Avalon, corporate car hire, wedding cars, winery tours & special events. Professional drivers. Fixed prices. Available 24/7 across Melbourne, Mornington Peninsula, Yarra Valley & Geelong. Book instantly online.{% endblock %}">
+
+    <meta name="keywords"
+          content="{% block meta_keywords %}SevenStar Limo, SevenStar Chauffeur, chauffeur Melbourne, limo hire Melbourne, limousine service Melbourne, airport transfer Melbourne Tullamarine, airport transfer Avalon, corporate chauffeur Melbourne, luxury car hire Melbourne, wedding chauffeur Melbourne, chauffeur driven car Melbourne, point to point transfer Melbourne, hourly chauffeur hire Melbourne, Melbourne CBD chauffeur, Mornington Peninsula chauffeur, Yarra Valley winery tour transfer, luxury sedan hire Melbourne, SUV chauffeur Melbourne, 24 hour chauffeur Melbourne{% endblock %}, SevenStar Limo, SevenStar Chauffeur, chauffeur Melbourne, limo hire Melbourne, limousine service Melbourne, airport transfer Melbourne Tullamarine, airport transfer Avalon, corporate chauffeur Melbourne, luxury car hire Melbourne, wedding chauffeur Melbourne, chauffeur driven car Melbourne, point to point transfer Melbourne, hourly chauffeur hire Melbourne, Melbourne CBD chauffeur, Mornington Peninsula chauffeur, Yarra Valley winery tour transfer, luxury sedan hire Melbourne, SUV chauffeur Melbourne, 24 hour chauffeur Melbourne">
+
+    <meta name="author"         content="SevenStar Limo Pyt. Ltd.">
+    <meta name="copyright"      content="SevenStar Limo Pyt. Ltd.">
+    <meta name="robots"         content="{% block meta_robots %}index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1{% endblock %}">
+    <meta name="googlebot"      content="index, follow, max-snippet:-1, max-image-preview:large">
+    <meta name="bingbot"        content="index, follow">
+    <meta name="revisit-after"  content="3 days">
+    <meta name="language"       content="en-AU">
+    <meta name="rating"         content="general">
+    <meta name="theme-color"    content="#0a0a0a">
+    <meta name="color-scheme"   content="dark light">
+    <meta name="format-detection" content="telephone=yes">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized"  content="320">
+
+    <!-- Geo targeting — Melbourne, Victoria, Australia -->
+    <meta name="geo.region"     content="AU-VIC">
+    <meta name="geo.placename"  content="Melbourne, Victoria, Australia">
+    <meta name="geo.position"   content="-37.8136;144.9631">
+    <meta name="ICBM"           content="-37.8136, 144.9631">
+
+    <!-- ============================================================
+         CANONICAL URL  (child pages MUST override this block)
+    ============================================================ -->
+    <link rel="canonical" href="{% block canonical_url %}https://sevenstarlimo.com.au/{% endblock %}">
+
+
+    <!-- ============================================================
+         OPEN GRAPH  (Facebook, LinkedIn, WhatsApp, Slack…)
+    ============================================================ -->
+    <meta property="og:type"          content="{% block og_type %}website{% endblock %}">
+    <meta property="og:site_name"     content="SevenStar Limo Pyt. Ltd.">
+    <meta property="og:title"         content="{% block og_title %}SevenStar Limo & Chauffeur Melbourne | Premium Luxury Car Hire{% endblock %}">
+    <meta property="og:description"   content="{% block og_description %}Melbourne's premier chauffeur and limousine service. Airport transfers, corporate travel, weddings & special events. Professional drivers, fixed prices, available 24/7. Book SevenStar Limo online now.{% endblock %}">
+    <meta property="og:image"         content="{% block og_image %}{% static 'img/logo.png' %}{% endblock %}">
+    <meta property="og:image:secure_url" content="{% block og_image_secure %}{% static 'img/logo.png' %}{% endblock %}">
+    <meta property="og:image:type"    content="image/png">
+    <meta property="og:image:width"   content="1200">
+    <meta property="og:image:height"  content="630">
+    <meta property="og:image:alt"     content="{% block og_image_alt %}SevenStar Limo Pyt. Ltd. — luxury Mercedes fleet, Melbourne{% endblock %}">
+    <meta property="og:url"           content="{% block og_url %}https://sevenstarlimo.com.au/{% endblock %}">
+    <meta property="og:locale"        content="en_AU">
+
+    <!-- ============================================================
+         TWITTER / X CARD
+    ============================================================ -->
+    <meta name="twitter:card"         content="summary_large_image">
+    <meta name="twitter:site"         content="@SevenStarLimo">
+    <meta name="twitter:creator"      content="@SevenStarLimo">
+    <meta name="twitter:title"        content="{% block twitter_title %}SevenStar Limo Pyt. Ltd.{% endblock %}">
+    <meta name="twitter:description"  content="{% block twitter_description %}Melbourne's premium chauffeur-driven limo hire. Airport transfers, corporate & events. Professional drivers. Fixed prices. Book 24/7.{% endblock %}">
+    <meta name="twitter:image"        content="{% block twitter_image %}{% static 'img/logo.png' %}{% endblock %}">
+    <meta name="twitter:image:alt"    content="{% block twitter_image_alt %}SevenStar Limo Pyt. Ltd. luxury fleet Melbourne{% endblock %}">
+
+    <!-- ============================================================
+         STRUCTURED DATA — Organization + LocalBusiness + TaxiService
+    ============================================================ -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": ["LocalBusiness", "TaxiService"],
+                "@id": "https://sevenstarlimo.com.au/#business",
+                "name": "SevenStar Limo & Chauffeur",
+                "alternateName": [
+                    "SevenStar Limo",
+                    "SevenStar Limo Melbourne",
+                    "Seven Star Limo Melbourne",
+                    "Seven Star Limo Pyt. Ltd",
+                    "SevenStar Limo Pyt. Ltd",
+                    "SevenStar Chauffeur Melbourne"
+                ],
+                "description": "SevenStar Limo & Chauffeur is Melbourne's premier luxury chauffeur and limousine service, offering airport transfers to Tullamarine and Avalon, corporate car hire, wedding cars, winery tours, and special event transportation across Melbourne and Victoria. Professional drivers, fixed prices, available 24/7.",
+                "url": "https://sevenstarlimo.com.au",
+                "telephone": "{% if contact %}{{ contact.phone }}{% else %}+61483841489{% endif %}",
+                "email": "info@sevenstarlimo.com.au",
+                "foundingDate": "2010",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://sevenstarlimo.com.au/static/img/logo.png",
+                    "width": 400,
+                    "height": 100
+                },
+                "image": [
+                    "https://sevenstarlimo.com.au/static/img/logo.png",
+                    "https://sevenstarlimo.com.au/static/img/chauffeur-door.jpg",
+                    "https://sevenstarlimo.com.au/static/img/logo1.png"
+                ],
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "Your Street Address",
+                    "addressLocality": "Melbourne",
+                    "addressRegion": "VIC",
+                    "postalCode": "3000",
+                    "addressCountry": "AU"
+                },
+                "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": -37.8136,
+                    "longitude": 144.9631
+                },
+                "hasMap": "https://maps.google.com/?q=Melbourne+VIC+3000+Australia",
+                "areaServed": [
+                    { "@type": "City",    "name": "Melbourne",                "sameAs": "https://en.wikipedia.org/wiki/Melbourne" },
+                    { "@type": "State",   "name": "Victoria",                 "sameAs": "https://en.wikipedia.org/wiki/Victoria_(Australia)" },
+                    { "@type": "Place",   "name": "Mornington Peninsula" },
+                    { "@type": "Place",   "name": "Yarra Valley" },
+                    { "@type": "Place",   "name": "Geelong" },
+                    { "@type": "Place",   "name": "Dandenong Ranges" },
+                    { "@type": "Place",   "name": "Frankston" },
+                    { "@type": "Place",   "name": "Craigieburn" },
+                    { "@type": "Place",   "name": "Werribee" },
+                    { "@type": "Airport", "name": "Melbourne Airport (Tullamarine)", "iataCode": "MEL" },
+                    { "@type": "Airport", "name": "Avalon Airport",                  "iataCode": "AVV" }
+                ],
+                "serviceType": [
+                    "Airport Transfer",
+                    "Corporate Chauffeur",
+                    "Wedding Car Hire",
+                    "Tour Transfer",
+                    "Winery Tour Transfer",
+                    "Hourly Chauffeur Hire",
+                    "Point-to-Point Transfer",
+                    "Special Event Transfer",
+                    "Cruise Ship Transfer"
+                ],
+                "openingHoursSpecification": {
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+                    "opens": "00:00",
+                    "closes": "23:59"
+                },
+                "priceRange": "$$",
+                "currenciesAccepted": "AUD",
+                "paymentAccepted": "Credit Card, Debit Card, Cash, Bank Transfer, Stripe",
+                "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "ratingValue": "4.9",
+                    "reviewCount": "120",
+                    "bestRating": "5",
+                    "worstRating": "1"
+                },
+                "sameAs": [
+                    "https://www.facebook.com/SevenStarLimo",
+                    "https://www.instagram.com/SevenStarLimo",
+                    "https://www.linkedin.com/company/SevenStarLimo",
+                    "https://g.page/SevenStarLimo"
+                ]
+            },
+            {
+                "@type": "WebSite",
+                "@id": "https://sevenstarlimo.com.au/",
+                "url": "https://sevenstarlimo.com.au",
+                "name": "SevenStar Limo Pyt. Ltd.",
+                "description": "Melbourne's premier luxury chauffeur and limousine service.",
+                "publisher": { "@id": "https://sevenstarlimo.com.au/" },
+                "inLanguage": "en-AU",
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": {
+                        "@type": "EntryPoint",
+                        "urlTemplate": "https://sevenstarlimo.com.au/search?q={search_term_string}"
+                    },
+                    "query-input": "required name=search_term_string"
+                }
+            }
+        ]
+    }
+    </script>
+
+    <!-- Per-page schema (FAQPage, BreadcrumbList, Review, Service, etc.) -->
+    {% block extra_schema %}{% endblock %}
+
+    <!-- ============================================================
+         FAVICONS & APP ICONS
+    ============================================================ -->
+    <link rel="icon"                type="image/x-icon"  href="{% static 'img/logo.ico' %}">
+    <link rel="icon"                type="image/png" sizes="32x32" href="{% static 'img/logo.png' %}">
+    <link rel="icon"                type="image/png" sizes="16x16" href="{% static 'img/logo.png' %}">
+    <link rel="icon"                type="image/svg+xml"  href="{% static 'img/logo.svg' %}">
+    <link rel="apple-touch-icon"    sizes="180x180"       href="{% static 'img/logo.png' %}">
+    <link rel="mask-icon"           href="{% static 'img/logo.svg' %}" color="#c9a84c">
+    <meta name="msapplication-TileColor"  content="#0a0a0a">
+    <meta name="msapplication-TileImage" content="{% static 'img/logo.png' %}">
+    {% progressive_web_app_meta %}
+
+    <!-- ============================================================
+         RESOURCE HINTS — critical for Core Web Vitals (LCP / FID)
+    ============================================================ -->
+    <!-- Preconnect to font origins (eliminates render-blocking RTT) -->
+    <link rel="preconnect"   href="https://fonts.googleapis.com"     crossorigin>
+    <link rel="preconnect"   href="https://fonts.gstatic.com"        crossorigin>
+
+    <!-- DNS-prefetch for analytics & third-party scripts -->
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    <link rel="dns-prefetch" href="https://js.stripe.com">
+    <link rel="dns-prefetch" href="https://maps.googleapis.com">
+
+    <!-- Preload LCP hero image (update path per child template as needed) -->
+    {% block preload_hero %}
+    <link rel="preload" as="image" href="{% static 'img/logo.png' %}" fetchpriority="high">
+    {% endblock %}
+
+    <!-- Preload critical webfonts -->
+    <link rel="preload" as="style"
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Jost:wght@300;400;500&display=swap">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Jost:wght@300;400;500&display=swap"
+          media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Jost:wght@300;400;500&display=swap">
+    </noscript>
+
+    <!-- ============================================================
+         GOOGLE TAG MANAGER  (replace GTM-XXXXXXX with your ID)
+    ============================================================ -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','G-0WP2VXEQRC');</script>
+
+    <!-- ============================================================
+         EXTRA CSS — injected by child templates
+    ============================================================ -->
+    {% block extra_css %}{% endblock %}
+
+</head>
+
+<body itemscope itemtype="https://schema.org/WebPage">
+
+    <!-- GTM noscript fallback (must be first child of <body>) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=G-0WP2VXEQRC"
+                height="0" width="0" style="display:none;visibility:hidden"
+                title="Google Tag Manager"></iframe>
+    </noscript>
+
+    <!-- Accessibility: skip-nav link -->
+    <a href="#main-content"
+       class="skip-link"
+       style="position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:9999"
+       onfocus="this.style.cssText='position:fixed;top:0;left:0;width:auto;height:auto;padding:.75rem 1.5rem;background:#c9a84c;color:#000;font-weight:600;text-decoration:none;z-index:9999;border-radius:0 0 4px 0'">
+        Skip to main content
+    </a>
+
+    <!-- ============================================================
+         SITE-WIDE MICRODATA (invisible, for rich-snippet eligibility)
+    ============================================================ -->
+    <span itemprop="name"      style="display:none">SevenStar Limo Pyt. Ltd.</span>
+    <span itemprop="telephone" style="display:none">{% if contact %}{{ contact.phone }}{% else %}+61483841489{% endif %}</span>
+    <link  itemprop="url"      href="https://sevenstarlimo.com.au">
+
+    {% include "partials/nav.html" %}
+
+    <main id="main-content" role="main" tabindex="-1">
+        {% block body %}{% endblock %}
+    </main>
+
+    {% include "partials/footer.html" %}
+
+    <!-- ============================================================
+         EXTRA JS — injected by child templates (deferred / async)
+    ============================================================ -->
+    {% block extra_js %}{% endblock %}
+
+</body>
+</html>

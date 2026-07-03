@@ -1,0 +1,308 @@
+{% extends "base.html" %}
+{% load static %}
+
+{# ════════════════════════════════════════════════════════════════
+   SevenStar Limo & Chauffeur — login.html
+   Split: login.html + static/css/login.css + static/js/login.js
+   Auth pages: noindex (no value indexing login forms)
+════════════════════════════════════════════════════════════════ #}
+
+{# ─── PRIMARY META ───────────────────────────────────────────── #}
+{% block title %}Log In | SevenStar Limo & Chauffeur Melbourne{% endblock %}
+
+{% block meta_description %}Log in to your SevenStar Limo & Chauffeur Melbourne account to manage bookings, view transfer history and enjoy faster checkout on your next chauffeur booking.{% endblock %}
+
+{% block meta_keywords %}SevenStar Limo login, SevenStar Chauffeur account, Melbourne chauffeur booking account{% endblock %}
+
+{# Login pages should not be indexed — no SEO value, avoids duplicate thin content #}
+{% block meta_robots %}noindex, nofollow{% endblock %}
+
+{# ─── CANONICAL ──────────────────────────────────────────────── #}
+{% block canonical_url %}https://sevenstarlimo.com.au/accounts/login/{% endblock %}
+
+{# ─── OPEN GRAPH ─────────────────────────────────────────────── #}
+{% block og_type %}website{% endblock %}
+{% block og_title %}Log In | SevenStar Limo & Chauffeur Melbourne{% endblock %}
+{% block og_description %}Log in to your SevenStar Limo account to manage bookings and transfers.{% endblock %}
+{% block og_url %}https://sevenstarlimo.com.au/accounts/login/{% endblock %}
+
+{# ─── TWITTER / X ────────────────────────────────────────────── #}
+{% block twitter_title %}Log In | SevenStar Limo & Chauffeur Melbourne{% endblock %}
+{% block twitter_description %}Log in to your SevenStar Limo account to manage bookings and transfers.{% endblock %}
+
+{# ─── STRUCTURED DATA ────────────────────────────────────────── #}
+{% block extra_schema %}
+{# BreadcrumbList — helps Google understand page hierarchy even for noindex pages #}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://sevenstarlimo.com.au/"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Log In",
+            "item": "https://sevenstarlimo.com.au/accounts/login/"
+        }
+    ]
+}
+</script>
+{% endblock %}
+
+{# ─── STYLESHEET ─────────────────────────────────────────────── #}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+
+{# ════════════════════════════════════════════════════════════════
+   BODY
+════════════════════════════════════════════════════════════════ #}
+{% block body %}
+<div data-page="login">
+<div class="li__page">
+
+    <!-- ════════════════════════════════
+         LEFT BRAND PANEL
+    ════════════════════════════════ -->
+    <div class="li__panel" aria-hidden="true">
+        <div class="li__panel-bg"></div>
+        <div class="li__panel-rule"></div>
+        <div class="li__panel-rule-h"></div>
+
+        <div class="li__panel-inner">
+            <p class="li__panel-eyebrow">Welcome Back — SevenStar Limo</p>
+            <h2 class="li__panel-title">Good to Have<br>You <em>Back</em></h2>
+            <p class="li__panel-sub">
+                Log in to manage your SevenStar Limo bookings, view your transfer history
+                and enjoy faster checkout on your next Melbourne chauffeur booking.
+            </p>
+
+            <div class="li__trust">
+                <div class="li__trust-item">
+                    <div class="li__trust-ico" aria-hidden="true">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                    </div>
+                    Your details are always encrypted
+                </div>
+                <div class="li__trust-item">
+                    <div class="li__trust-ico" aria-hidden="true">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    Instant access to your booking history
+                </div>
+                <div class="li__trust-item">
+                    <div class="li__trust-ico" aria-hidden="true">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                        </svg>
+                    </div>
+                    Faster checkout on every SevenStar Limo booking
+                </div>
+            </div>
+
+            <div class="li__panel-signup">
+                Don't have a SevenStar Limo account?
+                <a href="{% url 'signup' %}" title="Create a SevenStar Limo account">Create one here</a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ════════════════════════════════
+         RIGHT — FORM
+    ════════════════════════════════ -->
+    <div class="li__right">
+        <div class="li__form-wrap">
+
+            <!-- Mobile-only top bar -->
+            <div class="li__mobile-top">
+                <a href="{% url 'home' %}" class="li__back-link"
+                   aria-label="Back to SevenStar Limo home">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                        <line x1="19" y1="12" x2="5" y2="12"/>
+                        <polyline points="12 19 5 12 12 5"/>
+                    </svg>
+                    Back
+                </a>
+                <a href="{% url 'signup' %}"
+                   style="font-size:.8rem;color:var(--li-gold);text-decoration:none;font-weight:500;"
+                   title="Create a SevenStar Limo account">
+                    Create Account
+                </a>
+            </div>
+
+            <div class="li__form-heading">
+                <p class="li__form-eyebrow">SevenStar Limo Account</p>
+                <h1 class="li__form-title">Welcome <em>Back</em></h1>
+                <p class="li__form-desc">
+                    Use your email address or phone number to log in to your
+                    SevenStar Limo &amp; Chauffeur account.
+                </p>
+            </div>
+
+            <div class="li__card">
+
+                {# ── Django messages ── #}
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="li__banner li__banner--{{ message.tags }} li__show"
+                         role="alert" aria-live="assertive">
+                        {% if message.tags == 'success' %}
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        {% else %}
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="8" x2="12" y2="12"/>
+                                <line x1="12" y1="16" x2="12.01" y2="16"/>
+                            </svg>
+                        {% endif %}
+                        <span>{{ message }}</span>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+
+                <form
+                    id="li-form"
+                    method="POST"
+                    action="{% url 'login' %}"
+                    novalidate
+                    aria-label="Log in to SevenStar Limo account"
+                >
+                    {% csrf_token %}
+
+                    {# next redirect — preserves destination after login #}
+                    {% if next %}
+                        <input type="hidden" name="next" value="{{ next }}">
+                    {% endif %}
+
+                    {# ── Email or Phone ── #}
+                    <div class="li__field">
+                        <label class="li__label" for="li-identifier">
+                            Email or Phone
+                            <span class="li__label-hint">Either works</span>
+                        </label>
+                        <div class="li__input-shell">
+                            <span class="li__input-ico" aria-hidden="true">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="12" cy="7" r="4"/>
+                                </svg>
+                            </span>
+                            <input
+                                class="li__input"
+                                type="text"
+                                id="li-identifier"
+                                name="identifier"
+                                placeholder="jane@email.com or 04XX XXX XXX"
+                                autocomplete="username"
+                                aria-required="true"
+                                aria-describedby="li-id-err"
+                                required
+                                autofocus
+                                value="{{ identifier|default:'' }}"
+                            >
+                        </div>
+                        <span class="li__err" id="li-id-err" role="alert" aria-live="polite">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="8" x2="12" y2="12"/>
+                                <line x1="12" y1="16" x2="12.01" y2="16"/>
+                            </svg>
+                            Please enter your email address or phone number.
+                        </span>
+                    </div>
+
+                    {# ── Password ── #}
+                    <div class="li__field">
+                        <label class="li__label" for="li-pw">Password</label>
+                        <div class="li__input-shell">
+                            <span class="li__input-ico" aria-hidden="true">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2"/>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                </svg>
+                            </span>
+                            <input
+                                class="li__input li__input--pw"
+                                type="password"
+                                id="li-pw"
+                                name="password"
+                                placeholder="Your password"
+                                autocomplete="current-password"
+                                aria-required="true"
+                                aria-describedby="li-pw-err"
+                                required
+                            >
+                            <button type="button" class="li__eye" id="li-pw-eye"
+                                    aria-label="Show password">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <span class="li__err" id="li-pw-err" role="alert" aria-live="polite">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="8" x2="12" y2="12"/>
+                                <line x1="12" y1="16" x2="12.01" y2="16"/>
+                            </svg>
+                            Please enter your password.
+                        </span>
+                    </div>
+
+                    <button type="submit" class="li__submit" id="li-btn">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                            <polyline points="10 17 15 12 10 7"/>
+                            <line x1="15" y1="12" x2="3" y2="12"/>
+                        </svg>
+                        LOG IN
+                    </button>
+
+                </form>
+
+                <div class="li__divider" aria-hidden="true">or</div>
+
+                <div class="li__signup-row">
+                    Don't have a SevenStar Limo account?
+                    <a href="{% url 'signup' %}" title="Create a free SevenStar Limo account">Create one</a>
+                </div>
+
+            </div><!-- /li__card -->
+        </div>
+    </div>
+
+</div>
+</div><!-- /[data-page="login"] -->
+{% endblock %}
+
+
+{# ─── DEFERRED JS ────────────────────────────────────────────── #}
+{% block extra_js %}
+<script src="{% static 'js/login.js' %}" defer></script>
+{% endblock %}

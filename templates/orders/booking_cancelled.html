@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+{% load static %}
+
+{# ════════════════════════════════════════════════════════════════
+   SevenStar Limo & Chauffeur — payment_failed.html
+   Split: payment_failed.html + static/css/payment_failed.css
+   No JS file — this page is purely presentational.
+════════════════════════════════════════════════════════════════ #}
+
+{# ─── PRIMARY META ───────────────────────────────────────────── #}
+{% block title %}Payment Unsuccessful | SevenStar Limo Melbourne{% endblock %}
+
+{% block meta_description %}Your SevenStar Limo payment could not be processed. No charge has been made — your booking details are saved and you can try again.{% endblock %}
+
+{# Post-payment failure page — must not be indexed #}
+{% block meta_robots %}noindex, nofollow{% endblock %}
+
+{# ─── CANONICAL ──────────────────────────────────────────────── #}
+{% block canonical_url %}https://sevenstarlimo.com.au/book-now/{% endblock %}
+
+{# ─── OPEN GRAPH ─────────────────────────────────────────────── #}
+{% block og_type %}website{% endblock %}
+{% block og_title %}Payment Unsuccessful | SevenStar Limo Melbourne{% endblock %}
+{% block og_description %}Your SevenStar Limo payment could not be processed. No charge has been made.{% endblock %}
+{% block og_url %}https://sevenstarlimo.com.au/book-now/{% endblock %}
+
+{# ─── STRUCTURED DATA ────────────────────────────────────────── #}
+{% block extra_schema %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home",             "item": "https://sevenstarlimo.com.au/" },
+        { "@type": "ListItem", "position": 2, "name": "Book a Transfer",  "item": "https://sevenstarlimo.com.au/book-now/" },
+        { "@type": "ListItem", "position": 3, "name": "Payment Unsuccessful", "item": "https://sevenstarlimo.com.au/book-now/" }
+    ]
+}
+</script>
+{% endblock %}
+
+{# ─── STYLESHEET ─────────────────────────────────────────────── #}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/booking_cancelled.css' %}">
+{% endblock %}
+
+
+{# ════════════════════════════════════════════════════════════════
+   BODY
+════════════════════════════════════════════════════════════════ #}
+{% block body %}
+<div class="pf__page">
+
+
+<div class="pf__hero" role="banner">
+    <div class="pf__hero-bg" role="img"
+         aria-label="SevenStar Limo luxury chauffeur vehicle"></div>
+    <div class="pf__hero-rule" aria-hidden="true"></div>
+    <div class="pf__hero-inner">
+
+        <p class="pf__eyebrow">SevenStar Limo &amp; Chauffeur Melbourne</p>
+        <h1>{% if no_price %}Booking <em>Created</em>{% else %}Payment <em>Unsuccessful</em>{% endif %}</h1>
+        <p class="pf__hero-sub">{% if no_price %}We'll contact you with payment details shortly{% else %}Don't worry — your booking details have been saved{% endif %}</p>
+
+    </div>
+</div>
+
+
+<div class="pf__wrap">
+
+    {# Animated fail ring #}
+    <div class="pf__ring" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M10 10l12 12M22 10l-12 12"
+                  stroke="#b83232" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+    </div>
+
+    <h2 class="pf__fail-title">
+        {% if no_price %}
+            Payment link is <em>not ready yet</em>
+        {% else %}
+            We couldn't process your <em>payment</em>
+        {% endif %}
+    </h2>
+    <p class="pf__fail-sub">
+        {% if no_price %}
+            Your booking has been created successfully.<br>
+            A price has not been set yet. We will contact you shortly<br>
+            with payment details.
+        {% else %}
+            Your card was declined or the payment timed out.<br>
+            No charge has been made to your account.<br>
+            Your booking is saved — please start a new booking below.
+        {% endif %}
+    </p>
+
+    {# Booking reference pill #}
+    <div class="pf__ref"
+         aria-label="Booking reference number {{ order.id|stringformat:'06d' }}">
+        Booking ref &nbsp;<strong>#{{ order.id|stringformat:"06d" }}</strong>
+    </div>
+
+    {# Journey snapshot card #}
+    <div class="pf__card" aria-label="Saved journey details">
+        <div class="pf__card-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+            Your Saved Journey
+        </div>
+
+        <div class="pf__row">
+            <span class="pf__lbl">From</span>
+            <span class="pf__val">{{ order.pickup_address }}</span>
+        </div>
+        {% if order.additional_stop %}
+        <div class="pf__row">
+            <span class="pf__lbl">Via</span>
+            <span class="pf__val">{{ order.additional_stop }}</span>
+        </div>
+        {% endif %}
+        <div class="pf__row">
+            <span class="pf__lbl">To</span>
+            <span class="pf__val">{{ order.destination_address }}</span>
+        </div>
+        <div class="pf__row">
+            <span class="pf__lbl">Date &amp; Time</span>
+            <span class="pf__val">{{ order.pickup_date }} at {{ order.pickup_time }}</span>
+        </div>
+        <div class="pf__row">
+            <span class="pf__lbl">Vehicle</span>
+            <span class="pf__val">{{ order.limo_service_type }}</span>
+        </div>
+        {% if order.total_price %}
+        <div class="pf__row">
+            <span class="pf__lbl">Amount due</span>
+            <span class="pf__val pf__val--amount">AUD ${{ order.total_price }}</span>
+        </div>
+        {% endif %}
+    </div>
+
+    {# Action buttons #}
+    <div class="pf__actions">
+        {% if no_price %}
+        <a href="/" class="pf__btn-primary"
+           aria-label="Return to SevenStar Limo home page">
+            Return to Home
+        </a>
+        {% else %}
+        <a href="{% url 'orders' %}" class="pf__btn-primary"
+           aria-label="Start a new SevenStar Limo booking">
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M2 8l4 4 8-8" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Start a New Booking
+        </a>
+        <a href="/" class="pf__btn-ghost"
+           aria-label="Return to SevenStar Limo home page">
+            Return to Home
+        </a>
+        {% endif %}
+    </div>
+
+    {# Help note #}
+    <div class="pf__help" role="note"
+         aria-label="Contact information for payment issues">
+        <strong>Need help?</strong>
+        If you keep experiencing issues or were charged unexpectedly, please contact us at
+        <a href="mailto:support@sevenstarlimo.com.au">support@sevenstarlimo.com.au</a>
+        quoting reference <strong>#{{ order.id|stringformat:"06d" }}</strong>.
+    </div>
+
+</div><!-- /.pf__wrap -->
+</div><!-- /.pf__page -->
+{% endblock %}
+
+{# No extra_js — this page is purely presentational. #}

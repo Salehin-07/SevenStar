@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /accounts/
+Disallow: /admin/
+Disallow: /book-now/
+Allow: /
+
+Sitemap: https://sevenstarlimo.com.au/sitemap.xml

@@ -1,0 +1,257 @@
+{% extends "base.html" %}
+{% load static %}
+
+{# ════════════════════════════════════════════════════════════════
+   SevenStar Limo & Chauffeur — booking_confirmed.html
+   Split: booking_confirmed.html + static/css/booking_confirmed.css
+   Step 3 of 3 — payment confirmed, booking reference, next steps
+   No JS file — this page is purely presentational.
+════════════════════════════════════════════════════════════════ #}
+
+{# ─── PRIMARY META ───────────────────────────────────────────── #}
+{% block title %}Booking Confirmed | SevenStar Limo Melbourne{% endblock %}
+
+{% block meta_description %}Your SevenStar Limo & Chauffeur Melbourne booking is confirmed. A confirmation email has been sent with your full journey details and booking reference.{% endblock %}
+
+{# Post-payment confirmation — must not be indexed #}
+{% block meta_robots %}noindex, nofollow{% endblock %}
+
+{# ─── CANONICAL ──────────────────────────────────────────────── #}
+{% block canonical_url %}https://sevenstarlimo.com.au/book-now/{% endblock %}
+
+{# ─── OPEN GRAPH ─────────────────────────────────────────────── #}
+{% block og_type %}website{% endblock %}
+{% block og_title %}Booking Confirmed | SevenStar Limo Melbourne{% endblock %}
+{% block og_description %}Your SevenStar Limo booking is confirmed. Your chauffeur will be in touch before your pickup.{% endblock %}
+{% block og_url %}https://sevenstarlimo.com.au/book-now/{% endblock %}
+
+{# ─── STRUCTURED DATA ────────────────────────────────────────── #}
+{% block extra_schema %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home",              "item": "https://sevenstarlimo.com.au/" },
+        { "@type": "ListItem", "position": 2, "name": "Book a Transfer",   "item": "https://sevenstarlimo.com.au/book-now/" },
+        { "@type": "ListItem", "position": 3, "name": "Booking Confirmed", "item": "https://sevenstarlimo.com.au/book-now/" }
+    ]
+}
+</script>
+{% endblock %}
+
+{# ─── STYLESHEET ─────────────────────────────────────────────── #}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/booking_confirmed.css' %}">
+{% endblock %}
+
+
+{# ════════════════════════════════════════════════════════════════
+   BODY
+════════════════════════════════════════════════════════════════ #}
+{% block body %}
+<div class="bc__page">
+
+
+<div class="bc__hero" role="banner">
+    <div class="bc__hero-bg" role="img"
+         aria-label="SevenStar Limo luxury chauffeur vehicle"></div>
+    <div class="bc__hero-rule" aria-hidden="true"></div>
+    <div class="bc__hero-inner">
+
+        <p class="bc__eyebrow">SevenStar Limo &amp; Chauffeur Melbourne</p>
+        <h1>You're All <em>Booked!</em></h1>
+        <p class="bc__hero-sub">
+            A confirmation has been sent to {{ order.passenger_email }}
+        </p>
+
+        {# All 3 steps complete #}
+        <div class="bc__prog" role="list" aria-label="Booking complete — all steps done">
+            <div class="bc__ps" role="listitem">
+                <div class="bc__pc" aria-label="Step 1 complete">✓</div>
+                <div class="bc__plbl">Details</div>
+            </div>
+            <div class="bc__pl" aria-hidden="true"></div>
+            <div class="bc__ps" role="listitem">
+                <div class="bc__pc" aria-label="Step 2 complete">✓</div>
+                <div class="bc__plbl">Price</div>
+            </div>
+            <div class="bc__pl" aria-hidden="true"></div>
+            <div class="bc__ps" role="listitem">
+                <div class="bc__pc" aria-label="Step 3 complete — paid">✓</div>
+                <div class="bc__plbl">Paid</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="bc__wrap">
+
+    {# Animated success ring #}
+    <div class="bc__ring" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M6 16l7 7 13-13"
+                  stroke="#2a6e48" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </div>
+
+    <h2 class="bc__success-title">Payment <em>Confirmed</em></h2>
+    <p class="bc__success-sub">
+        Your SevenStar Limo chauffeur will be in touch before your pickup time.
+    </p>
+
+    {# Booking reference #}
+    <div class="bc__ref" aria-label="Booking reference number {{ order.id|stringformat:'06d' }}">
+        <small>Booking Reference</small>
+        #{{ order.id|stringformat:"06d" }}
+    </div>
+
+    {# ── Journey details card ── #}
+    <div class="bc__card" aria-label="Journey details">
+        <div class="bc__card-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+            Journey Details
+        </div>
+
+        <div class="bc__row">
+            <span class="bc__lbl">From</span>
+            <span class="bc__val">{{ order.pickup_address }}</span>
+        </div>
+        {% if order.additional_stop %}
+        <div class="bc__row">
+            <span class="bc__lbl">Via</span>
+            <span class="bc__val">{{ order.additional_stop }}</span>
+        </div>
+        {% endif %}
+        <div class="bc__row">
+            <span class="bc__lbl">To</span>
+            <span class="bc__val">{{ order.destination_address }}</span>
+        </div>
+        <div class="bc__row">
+            <span class="bc__lbl">Date</span>
+            <span class="bc__val">{{ order.pickup_date }}</span>
+        </div>
+        <div class="bc__row">
+            <span class="bc__lbl">Time</span>
+            <span class="bc__val">{{ order.pickup_time }}</span>
+        </div>
+        {% if order.flight_number %}
+        <div class="bc__row">
+            <span class="bc__lbl">Flight</span>
+            <span class="bc__val">{{ order.flight_number }}</span>
+        </div>
+        {% endif %}
+        {% if order.special_instruction %}
+        <div class="bc__row">
+            <span class="bc__lbl">Instructions</span>
+            <span class="bc__val">{{ order.special_instruction }}</span>
+        </div>
+        {% endif %}
+
+        <div class="bc__tags" aria-label="Booking summary tags">
+            <span class="bc__tag">{{ order.limo_service_type }}</span>
+            <span class="bc__tag">
+                {{ order.number_of_passengers }}
+                passenger{% if order.number_of_passengers != 1 %}s{% endif %}
+            </span>
+            <span class="bc__tag">
+                {{ order.number_of_bags }}
+                bag{% if order.number_of_bags != 1 %}s{% endif %}
+            </span>
+            {% if order.baby_seat   %}<span class="bc__tag bc__tag--green">🍼 Baby seat</span>{% endif %}
+            {% if order.return_ride %}<span class="bc__tag bc__tag--green">🔄 Return ride</span>{% endif %}
+        </div>
+    </div>
+
+    {# ── Passenger card ── #}
+    <div class="bc__card" aria-label="Passenger details">
+        <div class="bc__card-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+            </svg>
+            Passenger
+        </div>
+
+        <div class="bc__row">
+            <span class="bc__lbl">Name</span>
+            <span class="bc__val">{{ order.passenger_name }}</span>
+        </div>
+        <div class="bc__row">
+            <span class="bc__lbl">Phone</span>
+            <span class="bc__val">{{ order.passenger_number }}</span>
+        </div>
+        <div class="bc__row">
+            <span class="bc__lbl">Email</span>
+            <span class="bc__val">{{ order.passenger_email }}</span>
+        </div>
+    </div>
+
+    {# ── Amount charged panel ── #}
+    <div class="bc__paid" aria-label="Amount charged">
+        <div class="bc__paid-inner">
+            <div class="bc__paid-eyebrow">Amount Charged</div>
+            <div class="bc__paid-amount">
+                <span class="bc__paid-aud">AUD</span>{{ order.total_price }}
+            </div>
+            <div class="bc__paid-tags">
+                <span class="bc__paid-tag">{{ order.limo_service_type }}</span>
+                {% if order.return_ride %}
+                <span class="bc__paid-tag bc__paid-tag--green">🔄 Return discount applied</span>
+                {% endif %}
+                {% if order.baby_seat %}
+                <span class="bc__paid-tag">🍼 Baby seat</span>
+                {% endif %}
+            </div>
+            <div class="bc__paid-badge" role="status" aria-live="polite">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                    <path d="M2 6l3 3 5-5" stroke="#a8d5be" stroke-width="1.5"
+                          stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Payment successful
+            </div>
+        </div>
+    </div>
+
+    {# ── What happens next ── #}
+    <div class="bc__next" aria-label="What happens next">
+        <h3>What happens next?</h3>
+
+        <div class="bc__step">
+            <div class="bc__step-n" aria-hidden="true">1</div>
+            <div class="bc__step-txt">
+                <strong>Confirmation email</strong>
+                <span>A full booking summary has been sent to {{ order.passenger_email }}</span>
+            </div>
+        </div>
+
+        <div class="bc__step">
+            <div class="bc__step-n" aria-hidden="true">2</div>
+            <div class="bc__step-txt">
+                <strong>Driver assigned</strong>
+                <span>We'll assign your SevenStar Limo chauffeur and share their details 24 hours before pickup</span>
+            </div>
+        </div>
+
+        <div class="bc__step">
+            <div class="bc__step-n" aria-hidden="true">3</div>
+            <div class="bc__step-txt">
+                <strong>Day of travel</strong>
+                <span>Your driver will meet you at {{ order.pickup_address }} at {{ order.pickup_time }}</span>
+            </div>
+        </div>
+
+    </div>
+
+</div><!-- /.bc__wrap -->
+</div><!-- /.bc__page -->
+{% endblock %}
+
+{# No extra_js — this page is purely presentational. #}

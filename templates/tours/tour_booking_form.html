@@ -1,0 +1,1157 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Book {{ tour.label }} | SevenStar Limo Melbourne{% endblock %}
+{% block meta_description %}Inquire about your {{ tour.label }} with SevenStar Limo & Chauffeur. Private chauffeur, luxury vehicles, personalised service across Victoria.{% endblock %}
+{% block meta_robots %}noindex, nofollow{% endblock %}
+{% block canonical_url %}https://sevenstarlimo.com.au/book-tours/?type={{ tour_key }}{% endblock %}
+
+{% block extra_schema %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://sevenstarlimo.com.au/"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Book a Tour",
+            "item": "https://sevenstarlimo.com.au/book-tours/"
+        }
+    ]
+}
+</script>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ════════════════════════════════════════════════════════════════
+   TOUR BOOKING FORM  ·  tbf__ prefix
+   Aesthetic: Refined Luxury — cream bg, white cards, gold accents
+════════════════════════════════════════════════════════════════ */
+
+.tbf__page {
+    --tbf-ink:         #1a1714;
+    --tbf-ink-2:       #2e2a26;
+    --tbf-ink-soft:    #4a4540;
+    --tbf-ink-muted:   #a09890;
+    --tbf-cream:       #faf8f3;
+    --tbf-cream-2:     #f3efe6;
+    --tbf-white:       #ffffff;
+    --tbf-gold:        #b8902e;
+    --tbf-gold-lt:     #d4aa4a;
+    --tbf-gold-dk:     #9a7520;
+    --tbf-gold-bg:     rgba(184,144,46,0.07);
+    --tbf-gold-ring:   rgba(184,144,46,0.18);
+    --tbf-border:      #e8e2d6;
+    --tbf-border-f:    #b8902e;
+    --tbf-warn-bg:     #fffbf0;
+    --tbf-warn-border: #e8d08a;
+    --tbf-warn-text:   #7a5c00;
+    --tbf-err:         #b83232;
+    --tbf-green:       #2a7a4b;
+    --tbf-serif:       'Cormorant Garamond', Georgia, serif;
+    --tbf-sans:        'Jost', system-ui, sans-serif;
+    --tbf-ease:        cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --tbf-r:           14px;
+    --tbf-rs:          10px;
+    --tbf-shadow:      0 2px 24px rgba(26,23,20,.06);
+    --tbf-shadow-h:    0 8px 40px rgba(26,23,20,.12);
+
+    font-family: var(--tbf-sans);
+    background: var(--tbf-cream);
+    color: var(--tbf-ink);
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ── Hero ───────────────────────────────────────────────────── */
+.tbf__hero {
+    background: var(--tbf-ink);
+    padding: calc(36px + 68px + 2.5rem) 2rem 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+.tbf__hero-bg {
+    position: absolute; inset: 0;
+    background:
+        radial-gradient(ellipse 80% 55% at 50% 110%, rgba(184,144,46,.2) 0%, transparent 70%),
+        linear-gradient(180deg, rgba(26,23,20,.96) 0%, rgba(26,23,20,.88) 100%),
+        url("{% static 'img/hero-car.jpg' %}") center / cover no-repeat;
+}
+.tbf__hero-rule {
+    position: absolute; bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 120px; height: 2px;
+    background: linear-gradient(to right, transparent, var(--tbf-gold), transparent);
+}
+.tbf__hero-inner { position: relative; z-index: 2; }
+
+.tbf__eyebrow {
+    font-size: .58rem; font-weight: 600;
+    letter-spacing: .32em; text-transform: uppercase;
+    color: var(--tbf-gold-lt);
+    display: inline-flex; align-items: center; gap: .65rem;
+    margin-bottom: .9rem;
+}
+.tbf__eyebrow::before, .tbf__eyebrow::after {
+    content: ''; width: 20px; height: 1px;
+    background: var(--tbf-gold-lt);
+}
+.tbf__back {
+    display: inline-flex; align-items: center; gap: .45rem;
+    font-size: .62rem; font-weight: 500; letter-spacing: .14em;
+    text-transform: uppercase;
+    color: rgba(248,245,239,.38);
+    text-decoration: none;
+    margin-bottom: 1.2rem;
+    transition: color .2s;
+}
+.tbf__back:hover { color: var(--tbf-gold-lt); }
+.tbf__back:hover svg { transform: translateX(-3px); }
+.tbf__back svg { transition: transform .2s; }
+
+.tbf__hero h1 {
+    font-family: var(--tbf-serif);
+    font-size: clamp(1.8rem, 5vw, 2.9rem);
+    font-weight: 300; color: #f8f5ef;
+    line-height: 1.1; letter-spacing: -.02em; margin: 0;
+}
+.tbf__hero h1 em { font-style: italic; color: var(--tbf-gold-lt); }
+.tbf__hero-sub {
+    margin-top: .5rem; color: rgba(248,245,239,.42);
+    font-size: .86rem; font-weight: 300;
+}
+.tbf__badge {
+    display: inline-flex; align-items: center; gap: .5rem;
+    margin-top: 1rem;
+    padding: .38rem .95rem;
+    background: rgba(184,144,46,.12);
+    border: 1px solid rgba(184,144,46,.3);
+    border-radius: 100px;
+    color: var(--tbf-gold-lt);
+    font-size: .7rem; font-weight: 600; letter-spacing: .1em;
+}
+
+/* progress tracker */
+.tbf__prog {
+    display: flex; align-items: center; justify-content: center;
+    gap: 0;
+    margin-top: 1.8rem; padding-bottom: 2rem;
+    position: relative; z-index: 2;
+}
+.tbf__ps { display: flex; flex-direction: column; align-items: center; gap: .5rem; }
+.tbf__pl { width: 60px; height: 1px; background: rgba(255,255,255,.15); margin-bottom: 1.4rem; flex-shrink: 0; }
+.tbf__pc {
+    width: 30px; height: 30px; border-radius: 50%;
+    font-size: .7rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+}
+.tbf__ps--on .tbf__pc  { border: 2px solid var(--tbf-gold); color: var(--tbf-gold); background: rgba(184,144,46,.12); }
+.tbf__ps--off .tbf__pc { border: 2px solid rgba(255,255,255,.2); color: rgba(255,255,255,.28); }
+.tbf__plbl { font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; }
+.tbf__ps--on .tbf__plbl  { color: var(--tbf-gold); }
+.tbf__ps--off .tbf__plbl { color: rgba(255,255,255,.25); }
+
+/* ── Highlights strip ───────────────────────────────────────── */
+.tbf__highlights {
+    background: var(--tbf-warn-bg);
+    border-bottom: 1px solid var(--tbf-warn-border);
+    padding: 1.4rem 2rem;
+}
+.tbf__highlights-inner { max-width: 860px; margin: 0 auto; }
+.tbf__hl-label {
+    font-size: .58rem; font-weight: 600; letter-spacing: .22em;
+    text-transform: uppercase; color: var(--tbf-warn-text);
+    margin-bottom: .85rem;
+    display: flex; align-items: center; gap: .5rem;
+}
+.tbf__hl-label::before { content: ''; width: 14px; height: 1px; background: var(--tbf-warn-text); opacity: .5; }
+.tbf__hl-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: .4rem .85rem;
+}
+.tbf__hl-item {
+    display: flex; align-items: flex-start; gap: .5rem;
+    font-size: .81rem; line-height: 1.55; color: var(--tbf-ink-soft);
+}
+.tbf__hl-dot {
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--tbf-gold); flex-shrink: 0;
+    margin-top: .48rem; opacity: .7;
+}
+
+/* ── About strip ────────────────────────────────────────────── */
+.tbf__about {
+    background: var(--tbf-cream-2);
+    border-bottom: 1px solid var(--tbf-border);
+    padding: 1.15rem 2rem;
+}
+.tbf__about-inner {
+    max-width: 860px; margin: 0 auto;
+    font-family: var(--tbf-serif); font-size: .93rem;
+    font-style: italic; font-weight: 300;
+    line-height: 1.8; color: var(--tbf-ink-soft);
+}
+
+/* ── Wrap ───────────────────────────────────────────────────── */
+.tbf__wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2.8rem 1.5rem 6rem;
+}
+
+/* error banner */
+.tbf__err {
+    background: rgba(184,50,50,.06);
+    border: 1.5px solid rgba(184,50,50,.22);
+    color: var(--tbf-err);
+    border-radius: var(--tbf-rs);
+    padding: 1rem 1.2rem;
+    margin-bottom: 1.2rem;
+    font-size: .875rem;
+    display: flex; align-items: center; gap: .7rem; line-height: 1.5;
+}
+
+/* ── Cards ──────────────────────────────────────────────────── */
+.tbf__card {
+    background: var(--tbf-white);
+    border: 1px solid var(--tbf-border);
+    border-radius: var(--tbf-r);
+    box-shadow: var(--tbf-shadow);
+    padding: 2rem 2rem 2.2rem;
+    margin-bottom: 1.2rem;
+    position: relative; overflow: hidden;
+    transition: box-shadow .25s var(--tbf-ease);
+}
+.tbf__card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(to right, var(--tbf-gold), var(--tbf-gold-lt) 55%, transparent);
+    opacity: 0; transition: opacity .25s;
+}
+.tbf__card:focus-within { box-shadow: var(--tbf-shadow-h); }
+.tbf__card:focus-within::before { opacity: 1; }
+
+/* section header */
+.tbf__sh { display: flex; align-items: center; gap: .75rem; margin-bottom: 1.6rem; }
+.tbf__sn {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--tbf-ink); color: #fff;
+    font-size: .68rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.tbf__sh h2 {
+    font-family: var(--tbf-serif);
+    font-size: 1.12rem; font-weight: 500;
+    color: var(--tbf-ink); margin: 0; letter-spacing: -.01em;
+}
+
+/* grid */
+.tbf__g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.tbf__s2 { grid-column: span 2; }
+
+/* ── Fields ─────────────────────────────────────────────────── */
+.tbf__f { display: flex; flex-direction: column; position: relative; }
+.tbf__f label {
+    font-size: .62rem; font-weight: 600; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--tbf-ink-2); margin-bottom: .5rem;
+}
+.tbf__req { color: var(--tbf-gold); margin-left: 2px; }
+.tbf__f input,
+.tbf__f select,
+.tbf__f textarea {
+    width: 100%; padding: .82rem 1rem;
+    border: 1.5px solid var(--tbf-border);
+    border-radius: var(--tbf-rs);
+    font-family: var(--tbf-sans); font-size: .9rem; font-weight: 300;
+    color: var(--tbf-ink); background: var(--tbf-cream);
+    outline: none; -webkit-appearance: none; appearance: none;
+    transition: border-color .2s, background .2s, box-shadow .2s;
+    box-sizing: border-box; line-height: 1.5;
+}
+.tbf__f input::placeholder,
+.tbf__f textarea::placeholder { color: var(--tbf-ink-muted); font-weight: 300; }
+.tbf__f input:hover, .tbf__f select:hover, .tbf__f textarea:hover {
+    border-color: rgba(184,144,46,.4); background: var(--tbf-white);
+}
+.tbf__f input:focus, .tbf__f select:focus, .tbf__f textarea:focus {
+    border-color: var(--tbf-border-f); background: var(--tbf-white);
+    box-shadow: 0 0 0 3px var(--tbf-gold-ring);
+}
+.tbf__f select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23a09890' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 1rem center;
+    padding-right: 2.6rem; cursor: pointer;
+}
+.tbf__f textarea { resize: vertical; min-height: 88px; }
+
+/* ── Autocomplete ───────────────────────────────────────────── */
+.tbf__acw { position: relative; }
+.tbf__acl {
+    position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+    background: var(--tbf-white);
+    border: 1.5px solid var(--tbf-border-f);
+    border-radius: var(--tbf-rs);
+    box-shadow: 0 8px 32px rgba(26,23,20,.12);
+    z-index: 9999; max-height: 220px; overflow-y: auto; display: none;
+}
+.tbf__acl.open { display: block; }
+.tbf__aci {
+    padding: .7rem 1rem; font-size: .87rem; cursor: pointer;
+    border-bottom: 1px solid var(--tbf-border);
+    display: flex; align-items: flex-start; gap: .7rem;
+    transition: background .15s;
+}
+.tbf__aci:last-child { border-bottom: none; }
+.tbf__aci:hover, .tbf__aci.hi { background: var(--tbf-gold-bg); }
+
+/* ════════════════════════════════════════════════════════════
+   CAR SELECTOR CARDS
+════════════════════════════════════════════════════════════ */
+.tbf__cars {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: .75rem;
+    margin-top: .5rem;
+}
+.tbf__car-opt {
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+}
+.tbf__car-opt input[type="radio"] {
+    position: absolute; opacity: 0; width: 0; height: 0;
+}
+.tbf__car-label {
+    display: flex;
+    flex-direction: column;
+    border: 1.5px solid var(--tbf-border);
+    border-radius: var(--tbf-rs);
+    padding: 1rem 1rem .9rem;
+    background: var(--tbf-cream);
+    transition: border-color .2s, background .2s, box-shadow .2s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+.tbf__car-label::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--tbf-gold); opacity: 0; transition: opacity .2s;
+}
+.tbf__car-opt input:checked + .tbf__car-label {
+    border-color: var(--tbf-gold);
+    background: var(--tbf-white);
+    box-shadow: 0 0 0 3px var(--tbf-gold-ring), var(--tbf-shadow);
+}
+.tbf__car-opt input:checked + .tbf__car-label::before { opacity: 1; }
+.tbf__car-label:hover {
+    border-color: rgba(184,144,46,.45);
+    background: var(--tbf-white);
+}
+
+/* check mark badge */
+.tbf__car-check {
+    position: absolute; top: .7rem; right: .7rem;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--tbf-gold);
+    display: none; align-items: center; justify-content: center;
+}
+.tbf__car-opt input:checked ~ .tbf__car-label .tbf__car-check { display: flex; }
+
+.tbf__car-img {
+    width: 100%; aspect-ratio: 16/9;
+    object-fit: cover; border-radius: 6px;
+    margin-bottom: .75rem;
+    background: var(--tbf-cream-2);
+}
+.tbf__car-img-ph {
+    width: 100%; aspect-ratio: 16/9;
+    border-radius: 6px; margin-bottom: .75rem;
+    background: linear-gradient(135deg, var(--tbf-cream-2) 0%, var(--tbf-border) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem;
+}
+.tbf__car-name {
+    font-family: var(--tbf-serif); font-size: .98rem;
+    font-weight: 500; color: var(--tbf-ink); margin-bottom: .2rem;
+    line-height: 1.25;
+}
+.tbf__car-desc {
+    font-size: .75rem; color: var(--tbf-ink-muted);
+    line-height: 1.5; margin-bottom: .5rem;
+}
+.tbf__car-cap {
+    display: inline-flex; align-items: center; gap: .35rem;
+    font-size: .64rem; font-weight: 600; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--tbf-gold);
+}
+/* passenger warning on card */
+.tbf__car-warn {
+    display: none;
+    margin-top: .5rem;
+    font-size: .72rem;
+    color: var(--tbf-err);
+    line-height: 1.4;
+}
+.tbf__car-opt.tbf__car-overflow .tbf__car-warn { display: block; }
+.tbf__car-opt.tbf__car-overflow .tbf__car-label {
+    border-color: rgba(184,50,50,.3);
+    opacity: .7;
+}
+
+/* no cars fallback */
+.tbf__nocars {
+    padding: 1.2rem; text-align: center;
+    color: var(--tbf-ink-muted); font-size: .85rem;
+    border: 1.5px dashed var(--tbf-border); border-radius: var(--tbf-rs);
+}
+
+/* ════════════════════════════════════════════════════════════
+   ADDITIONAL STOPS
+════════════════════════════════════════════════════════════ */
+.tbf__stops { display: flex; flex-direction: column; gap: .65rem; }
+.tbf__stop-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: .5rem;
+    align-items: center;
+}
+.tbf__stop-ac { position: relative; }
+.tbf__stop-ac input {
+    width: 100%; padding: .74rem .95rem;
+    border: 1.5px solid var(--tbf-border);
+    border-radius: var(--tbf-rs);
+    font-family: var(--tbf-sans); font-size: .88rem; font-weight: 300;
+    color: var(--tbf-ink); background: var(--tbf-cream);
+    outline: none; -webkit-appearance: none;
+    transition: border-color .2s, box-shadow .2s, background .2s;
+    box-sizing: border-box;
+}
+.tbf__stop-ac input:focus {
+    border-color: var(--tbf-border-f); background: var(--tbf-white);
+    box-shadow: 0 0 0 3px var(--tbf-gold-ring);
+}
+.tbf__stop-ac input:hover { border-color: rgba(184,144,46,.4); background: var(--tbf-white); }
+
+.tbf__stop-del {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1.5px solid var(--tbf-border);
+    background: var(--tbf-cream-2);
+    color: var(--tbf-ink-muted);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: border-color .2s, background .2s, color .2s;
+}
+.tbf__stop-del:hover {
+    border-color: rgba(184,50,50,.4);
+    background: rgba(184,50,50,.06);
+    color: var(--tbf-err);
+}
+.tbf__add-stop {
+    display: inline-flex; align-items: center; gap: .45rem;
+    margin-top: .2rem;
+    padding: .6rem 1.1rem;
+    background: transparent;
+    border: 1.5px dashed var(--tbf-border);
+    border-radius: var(--tbf-rs);
+    color: var(--tbf-ink-soft);
+    font-family: var(--tbf-sans); font-size: .78rem;
+    font-weight: 500; letter-spacing: .08em;
+    cursor: pointer;
+    transition: border-color .2s, color .2s, background .2s;
+    width: 100%;
+    justify-content: center;
+}
+.tbf__add-stop:hover {
+    border-color: var(--tbf-gold);
+    color: var(--tbf-gold);
+    background: var(--tbf-gold-bg);
+}
+/* autocomplete for stops */
+.tbf__stop-list {
+    position: absolute; top: calc(100% + 3px); left: 0; right: 0;
+    background: var(--tbf-white);
+    border: 1.5px solid var(--tbf-border-f);
+    border-radius: var(--tbf-rs);
+    box-shadow: 0 8px 28px rgba(26,23,20,.1);
+    z-index: 9999; max-height: 180px; overflow-y: auto; display: none;
+}
+.tbf__stop-list.open { display: block; }
+.tbf__stop-item {
+    padding: .65rem .95rem; font-size: .84rem; cursor: pointer;
+    border-bottom: 1px solid var(--tbf-border);
+    display: flex; align-items: flex-start; gap: .6rem;
+    transition: background .15s;
+}
+.tbf__stop-item:last-child { border-bottom: none; }
+.tbf__stop-item:hover, .tbf__stop-item.hi { background: var(--tbf-gold-bg); }
+
+/* ════════════════════════════════════════════════════════════
+   WHATSAPP SUBMIT BUTTON
+════════════════════════════════════════════════════════════ */
+.tbf__wa-btn {
+    width: 100%;
+    padding: 1.15rem 2rem;
+    background: #25d366;
+    color: #fff;
+    border: none; border-radius: var(--tbf-rs);
+    cursor: pointer;
+    font-family: var(--tbf-sans);
+    font-size: .82rem; font-weight: 700; letter-spacing: .16em;
+    text-transform: uppercase;
+    display: flex; align-items: center; justify-content: center;
+    gap: .7rem;
+    transition: background .22s, transform .18s, box-shadow .22s;
+    box-shadow: 0 4px 20px rgba(37,211,102,.3);
+}
+.tbf__wa-btn:hover {
+    background: #1dbe5c;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(37,211,102,.4);
+}
+.tbf__wa-btn:active { transform: translateY(0); }
+.tbf__wa-btn:disabled { opacity: .65; cursor: not-allowed; transform: none !important; }
+
+/* wa icon */
+.tbf__wa-icon {
+    width: 22px; height: 22px; flex-shrink: 0;
+}
+
+.tbf__spin {
+    width: 17px; height: 17px;
+    border: 2px solid rgba(255,255,255,.35);
+    border-top-color: #fff;
+    border-radius: 50%; display: none;
+    animation: tbf-spin .7s linear infinite;
+}
+@keyframes tbf-spin { to { transform: rotate(360deg); } }
+
+.tbf__note {
+    text-align: center; font-size: .75rem; color: var(--tbf-ink-muted);
+    margin-top: .85rem;
+    display: flex; align-items: center; justify-content: center; gap: .4rem;
+    line-height: 1.5;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 640px) {
+    .tbf__g2  { grid-template-columns: 1fr; }
+    .tbf__s2  { grid-column: span 1; }
+    .tbf__card { padding: 1.5rem 1.2rem; }
+    .tbf__wrap { padding: 2rem 1rem 5rem; }
+    .tbf__hero { padding: calc(36px + 68px + 1.8rem) 1.25rem 0; }
+    .tbf__highlights, .tbf__about { padding: 1.2rem 1.25rem; }
+    .tbf__hl-grid { grid-template-columns: 1fr; }
+    .tbf__cars { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 400px) {
+    .tbf__cars { grid-template-columns: 1fr; }
+}
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="tbf__page">
+
+<!-- ── Hero ───────────────────────────────────────────────────── -->
+<div class="tbf__hero" role="banner">
+    <div class="tbf__hero-bg" role="img" aria-label="SevenStar Limo luxury chauffeur vehicle"></div>
+    <div class="tbf__hero-rule" aria-hidden="true"></div>
+    <div class="tbf__hero-inner">
+
+        <a href="{% url 'tours' %}" class="tbf__back">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                <line x1="19" y1="12" x2="5" y2="12"/>
+                <polyline points="12 19 5 12 12 5"/>
+            </svg>
+            All Tours
+        </a>
+
+        <p class="tbf__eyebrow">SevenStar Limo &amp; Chauffeur Melbourne</p>
+        <h1><em>{{ tour.label }}</em></h1>
+        <p class="tbf__hero-sub">{{ tour.tagline }}</p>
+
+        <div class="tbf__badge">{{ tour.emoji }}&nbsp; {{ tour.label }}</div>
+
+        <div class="tbf__prog" role="list" aria-label="Inquiry steps">
+            <div class="tbf__ps tbf__ps--on" role="listitem" aria-current="step">
+                <div class="tbf__pc">1</div>
+                <div class="tbf__plbl">Details</div>
+            </div>
+            <div class="tbf__pl" aria-hidden="true"></div>
+            <div class="tbf__ps tbf__ps--off" role="listitem">
+                <div class="tbf__pc">2</div>
+                <div class="tbf__plbl">WhatsApp</div>
+            </div>
+            <div class="tbf__pl" aria-hidden="true"></div>
+            <div class="tbf__ps tbf__ps--off" role="listitem">
+                <div class="tbf__pc">3</div>
+                <div class="tbf__plbl">Confirmed</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ── Highlights strip ───────────────────────────────────────── -->
+<div class="tbf__highlights">
+    <div class="tbf__highlights-inner">
+        <p class="tbf__hl-label">What's Included</p>
+        <div class="tbf__hl-grid">
+            {% for h in tour.highlights %}
+            <div class="tbf__hl-item">
+                <span class="tbf__hl-dot" aria-hidden="true"></span>
+                <span>{{ h }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- ── About strip ────────────────────────────────────────────── -->
+<div class="tbf__about">
+    <div class="tbf__about-inner">{{ tour.about }}</div>
+</div>
+
+<!-- ── Form ───────────────────────────────────────────────────── -->
+<div class="tbf__wrap">
+
+    {% if error %}
+    <div class="tbf__err" role="alert" aria-live="assertive">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+            <circle cx="9" cy="9" r="8" stroke="#b83232" stroke-width="1.5"/>
+            <path d="M9 5v5M9 12.5v.5" stroke="#b83232" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        {{ error }}
+    </div>
+    {% endif %}
+
+    <form method="POST" id="tbfForm" novalidate aria-label="SevenStar Limo tour inquiry form">
+        {% csrf_token %}
+        <input type="hidden" name="tour_type" value="{{ tour_key }}">
+
+        <!-- ── 1: Your Details ──────────────────────────────────── -->
+        <div class="tbf__card">
+            <div class="tbf__sh">
+                <div class="tbf__sn" aria-hidden="true">1</div>
+                <h2>Your Details</h2>
+            </div>
+            <div class="tbf__g2">
+
+                <div class="tbf__f">
+                    <label for="tbf-name">Full Name <span class="tbf__req" aria-hidden="true">*</span></label>
+                    <input type="text" id="tbf-name" name="passenger_name"
+                           placeholder="e.g. James Wilson"
+                           value="{{ form_data.passenger_name|default:'' }}"
+                           autocomplete="name" aria-required="true" required>
+                </div>
+
+                <div class="tbf__f">
+                    <label for="tbf-phone">Phone Number <span class="tbf__req" aria-hidden="true">*</span></label>
+                    <input type="tel" id="tbf-phone" name="passenger_number"
+                           placeholder="+61 4XX XXX XXX"
+                           value="{{ form_data.passenger_number|default:'' }}"
+                           autocomplete="tel" aria-required="true" required>
+                </div>
+
+                <!-- EMAIL — optional -->
+                <div class="tbf__f tbf__s2">
+                    <label for="tbf-email">
+                        Email Address
+                        <small style="text-transform:none;letter-spacing:0;font-weight:300;color:var(--tbf-ink-muted);">(optional)</small>
+                    </label>
+                    <input type="email" id="tbf-email" name="passenger_email"
+                           placeholder="you@example.com.au"
+                           value="{{ form_data.passenger_email|default:'' }}"
+                           autocomplete="email">
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ── 2: Tour Details ──────────────────────────────────── -->
+        <div class="tbf__card">
+            <div class="tbf__sh">
+                <div class="tbf__sn" aria-hidden="true">2</div>
+                <h2>Tour Details</h2>
+            </div>
+            <div class="tbf__g2">
+
+                <!-- Pickup address — full width -->
+                <div class="tbf__f tbf__s2">
+                    <label for="tbfPickup">Pickup Address <span class="tbf__req" aria-hidden="true">*</span></label>
+                    <div class="tbf__acw">
+                        <input type="text" id="tbfPickup" name="pickup_address"
+                               placeholder="Start typing your hotel, home or meeting point…"
+                               value="{{ form_data.pickup_address|default:'' }}"
+                               autocomplete="off" aria-required="true"
+                               aria-autocomplete="list" aria-controls="tbfPickupList" required>
+                        <div class="tbf__acl" id="tbfPickupList" role="listbox" aria-label="Address suggestions"></div>
+                    </div>
+                </div>
+
+                <!-- Date -->
+                <div class="tbf__f">
+                    <label for="tbfDate">Tour Date <span class="tbf__req" aria-hidden="true">*</span></label>
+                    <input type="date" id="tbfDate" name="booking_date"
+                           value="{{ form_data.booking_date|default:'' }}"
+                           aria-required="true" required>
+                </div>
+
+                <!-- Passengers -->
+                <div class="tbf__f">
+                    <label for="tbfPass">Passengers <span class="tbf__req" aria-hidden="true">*</span></label>
+                    <select id="tbfPass" name="number_of_passengers" aria-required="true">
+                        <option value="1"  {% if form_data.number_of_passengers == 1  %}selected{% endif %}>1 Passenger</option>
+                        <option value="2"  {% if form_data.number_of_passengers == 2 or not form_data.number_of_passengers %}selected{% endif %}>2 Passengers</option>
+                        <option value="3"  {% if form_data.number_of_passengers == 3  %}selected{% endif %}>3 Passengers</option>
+                        <option value="4"  {% if form_data.number_of_passengers == 4  %}selected{% endif %}>4 Passengers</option>
+                        <option value="5"  {% if form_data.number_of_passengers == 5  %}selected{% endif %}>5 Passengers</option>
+                        <option value="6"  {% if form_data.number_of_passengers == 6  %}selected{% endif %}>6 Passengers</option>
+                        <option value="7"  {% if form_data.number_of_passengers == 7  %}selected{% endif %}>7 Passengers</option>
+                        <option value="8"  {% if form_data.number_of_passengers == 8  %}selected{% endif %}>8 Passengers</option>
+                        <option value="9"  {% if form_data.number_of_passengers == 9  %}selected{% endif %}>9 Passengers</option>
+                        <option value="10" {% if form_data.number_of_passengers == 10 %}selected{% endif %}>10 Passengers</option>
+                        <option value="11" {% if form_data.number_of_passengers == 11 %}selected{% endif %}>11 Passengers</option>
+                    </select>
+                </div>
+
+                <!-- Pickup time -->
+                <div class="tbf__f">
+                    <label for="tbfTime">Pickup Time <span class="tbf__req" aria-hidden="true">*</span></label>
+                    <input type="time" id="tbfTime" name="booking_time"
+                           value="{{ form_data.booking_time|default:'08:00' }}"
+                           aria-required="true" required>
+                </div>
+
+                <!-- Return time — NEW, optional -->
+                <div class="tbf__f">
+                    <label for="tbfReturnTime">
+                        Return Time
+                        <small style="text-transform:none;letter-spacing:0;font-weight:300;color:var(--tbf-ink-muted);">(optional)</small>
+                    </label>
+                    <input type="time" id="tbfReturnTime" name="return_time"
+                           value="{{ form_data.return_time|default:'' }}">
+                </div>
+
+                <!-- Special instructions -->
+                <div class="tbf__f tbf__s2">
+                    <label for="tbf-instr">Special Instructions
+                        <small style="text-transform:none;letter-spacing:0;font-weight:300;color:var(--tbf-ink-muted);">(optional)</small>
+                    </label>
+                    <textarea id="tbf-instr" name="special_instruction"
+                              placeholder="Accessibility needs, preferred stops, wine preferences…"
+                              rows="3">{{ form_data.special_instruction|default:'' }}</textarea>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ── 3: Additional Stops ─────────────────────────────── -->
+        <div class="tbf__card">
+            <div class="tbf__sh">
+                <div class="tbf__sn" aria-hidden="true">3</div>
+                <h2>Additional Stops
+                    <small style="font-family:var(--tbf-sans);font-size:.72rem;font-weight:300;color:var(--tbf-ink-muted);margin-left:.5rem;">(optional)</small>
+                </h2>
+            </div>
+            <p style="font-size:.83rem;color:var(--tbf-ink-muted);margin:0 0 1.1rem;line-height:1.65;">
+                Add any extra locations you'd like to visit during your tour — wineries, viewpoints, restaurants, or anywhere in between.
+            </p>
+
+            <div class="tbf__stops" id="tbfStopsList">
+                {% if form_data.stops %}
+                    {% for stop in form_data.stops %}
+                    <div class="tbf__stop-row" data-stop>
+                        <div class="tbf__stop-ac">
+                            <input type="text" name="stop[]"
+                                   value="{{ stop }}"
+                                   placeholder="e.g. Healesville Sanctuary, Domaine Chandon…"
+                                   autocomplete="off">
+                            <div class="tbf__stop-list" role="listbox"></div>
+                        </div>
+                        <button type="button" class="tbf__stop-del" aria-label="Remove stop">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        </button>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <button type="button" class="tbf__add-stop" id="tbfAddStop">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                    <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+                Add a Stop
+            </button>
+        </div>
+
+        <!-- ── 4: Select Your Vehicle ──────────────────────────── -->
+        <div class="tbf__card">
+            <div class="tbf__sh">
+                <div class="tbf__sn" aria-hidden="true">4</div>
+                <h2>Select Your Vehicle</h2>
+            </div>
+            <p style="font-size:.83rem;color:var(--tbf-ink-muted);margin:0 0 1.2rem;line-height:1.65;">
+                Choose the vehicle that best suits your group. Passenger capacity is strictly enforced for comfort and safety.
+            </p>
+
+            {% if cars %}
+            <div class="tbf__cars" id="tbfCarsGrid" role="radiogroup" aria-label="Vehicle selection">
+                {% for car in cars %}
+                <div class="tbf__car-opt" data-max="{{ car.max_passengers }}" data-car-id="{{ car.id }}">
+                    <input type="radio"
+                           name="selected_car"
+                           id="car_{{ car.id }}"
+                           value="{{ car.id }}"
+                           {% if form_data.selected_car == car.id|stringformat:"s" %}checked{% endif %}
+                           {% if forloop.first and not form_data.selected_car %}checked{% endif %}>
+                    <label class="tbf__car-label" for="car_{{ car.id }}">
+                        <div class="tbf__car-check" aria-hidden="true">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        {% if car.image_url %}
+                        <img class="tbf__car-img" src="{{ car.image_url }}" alt="{{ car.name }}" loading="lazy">
+                        {% else %}
+                        <div class="tbf__car-img-ph" aria-hidden="true">🚗</div>
+                        {% endif %}
+                        <div class="tbf__car-name">{{ car.name }}</div>
+                        {% if car.description %}
+                        <div class="tbf__car-desc">{{ car.description }}</div>
+                        {% endif %}
+                        <div class="tbf__car-cap">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                            Up to {{ car.max_passengers }} passenger{{ car.max_passengers|pluralize }}
+                        </div>
+                    </label>
+                    <p class="tbf__car-warn" aria-live="polite">
+                        Exceeds capacity — please select a larger vehicle.
+                    </p>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="tbf__nocars">
+                <p>No vehicles are currently configured. Our team will recommend the best option for your group.</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- ── Submit ──────────────────────────────────────────── -->
+        <button type="submit" class="tbf__wa-btn" id="tbfSubmit">
+            <!-- WhatsApp SVG -->
+            <svg class="tbf__wa-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.301A9.934 9.934 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.354-1.297l-.31-.186-3.23.845.867-3.142-.204-.325A7.96 7.96 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/>
+            </svg>
+            <span id="tbfBtnTxt">Inquire &amp; Get Quote on WhatsApp</span>
+            <div class="tbf__spin" id="tbfSpin" aria-hidden="true"></div>
+        </button>
+
+        <p class="tbf__note">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+            </svg>
+            You'll be connected directly with our team on WhatsApp to confirm your tour.
+        </p>
+
+    </form>
+</div><!-- /.tbf__wrap -->
+</div><!-- /.tbf__page -->
+{% endblock %}
+
+{% block extra_js %}
+<script>
+/* ── Globals ──────────────────────────────────────────────────── */
+var GOOGLE_MAPS_KEY = "{{ google_maps_key }}";
+var tbfGmapsLoaded  = false;
+var tbfAcService    = null;
+
+function tbfGetAcService() {
+    if (!tbfAcService && window.google && window.google.maps && window.google.maps.places) {
+        tbfAcService = new window.google.maps.places.AutocompleteService();
+    }
+    return tbfAcService;
+}
+
+/* ── Generic autocomplete setup ─────────────────────────────── */
+function tbfSetupAC(inputEl, listEl, options) {
+    options = options || {};
+    var items = [], hi = -1;
+
+    function fetchSuggestions(val) {
+        var svc = tbfGetAcService();
+        if (!svc) return;
+        svc.getPlacePredictions(
+            { input: val, componentRestrictions: { country: 'au' } },
+            function (preds, status) {
+                if (status !== window.google.maps.places.PlacesServiceStatus.OK || !preds) {
+                    listEl.classList.remove('open'); return;
+                }
+                items = preds; hi = -1;
+                listEl.innerHTML = preds.map(function (p, i) {
+                    return '<div class="tbf__aci" data-i="' + i + '">' +
+                        '<svg width="13" height="13" viewBox="0 0 14 14" fill="none">' +
+                        '<path d="M7 1C4.791 1 3 2.791 3 5c0 3 4 8 4 8s4-5 4-8c0-2.209-1.791-4-4-4z"' +
+                        ' stroke="#b8902e" stroke-width="1.2" fill="none"/>' +
+                        '<circle cx="7" cy="5" r="1.3" fill="#b8902e"/></svg>' +
+                        '<span>' + p.description + '</span></div>';
+                }).join('');
+                listEl.classList.add('open');
+            }
+        );
+    }
+
+    inputEl.addEventListener('input', function () {
+        if (inputEl.value.trim().length >= 3) fetchSuggestions(inputEl.value.trim());
+        else listEl.classList.remove('open');
+    });
+
+    listEl.addEventListener('click', function (e) {
+        var it = e.target.closest('[data-i]');
+        if (!it) return;
+        inputEl.value = items[parseInt(it.dataset.i, 10)].description;
+        listEl.classList.remove('open');
+    });
+
+    inputEl.addEventListener('keydown', function (e) {
+        var rows = listEl.querySelectorAll('[data-i]');
+        if (e.key === 'ArrowDown') { hi = Math.min(hi + 1, rows.length - 1); tbfHL(rows); e.preventDefault(); }
+        else if (e.key === 'ArrowUp') { hi = Math.max(hi - 1, -1); tbfHL(rows); e.preventDefault(); }
+        else if (e.key === 'Enter' && hi >= 0) { inputEl.value = items[hi].description; listEl.classList.remove('open'); e.preventDefault(); }
+        else if (e.key === 'Escape') { listEl.classList.remove('open'); }
+    });
+
+    document.addEventListener('click', function (e) {
+        if (!inputEl.contains(e.target) && !listEl.contains(e.target)) listEl.classList.remove('open');
+    });
+
+    function tbfHL(rows) {
+        rows.forEach(function (r, i) { r.classList.toggle('hi', i === hi); });
+    }
+}
+
+/* ── Stop autocomplete (uses stop-specific classes) ─────────── */
+function tbfSetupStopAC(inputEl, listEl) {
+    var items = [], hi = -1;
+
+    function fetchSuggestions(val) {
+        var svc = tbfGetAcService();
+        if (!svc) return;
+        svc.getPlacePredictions(
+            { input: val, componentRestrictions: { country: 'au' } },
+            function (preds, status) {
+                if (status !== window.google.maps.places.PlacesServiceStatus.OK || !preds) {
+                    listEl.classList.remove('open'); return;
+                }
+                items = preds; hi = -1;
+                listEl.innerHTML = preds.map(function (p, i) {
+                    return '<div class="tbf__stop-item" data-i="' + i + '">' +
+                        '<svg width="12" height="12" viewBox="0 0 14 14" fill="none">' +
+                        '<path d="M7 1C4.791 1 3 2.791 3 5c0 3 4 8 4 8s4-5 4-8c0-2.209-1.791-4-4-4z"' +
+                        ' stroke="#b8902e" stroke-width="1.2" fill="none"/>' +
+                        '<circle cx="7" cy="5" r="1.3" fill="#b8902e"/></svg>' +
+                        '<span>' + p.description + '</span></div>';
+                }).join('');
+                listEl.classList.add('open');
+            }
+        );
+    }
+
+    inputEl.addEventListener('input', function () {
+        if (inputEl.value.trim().length >= 3) fetchSuggestions(inputEl.value.trim());
+        else listEl.classList.remove('open');
+    });
+    listEl.addEventListener('click', function (e) {
+        var it = e.target.closest('[data-i]');
+        if (!it) return;
+        inputEl.value = items[parseInt(it.dataset.i, 10)].description;
+        listEl.classList.remove('open');
+    });
+    inputEl.addEventListener('keydown', function (e) {
+        var rows = listEl.querySelectorAll('[data-i]');
+        if (e.key === 'ArrowDown') { hi = Math.min(hi + 1, rows.length - 1); hiHL(rows); e.preventDefault(); }
+        else if (e.key === 'ArrowUp')  { hi = Math.max(hi - 1, -1); hiHL(rows); e.preventDefault(); }
+        else if (e.key === 'Enter' && hi >= 0) { inputEl.value = items[hi].description; listEl.classList.remove('open'); e.preventDefault(); }
+        else if (e.key === 'Escape')   { listEl.classList.remove('open'); }
+    });
+    document.addEventListener('click', function (e) {
+        if (!inputEl.contains(e.target) && !listEl.contains(e.target)) listEl.classList.remove('open');
+    });
+    function hiHL(rows) { rows.forEach(function (r, i) { r.classList.toggle('hi', i === hi); }); }
+}
+
+/* ── Additional stops management ────────────────────────────── */
+function tbfMakeStopRow(value) {
+    var row = document.createElement('div');
+    row.className = 'tbf__stop-row';
+    row.setAttribute('data-stop', '');
+    row.innerHTML =
+        '<div class="tbf__stop-ac">' +
+            '<input type="text" name="stop[]" placeholder="e.g. Healesville Sanctuary, Domaine Chandon…" autocomplete="off" value="' + (value || '') + '">' +
+            '<div class="tbf__stop-list" role="listbox"></div>' +
+        '</div>' +
+        '<button type="button" class="tbf__stop-del" aria-label="Remove stop">' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
+        '</button>';
+
+    var inp = row.querySelector('input');
+    var lst = row.querySelector('.tbf__stop-list');
+    if (tbfGmapsLoaded) tbfSetupStopAC(inp, lst);
+
+    row.querySelector('.tbf__stop-del').addEventListener('click', function () {
+        row.remove();
+    });
+    return row;
+}
+
+document.getElementById('tbfAddStop').addEventListener('click', function () {
+    var list = document.getElementById('tbfStopsList');
+    var row  = tbfMakeStopRow('');
+    list.appendChild(row);
+    row.querySelector('input').focus();
+});
+
+// Wire delete for pre-rendered stops
+document.querySelectorAll('[data-stop] .tbf__stop-del').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+        btn.closest('[data-stop]').remove();
+    });
+});
+
+/* ── Google Maps ready ───────────────────────────────────────── */
+window.tbfMapsReady = function () {
+    tbfGmapsLoaded = true;
+    // Pickup
+    tbfSetupAC(
+        document.getElementById('tbfPickup'),
+        document.getElementById('tbfPickupList')
+    );
+    // Any pre-rendered stops
+    document.querySelectorAll('[data-stop]').forEach(function (row) {
+        var inp = row.querySelector('input');
+        var lst = row.querySelector('.tbf__stop-list');
+        if (inp && lst) tbfSetupStopAC(inp, lst);
+    });
+};
+
+/* ── Car / passenger validation ─────────────────────────────── */
+function tbfCheckPassengerCap() {
+    var numPax = parseInt(document.getElementById('tbfPass').value, 10) || 1;
+    document.querySelectorAll('.tbf__car-opt').forEach(function (opt) {
+        var maxPax = parseInt(opt.dataset.max, 10);
+        var over   = numPax > maxPax;
+        opt.classList.toggle('tbf__car-overflow', over);
+    });
+}
+
+document.getElementById('tbfPass').addEventListener('change', tbfCheckPassengerCap);
+tbfCheckPassengerCap(); // run once on load
+
+/* Prevent selecting a car that is over capacity */
+document.querySelectorAll('.tbf__car-opt input[type="radio"]').forEach(function (radio) {
+    radio.addEventListener('change', function () {
+        var opt    = radio.closest('.tbf__car-opt');
+        var maxPax = parseInt(opt.dataset.max, 10);
+        var numPax = parseInt(document.getElementById('tbfPass').value, 10) || 1;
+        if (numPax > maxPax) {
+            radio.checked = false;
+            opt.classList.add('tbf__car-overflow');
+        }
+    });
+});
+
+/* ── Date min = today ────────────────────────────────────────── */
+(function () {
+    var d = document.getElementById('tbfDate');
+    if (d) {
+        var today = new Date().toISOString().split('T')[0];
+        d.min = today;
+        if (!d.value) d.value = today;
+    }
+}());
+
+/* ── Return time must be after pickup time ───────────────────── */
+document.getElementById('tbfTime').addEventListener('change', function () {
+    var ret = document.getElementById('tbfReturnTime');
+    if (ret) ret.min = this.value || '';
+});
+
+/* ── Form submit loading state ───────────────────────────────── */
+document.getElementById('tbfForm').addEventListener('submit', function (e) {
+    /* Validate return time is after pickup time if both are set */
+    var pickupVal = document.getElementById('tbfTime').value;
+    var returnVal = document.getElementById('tbfReturnTime').value;
+    if (pickupVal && returnVal && returnVal <= pickupVal) {
+        e.preventDefault();
+        var ret = document.getElementById('tbfReturnTime');
+        ret.focus();
+        ret.style.borderColor = 'var(--tbf-err)';
+        ret.style.boxShadow   = '0 0 0 3px rgba(184,50,50,.15)';
+        // Show inline message
+        var existing = document.getElementById('tbfReturnErr');
+        if (!existing) {
+            var msg = document.createElement('span');
+            msg.id = 'tbfReturnErr';
+            msg.style.cssText = 'font-size:.72rem;color:var(--tbf-err);margin-top:.3rem;display:block;';
+            msg.textContent = 'Return time must be after pickup time.';
+            ret.parentNode.appendChild(msg);
+        }
+        return;
+    }
+    // Clear any prior return time error
+    var retErr = document.getElementById('tbfReturnErr');
+    if (retErr) retErr.remove();
+    var retEl = document.getElementById('tbfReturnTime');
+    if (retEl) { retEl.style.borderColor = ''; retEl.style.boxShadow = ''; }
+
+    /* Validate car selection vs passenger count */
+    var numPax     = parseInt(document.getElementById('tbfPass').value, 10) || 1;
+    var checkedCar = document.querySelector('.tbf__car-opt input[type="radio"]:checked');
+    if (checkedCar) {
+        var opt    = checkedCar.closest('.tbf__car-opt');
+        var maxPax = parseInt(opt.dataset.max, 10);
+        if (numPax > maxPax) {
+            e.preventDefault();
+            opt.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
+    }
+
+    var btn  = document.getElementById('tbfSubmit');
+    var spin = document.getElementById('tbfSpin');
+    var txt  = document.getElementById('tbfBtnTxt');
+    if (btn)  btn.disabled         = true;
+    if (spin) spin.style.display   = 'block';
+    if (txt)  txt.textContent      = 'Opening WhatsApp…';
+});
+
+/* Clear return time error styling on user correction */
+document.getElementById('tbfReturnTime').addEventListener('input', function () {
+    this.style.borderColor = '';
+    this.style.boxShadow   = '';
+    var err = document.getElementById('tbfReturnErr');
+    if (err) err.remove();
+});
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_key }}&libraries=places&callback=tbfMapsReady" async defer></script>
+{% endblock %}

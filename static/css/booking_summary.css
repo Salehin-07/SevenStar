@@ -1,0 +1,303 @@
+/* ════════════════════════════════════════════════════════════════
+   SevenStar Limo & Chauffeur — booking_summary.css
+   Review / price step · all classes prefixed bs__
+   Scoped to .bs__page — zero conflict with nav__ ftr__ bf__ pr__ etc.
+════════════════════════════════════════════════════════════════ */
+
+.bs__page {
+    --bs-ink:        #1a1714;
+    --bs-ink-2:      #2e2a26;
+    --bs-ink-soft:   #4a4540;
+    --bs-ink-muted:  #a09890;
+    --bs-cream:      #faf8f3;
+    --bs-cream-2:    #f3efe6;
+    --bs-white:      #ffffff;
+    --bs-gold:       #b8902e;
+    --bs-gold-lt:    #d4aa4a;
+    --bs-gold-dk:    #9a7520;
+    --bs-gold-bg:    rgba(184,144,46,0.07);
+    --bs-gold-ring:  rgba(184,144,46,0.18);
+    --bs-border:     #e8e2d6;
+    --bs-border-2:   #f0ece4;
+    --bs-ok:         #2a6e48;
+    --bs-ok-bg:      rgba(42,110,72,0.07);
+    --bs-ok-brd:     rgba(42,110,72,0.22);
+    --bs-warn-bg:    #fffbf0;
+    --bs-warn-brd:   #e8d08a;
+    --bs-warn-text:  #7a5c00;
+    --bs-serif:      'Cormorant Garamond', Georgia, serif;
+    --bs-sans:       'Jost', system-ui, sans-serif;
+    --bs-ease:       cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --bs-r:          14px;
+    --bs-rs:         10px;
+    --bs-shadow:     0 2px 24px rgba(26,23,20,.06);
+    --bs-shadow-h:   0 8px 40px rgba(26,23,20,.12);
+
+    font-family: var(--bs-sans);
+    background: var(--bs-cream);
+    color: var(--bs-ink);
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* ════════════════════════════════════════════════════════════
+   HERO BAND
+════════════════════════════════════════════════════════════ */
+.bs__hero {
+    background: var(--bs-ink);
+    padding: calc(36px + 68px + 2.5rem) 2rem 0;
+    text-align: center;
+    position: relative; overflow: hidden;
+}
+.bs__hero-bg {
+    position: absolute; inset: 0;
+    background:
+        radial-gradient(ellipse 80% 55% at 50% 110%, rgba(184,144,46,.2) 0%, transparent 70%),
+        linear-gradient(180deg, rgba(26,23,20,.96) 0%, rgba(26,23,20,.88) 100%),
+        url("../img/hero-car.jpg") center / cover no-repeat;
+}
+.bs__hero-rule {
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 120px; height: 2px;
+    background: linear-gradient(to right, transparent, var(--bs-gold), transparent);
+}
+.bs__hero-inner { position: relative; z-index: 2; }
+
+.bs__eyebrow {
+    font-size: .6rem; font-weight: 600; letter-spacing: .3em; text-transform: uppercase;
+    color: var(--bs-gold-lt); display: inline-flex; align-items: center; gap: .65rem;
+    margin-bottom: .9rem;
+}
+.bs__eyebrow::before, .bs__eyebrow::after {
+    content: ''; width: 20px; height: 1px; background: var(--bs-gold-lt);
+}
+.bs__hero h1 {
+    font-family: var(--bs-serif); font-size: clamp(1.9rem, 5vw, 3rem);
+    font-weight: 300; color: #f8f5ef; line-height: 1.1;
+    letter-spacing: -.02em; margin: 0;
+}
+.bs__hero h1 em { font-style: italic; color: var(--bs-gold-lt); }
+.bs__hero-sub {
+    margin-top: .55rem; color: rgba(248,245,239,.45);
+    font-size: .88rem; font-weight: 300;
+}
+.bs__badge {
+    display: inline-flex; align-items: center; gap: .5rem;
+    margin-top: 1.1rem; padding: .4rem 1rem;
+    background: rgba(184,144,46,.12); border: 1px solid rgba(184,144,46,.32);
+    border-radius: 100px; color: var(--bs-gold-lt);
+    font-size: .72rem; font-weight: 600; letter-spacing: .1em;
+}
+
+/* progress tracker */
+.bs__prog {
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 1.8rem; padding-bottom: 2rem; position: relative; z-index: 2;
+}
+.bs__ps { display: flex; flex-direction: column; align-items: center; gap: .5rem; }
+.bs__pl { width: 60px; height: 1px; margin-bottom: 1.4rem; flex-shrink: 0; }
+.bs__pl--done    { background: var(--bs-gold); }
+.bs__pl--pending { background: rgba(255,255,255,.15); }
+.bs__pc {
+    width: 30px; height: 30px; border-radius: 50%;
+    font-size: .72rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+}
+.bs__ps--done   .bs__pc { border: 2px solid var(--bs-gold); background: var(--bs-gold); color: var(--bs-ink); }
+.bs__ps--active .bs__pc { border: 2px solid var(--bs-gold); color: var(--bs-gold); background: rgba(184,144,46,.12); }
+.bs__ps--idle   .bs__pc { border: 2px solid rgba(255,255,255,.2); color: rgba(255,255,255,.3); }
+.bs__plbl { font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; }
+.bs__ps--done .bs__plbl,
+.bs__ps--active .bs__plbl { color: var(--bs-gold); }
+.bs__ps--idle .bs__plbl   { color: rgba(255,255,255,.28); }
+
+/* ════════════════════════════════════════════════════════════
+   PAGE BODY
+════════════════════════════════════════════════════════════ */
+.bs__wrap {
+    max-width: 860px; margin: 0 auto;
+    padding: 2.8rem 1.5rem 6rem;
+}
+
+/* back link */
+.bs__back {
+    display: inline-flex; align-items: center; gap: .55rem;
+    color: var(--bs-ink-muted); font-size: .8rem; font-weight: 500;
+    text-decoration: none; margin-bottom: 2rem;
+    padding: .55rem 1rem; border-radius: var(--bs-rs);
+    border: 1.5px solid var(--bs-border); background: var(--bs-white);
+    transition: border-color .2s, color .2s;
+}
+.bs__back:hover { border-color: var(--bs-gold); color: var(--bs-ink); }
+
+/* two-column layout */
+.bs__cols {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+/* ── Summary cards ───────────────────────────────────────── */
+.bs__card {
+    background: var(--bs-white);
+    border: 1px solid var(--bs-border);
+    border-radius: var(--bs-r);
+    box-shadow: var(--bs-shadow);
+    padding: 1.8rem 1.8rem 1.6rem;
+    margin-bottom: 1.2rem;
+    position: relative; overflow: hidden;
+    transition: box-shadow .25s var(--bs-ease);
+    animation: bs-up .4s var(--bs-ease) both;
+}
+.bs__card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(to right, var(--bs-gold), var(--bs-gold-lt) 55%, transparent);
+    opacity: 0; transition: opacity .25s;
+}
+.bs__card:hover { box-shadow: var(--bs-shadow-h); }
+.bs__card:hover::before { opacity: 1; }
+.bs__card:nth-child(1) { animation-delay: .05s; }
+.bs__card:nth-child(2) { animation-delay: .12s; }
+
+.bs__card-title {
+    font-family: var(--bs-serif); font-size: 1.1rem; font-weight: 500;
+    color: var(--bs-ink); margin-bottom: 1.3rem; padding-bottom: .9rem;
+    border-bottom: 1px solid var(--bs-border-2);
+    display: flex; align-items: center; gap: .65rem;
+}
+
+/* detail rows */
+.bs__row {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding: .65rem 0; border-bottom: 1px solid var(--bs-border-2);
+    font-size: .875rem;
+}
+.bs__row:last-of-type { border-bottom: none; }
+.bs__lbl { color: var(--bs-ink-muted); font-weight: 300; flex-shrink: 0; margin-right: 1.2rem; }
+.bs__val { color: var(--bs-ink-2); font-weight: 400; text-align: right; }
+
+/* tags */
+.bs__tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.1rem; }
+.bs__tag {
+    padding: .28rem .8rem; border-radius: 100px;
+    font-size: .68rem; font-weight: 600;
+    display: flex; align-items: center; gap: .3rem;
+    background: var(--bs-gold-bg); color: var(--bs-gold-dk);
+    border: 1px solid rgba(184,144,46,.25);
+}
+.bs__tag--green { background: var(--bs-ok-bg);       color: var(--bs-ok);       border-color: var(--bs-ok-brd); }
+.bs__tag--blue  { background: rgba(21,101,192,.06);  color: #1565c0;            border-color: rgba(21,101,192,.2); }
+.bs__tag--toll  { background: var(--bs-warn-bg);     color: var(--bs-warn-text); border-color: var(--bs-warn-brd); }
+
+/* ── Price panel ─────────────────────────────────────────── */
+.bs__price {
+    background: var(--bs-ink);
+    border-radius: var(--bs-r);
+    padding: 2rem 1.8rem 1.8rem;
+    position: sticky; top: 100px;
+    overflow: hidden;
+    animation: bs-up .4s var(--bs-ease) .2s both;
+}
+.bs__price::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 90% 70% at 110% 110%, rgba(184,144,46,.22) 0%, transparent 65%);
+    pointer-events: none;
+}
+.bs__price-inner { position: relative; z-index: 2; }
+
+.bs__price-eyebrow {
+    font-size: .6rem; letter-spacing: .24em; text-transform: uppercase;
+    color: var(--bs-gold); font-weight: 600; margin-bottom: .5rem;
+}
+
+/* ── Final price — clean, no line items ──────────────────── */
+.bs__price-amount {
+    font-family: var(--bs-serif); font-size: 3.2rem; font-weight: 300;
+    color: #f8f5ef; line-height: 1; letter-spacing: -.02em;
+}
+.bs__price-aud {
+    font-size: 1.1rem; font-weight: 300; opacity: .5;
+    margin-right: .25rem; vertical-align: top; line-height: 2.65;
+}
+.bs__price-sub {
+    font-size: .73rem; color: rgba(248,245,239,.38);
+    margin-top: .45rem; line-height: 1.6;
+}
+
+/* 3 % surcharge pill */
+.bs__surcharge {
+    margin-top: 1rem; padding: .65rem .9rem;
+    background: rgba(184,144,46,.1); border: 1px solid rgba(184,144,46,.22);
+    border-radius: var(--bs-rs);
+    display: flex; align-items: flex-start; gap: .5rem;
+}
+.bs__surcharge-ico { color: var(--bs-gold-lt); flex-shrink: 0; margin-top: 1px; }
+.bs__surcharge-txt {
+    font-size: .7rem; color: rgba(248,245,239,.46); line-height: 1.65;
+}
+.bs__surcharge-txt strong { color: var(--bs-gold-lt); font-weight: 500; }
+
+/* toll notice */
+.bs__toll {
+    margin-top: .8rem; padding: .65rem .9rem;
+    background: rgba(255,166,0,.1); border: 1px solid rgba(255,166,0,.25);
+    border-radius: var(--bs-rs); font-size: .72rem; color: #ffb74d;
+    display: flex; align-items: center; gap: .55rem;
+}
+
+/* divider */
+.bs__divider { height: 1px; background: rgba(255,255,255,.1); margin: 1.2rem 0; }
+
+/* confirm button */
+.bs__btn {
+    width: 100%; margin-top: 1.2rem; padding: 1.05rem 1.5rem;
+    background: var(--bs-gold); color: #fff;
+    border: none; border-radius: var(--bs-rs); cursor: pointer;
+    font-family: var(--bs-sans); font-size: .78rem; font-weight: 700;
+    letter-spacing: .18em; text-transform: uppercase;
+    display: flex; align-items: center; justify-content: center; gap: .6rem;
+    transition: background .22s, transform .18s, box-shadow .22s;
+    box-shadow: 0 4px 20px rgba(184,144,46,.4);
+}
+.bs__btn:hover   { background: var(--bs-gold-dk); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(184,144,46,.5); }
+.bs__btn:active  { transform: translateY(0); }
+.bs__btn:disabled { opacity: .65; cursor: not-allowed; transform: none !important; }
+
+.bs__stripe-note {
+    margin-top: .9rem; font-size: .68rem;
+    color: rgba(248,245,239,.3); text-align: center;
+    display: flex; align-items: center; justify-content: center; gap: .4rem;
+}
+
+/* spinner */
+.bs__spin {
+    width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,.3); border-top-color: #fff;
+    border-radius: 50%; display: none;
+    animation: bs-spin .7s linear infinite;
+}
+
+/* ════════════════════════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════════════════════════ */
+@media (max-width: 720px) {
+    .bs__cols  { grid-template-columns: 1fr; }
+    .bs__price { position: static; }
+}
+@media (max-width: 480px) {
+    .bs__card, .bs__price { padding: 1.4rem 1.2rem; }
+    .bs__price-amount     { font-size: 2.6rem; }
+    .bs__wrap             { padding: 1.8rem 1rem 5rem; }
+}
+
+/* ── Animations ──────────────────────────────────────────── */
+@keyframes bs-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: none; }
+}
+@keyframes bs-spin { to { transform: rotate(360deg); } }

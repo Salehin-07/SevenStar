@@ -1,0 +1,249 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Opening WhatsApp | SevenStar Limo Melbourne{% endblock %}
+{% block meta_robots %}noindex, nofollow{% endblock %}
+
+{% block extra_css %}
+<style>
+.twa__page {
+    --twa-ink:      #1a1714;
+    --twa-cream:    #faf8f3;
+    --twa-white:    #ffffff;
+    --twa-gold:     #b8902e;
+    --twa-gold-lt:  #d4aa4a;
+    --twa-border:   #e8e2d6;
+    --twa-serif:    'Cormorant Garamond', Georgia, serif;
+    --twa-sans:     'Jost', system-ui, sans-serif;
+    --twa-green:    #25d366;
+    --twa-green-dk: #1dbe5c;
+
+    font-family: var(--twa-sans);
+    background: var(--twa-cream);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+}
+
+.twa__wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: calc(36px + 68px + 2rem) 1.5rem 4rem;
+}
+
+.twa__card {
+    background: var(--twa-white);
+    border: 1px solid var(--twa-border);
+    border-radius: 20px;
+    box-shadow: 0 4px 40px rgba(26,23,20,.09);
+    padding: 3rem 2.5rem 2.5rem;
+    max-width: 520px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+.twa__card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(to right, var(--twa-gold), var(--twa-gold-lt) 55%, transparent);
+}
+
+/* spinning logo ring */
+.twa__ring {
+    width: 88px; height: 88px;
+    border-radius: 50%;
+    border: 2px solid var(--twa-border);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.6rem;
+    position: relative;
+}
+.twa__ring::before {
+    content: '';
+    position: absolute; inset: -4px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: var(--twa-green);
+    animation: twa-spin 1.2s linear infinite;
+}
+@keyframes twa-spin { to { transform: rotate(360deg); } }
+
+.twa__ring-inner {
+    width: 68px; height: 68px; border-radius: 50%;
+    background: var(--twa-green);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 18px rgba(37,211,102,.35);
+}
+.twa__ring-inner svg { width: 34px; height: 34px; }
+
+.twa__eyebrow {
+    font-size: .58rem; font-weight: 600; letter-spacing: .28em;
+    text-transform: uppercase; color: var(--twa-gold);
+    margin-bottom: .6rem;
+}
+.twa__title {
+    font-family: var(--twa-serif);
+    font-size: 1.9rem; font-weight: 300;
+    color: var(--twa-ink); margin: 0 0 .5rem;
+    line-height: 1.15;
+}
+.twa__title em { font-style: italic; color: var(--twa-gold); }
+.twa__sub {
+    font-size: .86rem; color: #888; font-weight: 300;
+    line-height: 1.65; margin-bottom: 2rem;
+}
+
+/* reference box */
+.twa__ref {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .55rem 1.1rem;
+    background: rgba(184,144,46,.07);
+    border: 1px solid rgba(184,144,46,.22);
+    border-radius: 100px;
+    font-size: .72rem; font-weight: 700; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--twa-gold);
+    margin-bottom: 1.8rem;
+}
+
+/* summary strip */
+.twa__summary {
+    background: #faf8f3;
+    border: 1px solid var(--twa-border);
+    border-radius: 12px;
+    padding: 1.1rem 1.2rem;
+    margin-bottom: 1.8rem;
+    text-align: left;
+}
+.twa__summary-row {
+    display: flex; align-items: flex-start;
+    justify-content: space-between; gap: 1rem;
+    padding: .38rem 0;
+    border-bottom: 1px solid var(--twa-border);
+    font-size: .82rem; line-height: 1.5;
+}
+.twa__summary-row:last-child { border-bottom: none; }
+.twa__summary-lbl { color: #a09890; font-weight: 300; flex-shrink: 0; }
+.twa__summary-val { color: var(--twa-ink); font-weight: 400; text-align: right; }
+
+/* WhatsApp button */
+.twa__wa-btn {
+    display: flex; align-items: center; justify-content: center;
+    gap: .65rem;
+    width: 100%; padding: 1.1rem 1.5rem;
+    background: var(--twa-green);
+    color: #fff; border: none; border-radius: 10px;
+    cursor: pointer; text-decoration: none;
+    font-family: var(--twa-sans); font-size: .8rem; font-weight: 700;
+    letter-spacing: .16em; text-transform: uppercase;
+    transition: background .2s, transform .2s, box-shadow .2s;
+    box-shadow: 0 4px 20px rgba(37,211,102,.3);
+    margin-bottom: .9rem;
+}
+.twa__wa-btn:hover {
+    background: var(--twa-green-dk);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(37,211,102,.38);
+    color: #fff; text-decoration: none;
+}
+.twa__wa-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+.twa__back-link {
+    display: inline-block;
+    font-size: .75rem; color: #a09890;
+    text-decoration: none;
+    transition: color .2s;
+    margin-top: .3rem;
+}
+.twa__back-link:hover { color: var(--twa-gold); }
+
+@media (max-width: 480px) {
+    .twa__card { padding: 2rem 1.25rem 1.8rem; border-radius: 14px; }
+}
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="twa__page">
+<div class="twa__wrap">
+<div class="twa__card">
+
+    <div class="twa__ring">
+        <div class="twa__ring-inner">
+            <svg viewBox="0 0 24 24" fill="white" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.301A9.934 9.934 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.354-1.297l-.31-.186-3.23.845.867-3.142-.204-.325A7.96 7.96 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/>
+            </svg>
+        </div>
+    </div>
+
+    <p class="twa__eyebrow">SevenStar Limo &amp; Chauffeur</p>
+    <h1 class="twa__title">Inquiry <em>Saved!</em></h1>
+    <p class="twa__sub">
+        Your tour details have been recorded. Tap below to open WhatsApp —<br>
+        our team will confirm your booking personally.
+    </p>
+
+    <div class="twa__ref">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+        </svg>
+        Reference #{{ booking.id|stringformat:"06d" }}
+    </div>
+
+    <!-- Summary -->
+    <div class="twa__summary" aria-label="Booking summary">
+        <div class="twa__summary-row">
+            <span class="twa__summary-lbl">Tour</span>
+            <span class="twa__summary-val">{{ tour_info.label }}</span>
+        </div>
+        <div class="twa__summary-row">
+            <span class="twa__summary-lbl">Name</span>
+            <span class="twa__summary-val">{{ booking.passenger_name }}</span>
+        </div>
+        <div class="twa__summary-row">
+            <span class="twa__summary-lbl">Date</span>
+            <span class="twa__summary-val">{{ booking.booking_date }}</span>
+        </div>
+        <div class="twa__summary-row">
+            <span class="twa__summary-lbl">Pickup</span>
+            <span class="twa__summary-val">{{ booking.pickup_address }}</span>
+        </div>
+        {% if booking.selected_car %}
+        <div class="twa__summary-row">
+            <span class="twa__summary-lbl">Vehicle</span>
+            <span class="twa__summary-val">{{ booking.selected_car.name }}</span>
+        </div>
+        {% endif %}
+        <div class="twa__summary-row">
+            <span class="twa__summary-lbl">Passengers</span>
+            <span class="twa__summary-val">{{ booking.number_of_passengers }}</span>
+        </div>
+    </div>
+
+    <a href="{{ wa_url }}" class="twa__wa-btn" target="_blank" rel="noopener noreferrer"
+       aria-label="Open WhatsApp to send your tour inquiry">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.301A9.934 9.934 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.354-1.297l-.31-.186-3.23.845.867-3.142-.204-.325A7.96 7.96 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/>
+        </svg>
+        Open WhatsApp Now
+    </a>
+
+    <a href="{% url 'tours' %}" class="twa__back-link">← Back to All Tours</a>
+
+</div>
+</div>
+</div>
+
+<script>
+/* Auto-open WhatsApp after a short delay */
+window.addEventListener('load', function () {
+    setTimeout(function () {
+        window.location.href = "{{ wa_url|escapejs }}";
+    }, 1800);
+});
+</script>
+{% endblock %}

@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Blog | SevenStar Limo — Melbourne Chauffeur Insights & Luxury Travel Guides{% endblock %}
+{% block meta_description %}Explore the SevenStar Limo blog for Melbourne travel guides, luxury chauffeur tips, airport transfer advice, corporate travel insights, and everything limousine-related across Victoria.{% endblock %}
+{% block meta_keywords %}SevenStar Limo blog, Melbourne chauffeur blog, luxury travel Melbourne, limousine tips, airport transfer guide Melbourne, corporate travel Melbourne, chauffeur insights Victoria{% endblock %}
+{% block canonical_url %}https://sevenstarlimo.com.au/blog/{% endblock %}
+{% block og_title %}Blog | SevenStar Limo — Luxury Travel & Chauffeur Insights Melbourne{% endblock %}
+{% block og_description %}Melbourne travel guides, chauffeur tips, airport transfer advice and luxury limousine insights from the SevenStar Limo team.{% endblock %}
+{% block og_image %}https://sevenstarlimo.com.au/static/img/logo.png{% endblock %}
+{% block twitter_title %}Blog | SevenStar Limo Melbourne{% endblock %}
+{% block twitter_description %}Luxury travel guides and chauffeur insights from Melbourne's premier limousine service.{% endblock %}
+
+{% block extra_schema %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "SevenStar Limo Blog",
+    "description": "Melbourne travel guides, chauffeur tips and luxury limousine insights.",
+    "url": "https://sevenstarlimo.com.au/blog/",
+    "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://sevenstarlimo.com.au/"},
+            {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://sevenstarlimo.com.au/blog/"}
+        ]
+    }
+}
+</script>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+{% endblock %}
+
+{% block body %}
+<div data-page="blog">
+
+    <!-- ════════════════════════════════
+         HERO
+    ════════════════════════════════ -->
+    <section class="bl__hero" aria-label="SevenStar Limo Blog">
+        <div class="bl__hero-bg" role="img" aria-label="Luxury chauffeur driving through Melbourne"></div>
+        <div class="bl__hero-accent-h" aria-hidden="true"></div>
+        <div class="bl__hero-accent-v" aria-hidden="true"></div>
+        <div class="bl__hero-inner">
+            <p class="bl__hero-kicker">SevenStar Limo Journal</p>
+            <h1 class="bl__hero-title">Luxury Travel <em>&amp; Chauffeur</em><br>Insights</h1>
+            <p class="bl__hero-desc">Expert guides, Melbourne travel tips, airport transfer advice and everything you need to know about travelling in style across Victoria.</p>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════
+         CATEGORY FILTER
+    ════════════════════════════════ -->
+    <nav class="bl__filter" aria-label="Blog categories">
+        <div class="bl__filter-inner">
+            <a href="{% url 'blog:blog_list' %}" class="bl__filter-chip {% if not selected_category %}bl__filter-chip--active{% endif %}">All Posts</a>
+            {% for cat in categories %}
+            <a href="{% url 'blog:blog_list' %}?category={{ cat.slug }}" class="bl__filter-chip {% if selected_category == cat.slug %}bl__filter-chip--active{% endif %}">{{ cat.name }}</a>
+            {% endfor %}
+        </div>
+    </nav>
+
+    <!-- ════════════════════════════════
+         BLOG GRID
+    ════════════════════════════════ -->
+    <section class="bl__section" aria-label="Blog posts">
+        <div class="bl__wrap">
+
+            {% if page_obj|length == 0 %}
+            <div class="bl__empty">
+                <div class="bl__empty-icon" aria-hidden="true">✧</div>
+                <h2 class="bl__empty-title">No Posts Yet</h2>
+                <p class="bl__empty-text">Check back soon for new articles from the SevenStar Limo team.</p>
+            </div>
+            {% endif %}
+
+            <div class="bl__grid">
+                {% for blog in page_obj %}
+                <article class="bl__card bl__reveal" itemscope itemtype="https://schema.org/BlogPosting">
+                    <meta itemprop="datePublished" content="{{ blog.created_at|date:'c' }}">
+                    <meta itemprop="author" content="{{ blog.author.get_full_name|default:blog.author.username }}">
+
+                    <a href="{% url 'blog:blog_detail' category_slug=blog.category.slug blog_slug=blog.slug %}" class="bl__card-link" itemprop="url">
+                        {% if blog.img_url %}
+                        <div class="bl__card-thumb">
+                            <img src="{{ blog.img_url }}" alt="{{ blog.title }}" loading="lazy" width="400" height="225" itemprop="image">
+                            <span class="bl__card-tag">{{ blog.category.name }}</span>
+                        </div>
+                        {% else %}
+                        <div class="bl__card-thumb bl__card-thumb--placeholder">
+                            <div class="bl__card-placeholder-icon" aria-hidden="true">✧</div>
+                            <span class="bl__card-tag">{{ blog.category.name }}</span>
+                        </div>
+                        {% endif %}
+                        <div class="bl__card-body">
+                            <div class="bl__card-meta">
+                                <span class="bl__card-date" itemprop="datePublished">{{ blog.published_at|date:"d M Y" }}</span>
+                                <span class="bl__card-read">{{ blog.description|wordcount|divisibleby:200|yesno:"1,2" }} min read</span>
+                            </div>
+                            <h2 class="bl__card-title" itemprop="headline">{{ blog.title }}</h2>
+                            <p class="bl__card-desc" itemprop="description">{{ blog.description|truncatewords:25 }}</p>
+                            <div class="bl__card-footer">
+                                <span class="bl__card-stats">
+                                    <span aria-label="Likes">♥ {{ blog.like_count }}</span>
+                                    <span aria-label="Comments">● {{ blog.comment_count }}</span>
+                                </span>
+                                <span class="bl__card-arrow">
+                                    Read More
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+                {% endfor %}
+            </div>
+
+            <!-- ════════════════════════════════
+                 PAGINATION
+            ════════════════════════════════ -->
+            {% if page_obj.paginator.num_pages > 1 %}
+            <nav class="bl__pagination" aria-label="Blog pagination">
+                {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}" class="bl__page-link bl__page-link--prev" aria-label="Previous page">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+                    Previous
+                </a>
+                {% endif %}
+
+                <div class="bl__page-numbers">
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                        <span class="bl__page-link bl__page-link--active" aria-current="page">{{ num }}</span>
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <a href="?page={{ num }}{% if selected_category %}&category={{ selected_category }}{% endif %}" class="bl__page-link">{{ num }}</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}" class="bl__page-link bl__page-link--next" aria-label="Next page">
+                    Next
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+                {% endif %}
+            </nav>
+            {% endif %}
+
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════
+         CTA
+    ════════════════════════════════ -->
+    <section class="bl__cta" aria-labelledby="bl-cta-heading">
+        <div class="bl__cta-orb-1" aria-hidden="true"></div>
+        <div class="bl__cta-orb-2" aria-hidden="true"></div>
+        <div class="bl__cta-inner bl__reveal">
+            <p class="bl__eyebrow bl__eyebrow--light" style="justify-content:center;">Experience Luxury Travel</p>
+            <h2 class="bl__title bl__title--light" id="bl-cta-heading" style="text-align:center;">Ready to Ride with <em>SevenStar</em>?</h2>
+            <p class="bl__cta-sub">Book your Melbourne chauffeur today and experience the difference.</p>
+            <div class="bl__cta-actions">
+                <a href="{% url 'orders' %}" class="bl__btn bl__btn--gold">
+                    Book Your Transfer
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+                <a href="{% url 'contact' %}" class="bl__btn bl__btn--ghost">Get in Touch</a>
+            </div>
+        </div>
+    </section>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/blog.js' %}"></script>
+{% endblock %}

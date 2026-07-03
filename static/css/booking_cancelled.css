@@ -1,0 +1,212 @@
+/* ════════════════════════════════════════════════════════════════
+   SevenStar Limo & Chauffeur — payment_failed.css
+   Payment unsuccessful page · all classes prefixed pf__
+   Scoped to .pf__page — zero conflict with nav__ ftr__ bf__ bs__ bc__ etc.
+════════════════════════════════════════════════════════════════ */
+
+.pf__page {
+    --pf-ink:       #1a1714;
+    --pf-ink-2:     #2e2a26;
+    --pf-ink-soft:  #4a4540;
+    --pf-ink-muted: #a09890;
+    --pf-cream:     #faf8f3;
+    --pf-white:     #ffffff;
+    --pf-gold:      #b8902e;
+    --pf-gold-lt:   #d4aa4a;
+    --pf-gold-dk:   #9a7520;
+    --pf-gold-bg:   rgba(184,144,46,0.07);
+    --pf-gold-brd:  rgba(184,144,46,0.25);
+    --pf-border:    #e8e2d6;
+    --pf-border-2:  #f0ece4;
+    --pf-err:       #b83232;
+    --pf-err-bg:    rgba(184,50,50,0.06);
+    --pf-err-brd:   rgba(184,50,50,0.22);
+    --pf-serif:     'Cormorant Garamond', Georgia, serif;
+    --pf-sans:      'Jost', system-ui, sans-serif;
+    --pf-ease:      cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --pf-r:         14px;
+    --pf-rs:        10px;
+    --pf-shadow:    0 2px 24px rgba(26,23,20,.06);
+    --pf-shadow-h:  0 8px 40px rgba(26,23,20,.12);
+
+    font-family: var(--pf-sans);
+    background: var(--pf-cream);
+    color: var(--pf-ink);
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* ════════════════════════════════════════════════════════════
+   HERO BAND
+════════════════════════════════════════════════════════════ */
+.pf__hero {
+    background: var(--pf-ink);
+    padding: calc(36px + 68px + 2.5rem) 2rem 2.5rem;
+    text-align: center;
+    position: relative; overflow: hidden;
+}
+.pf__hero-bg {
+    position: absolute; inset: 0;
+    background:
+        radial-gradient(ellipse 80% 55% at 50% 110%, rgba(184,50,50,.18) 0%, transparent 70%),
+        linear-gradient(180deg, rgba(26,23,20,.96) 0%, rgba(26,23,20,.88) 100%),
+        url("../img/hero-car.jpg") center / cover no-repeat;
+}
+.pf__hero-rule {
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 120px; height: 2px;
+    background: linear-gradient(to right, transparent, var(--pf-gold), transparent);
+}
+.pf__hero-inner { position: relative; z-index: 2; }
+
+.pf__eyebrow {
+    font-size: .6rem; font-weight: 600; letter-spacing: .3em; text-transform: uppercase;
+    color: var(--pf-gold-lt); display: inline-flex; align-items: center; gap: .65rem;
+    margin-bottom: .9rem;
+}
+.pf__eyebrow::before, .pf__eyebrow::after {
+    content: ''; width: 20px; height: 1px; background: var(--pf-gold-lt);
+}
+.pf__hero h1 {
+    font-family: var(--pf-serif); font-size: clamp(1.9rem, 5vw, 3rem);
+    font-weight: 300; color: #f8f5ef; line-height: 1.1;
+    letter-spacing: -.02em; margin: 0;
+}
+.pf__hero h1 em { font-style: italic; color: #e8a0a0; }
+.pf__hero-sub {
+    margin-top: .55rem; color: rgba(248,245,239,.45);
+    font-size: .88rem; font-weight: 300;
+}
+
+/* ════════════════════════════════════════════════════════════
+   MAIN CONTENT
+════════════════════════════════════════════════════════════ */
+.pf__wrap {
+    max-width: 600px; margin: 0 auto;
+    padding: 3rem 1.5rem 6rem;
+    text-align: center;
+}
+
+/* animated fail ring */
+.pf__ring {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: var(--pf-err-bg); border: 2px solid var(--pf-err-brd);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.4rem;
+    animation: pf-pop .55s cubic-bezier(.34,1.56,.64,1) both;
+}
+
+.pf__fail-title {
+    font-family: var(--pf-serif); font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 400; color: var(--pf-ink); margin-bottom: .4rem;
+}
+.pf__fail-title em { font-style: italic; color: var(--pf-err); }
+
+.pf__fail-sub {
+    color: var(--pf-ink-muted); font-size: .88rem; line-height: 1.75;
+    margin-bottom: 2rem;
+}
+
+/* reference pill */
+.pf__ref {
+    display: inline-block;
+    background: var(--pf-ink); color: rgba(248,245,239,.45);
+    font-size: .78rem; padding: .5rem 1.1rem;
+    border-radius: 100px; margin-bottom: 2.2rem;
+}
+.pf__ref strong {
+    color: var(--pf-gold-lt);
+    font-family: var(--pf-serif); font-size: .95rem; font-weight: 400;
+}
+
+/* journey card */
+.pf__card {
+    background: var(--pf-white);
+    border: 1px solid var(--pf-border);
+    border-radius: var(--pf-r);
+    box-shadow: var(--pf-shadow);
+    padding: 1.8rem 1.8rem 1.6rem;
+    margin-bottom: 1.2rem; text-align: left;
+    position: relative; overflow: hidden;
+    transition: box-shadow .25s var(--pf-ease);
+    animation: pf-up .4s var(--pf-ease) .1s both;
+}
+.pf__card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(to right, var(--pf-err), rgba(184,50,50,.3) 55%, transparent);
+}
+.pf__card:hover { box-shadow: var(--pf-shadow-h); }
+
+.pf__card-title {
+    font-family: var(--pf-serif); font-size: 1.1rem; font-weight: 500;
+    color: var(--pf-ink); margin-bottom: 1.2rem; padding-bottom: .85rem;
+    border-bottom: 1px solid var(--pf-border-2);
+    display: flex; align-items: center; gap: .65rem;
+}
+
+.pf__row {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding: .6rem 0; border-bottom: 1px solid var(--pf-border-2);
+    font-size: .875rem;
+}
+.pf__row:last-of-type { border-bottom: none; }
+.pf__lbl { color: var(--pf-ink-muted); font-weight: 300; flex-shrink: 0; margin-right: 1.2rem; }
+.pf__val { color: var(--pf-ink-2); font-weight: 400; text-align: right; }
+.pf__val--amount { color: var(--pf-ink); font-weight: 600; }
+
+/* action buttons */
+.pf__actions {
+    display: flex; flex-direction: column; gap: .75rem;
+    margin-top: .4rem;
+}
+.pf__btn-primary {
+    display: flex; align-items: center; justify-content: center; gap: .6rem;
+    width: 100%; padding: 1.05rem 1.5rem;
+    background: var(--pf-gold); color: #fff;
+    border: none; border-radius: var(--pf-rs); cursor: pointer;
+    font-family: var(--pf-sans); font-size: .78rem; font-weight: 700;
+    letter-spacing: .18em; text-transform: uppercase;
+    text-decoration: none;
+    transition: background .22s, transform .18s, box-shadow .22s;
+    box-shadow: 0 4px 20px rgba(184,144,46,.35);
+}
+.pf__btn-primary:hover { background: var(--pf-gold-dk); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(184,144,46,.45); }
+.pf__btn-primary:active { transform: translateY(0); }
+
+.pf__btn-ghost {
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; padding: .95rem 1.5rem;
+    background: transparent; color: var(--pf-ink-soft);
+    border: 1.5px solid var(--pf-border); border-radius: var(--pf-rs);
+    font-family: var(--pf-sans); font-size: .78rem; font-weight: 500;
+    letter-spacing: .12em; text-transform: uppercase;
+    text-decoration: none;
+    transition: border-color .2s, color .2s;
+}
+.pf__btn-ghost:hover { border-color: var(--pf-gold); color: var(--pf-ink); }
+
+/* help note */
+.pf__help {
+    margin-top: 2rem; padding: 1.1rem 1.3rem;
+    background: var(--pf-gold-bg); border: 1px solid var(--pf-gold-brd);
+    border-radius: var(--pf-rs); font-size: .8rem;
+    color: var(--pf-ink-soft); text-align: left; line-height: 1.7;
+}
+.pf__help strong { display: block; font-size: .82rem; font-weight: 600; color: var(--pf-ink); margin-bottom: .3rem; }
+.pf__help a { color: var(--pf-gold); text-decoration: none; font-weight: 500; }
+.pf__help a:hover { color: var(--pf-gold-dk); text-decoration: underline; }
+
+/* ════════════════════════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+    .pf__card  { padding: 1.4rem 1.2rem; }
+    .pf__wrap  { padding: 2rem 1rem 5rem; }
+}
+
+/* ── Animations ──────────────────────────────────────────── */
+@keyframes pf-pop { from { opacity: 0; transform: scale(.5); }  to { opacity: 1; transform: scale(1); } }
+@keyframes pf-up  { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Create Blog Post | SevenStar Limo{% endblock %}
+{% block meta_robots %}noindex, nofollow{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+{% endblock %}
+
+{% block body %}
+<div data-page="blog">
+
+    <section class="bl__create">
+        <div class="bl__create-inner">
+            <a href="{% url 'blog:blog_list' %}" class="bl__create-back">← Back to Blog</a>
+            <h1 class="bl__create-title">Create a New Blog Post</h1>
+
+            {% if messages %}
+            <div class="bl__messages">
+                {% for message in messages %}
+                <p class="bl__message bl__message--{{ message.tags }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form method="POST" class="bl__create-form">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="bl__form-group">
+                    <label class="bl__form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                    <div class="bl__form-errors">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <button type="submit" class="bl__btn bl__btn--gold">Publish Post</button>
+            </form>
+        </div>
+    </section>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/blog.js' %}"></script>
+{% endblock %}

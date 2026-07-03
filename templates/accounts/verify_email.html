@@ -1,0 +1,285 @@
+{% extends "base.html" %}
+{% load static %}
+
+{# ════════════════════════════════════════════════════════════════
+   SevenStar Limo & Chauffeur — verify.html
+   Split: verify.html + static/css/verify.css + static/js/verify.js
+   Auth pages: noindex — no SEO value for OTP flows
+════════════════════════════════════════════════════════════════ #}
+
+{# ─── PRIMARY META ───────────────────────────────────────────── #}
+{% block title %}Verify Your Email | SevenStar Limo & Chauffeur Melbourne{% endblock %}
+
+{% block meta_description %}Enter your 6-digit verification code to complete your SevenStar Limo & Chauffeur Melbourne account registration. Code expires in 10 minutes.{% endblock %}
+
+{% block meta_keywords %}SevenStar Limo verify email, SevenStar Chauffeur account verification, Melbourne chauffeur account setup{% endblock %}
+
+{# OTP / verification pages must not be indexed #}
+{% block meta_robots %}noindex, nofollow{% endblock %}
+
+{# ─── CANONICAL ──────────────────────────────────────────────── #}
+{% block canonical_url %}https://sevenstarlimo.com.au/accounts/verify-email/{% endblock %}
+
+{# ─── OPEN GRAPH ─────────────────────────────────────────────── #}
+{% block og_type %}website{% endblock %}
+{% block og_title %}Verify Your Email | SevenStar Limo & Chauffeur Melbourne{% endblock %}
+{% block og_description %}Enter your 6-digit code to complete your SevenStar Limo account setup.{% endblock %}
+{% block og_url %}https://sevenstarlimo.com.au/verify-email/{% endblock %}
+
+{# ─── TWITTER / X ────────────────────────────────────────────── #}
+{% block twitter_title %}Verify Your Email | SevenStar Limo & Chauffeur Melbourne{% endblock %}
+{% block twitter_description %}Enter your 6-digit code to complete your SevenStar Limo account setup.{% endblock %}
+
+{# ─── STRUCTURED DATA ────────────────────────────────────────── #}
+{% block extra_schema %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://sevenstarlimo.com.au/"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Create Account",
+            "item": "https://sevenstarlimo.com.au/signup/"
+        },
+        {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Verify Email",
+            "item": "https://sevenstarlimo.com.au/verify-email/"
+        }
+    ]
+}
+</script>
+{% endblock %}
+
+{# ─── STYLESHEET ─────────────────────────────────────────────── #}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/verify.css' %}">
+{% endblock %}
+
+
+{# ════════════════════════════════════════════════════════════════
+   BODY
+════════════════════════════════════════════════════════════════ #}
+{% block body %}
+<div data-page="verify">
+<div class="su__page">
+
+    <!-- ════════════════════════════════
+         LEFT BRAND PANEL
+    ════════════════════════════════ -->
+    <div class="su__panel" aria-hidden="true">
+        <div class="su__panel-bg"></div>
+        <div class="su__panel-rule"></div>
+        <div class="su__panel-rule-h"></div>
+
+        <div class="su__panel-inner">
+            <p class="su__panel-eyebrow">SevenStar Limo — Account Setup</p>
+            <h2 class="su__panel-title">One Step<br><em>Away</em></h2>
+            <p class="su__panel-sub">
+                We sent a 6-digit code to your email to confirm your identity
+                before creating your SevenStar Limo account.
+            </p>
+
+            <div class="su__steps" role="list" aria-label="Account setup progress">
+                <div class="su__step su__step--done" role="listitem">
+                    <div class="su__step-num" aria-label="Step 1 complete">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="3" aria-hidden="true">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                    </div>
+                    Your details
+                </div>
+                <div class="su__step su__step--active" role="listitem" aria-current="step">
+                    <div class="su__step-num" aria-label="Step 2 current">2</div>
+                    Verify your email
+                </div>
+                <div class="su__step su__step--inactive" role="listitem">
+                    <div class="su__step-num" aria-label="Step 3 upcoming">3</div>
+                    Account ready
+                </div>
+            </div>
+
+            <div class="su__panel-login">
+                Wrong email?
+                <a href="{% url 'signup' %}" title="Go back and change your email">
+                    Go back and change it
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ════════════════════════════════
+         RIGHT — FORM
+    ════════════════════════════════ -->
+    <div class="su__right">
+        <div class="su__form-wrap">
+
+            <!-- Mobile-only top bar -->
+            <div class="su__mobile-top">
+                <a href="{% url 'signup' %}" class="su__back-link"
+                   aria-label="Back to SevenStar Limo sign up">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                        <line x1="19" y1="12" x2="5" y2="12"/>
+                        <polyline points="12 19 5 12 12 5"/>
+                    </svg>
+                    Back
+                </a>
+                <a href="{% url 'login' %}"
+                   style="font-size:.8rem;color:var(--su-gold);text-decoration:none;font-weight:500;"
+                   title="Log in to SevenStar Limo">
+                    Sign In
+                </a>
+            </div>
+
+            <div class="su__form-heading">
+                <p class="su__form-eyebrow">Step 2 of 3 — SevenStar Limo</p>
+                <h1 class="su__form-title">Verify Your <em>Email</em></h1>
+                <p class="su__form-desc">
+                    We've sent a 6-digit code to<br>
+                    <strong>{{ email }}</strong>.<br>
+                    Enter it below to complete your SevenStar Limo registration.
+                </p>
+            </div>
+
+            <div class="su__card">
+
+                {# ── Django messages ── #}
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="su__banner su__banner--{{ message.tags }} su__show"
+                         role="alert" aria-live="assertive">
+                        {% if message.tags == 'success' %}
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        {% else %}
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="8" x2="12" y2="12"/>
+                                <line x1="12" y1="16" x2="12.01" y2="16"/>
+                            </svg>
+                        {% endif %}
+                        <span>{{ message }}</span>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+
+                {# ── Email pill ── #}
+                <div style="text-align:center;">
+                    <div class="su__email-pill" aria-label="Verification code sent to {{ email }}">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                        {{ email }}
+                    </div>
+                </div>
+
+                {# ── OTP verify form ── #}
+                <form id="su-verify-form" method="POST"
+                      action="{% url 'verify_email' %}"
+                      novalidate
+                      aria-label="Enter 6-digit email verification code">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="verify">
+                    <input type="hidden" name="otp" id="su-otp-hidden">
+
+                    <div class="su__otp-group"
+                         role="group"
+                         aria-label="6-digit SevenStar Limo verification code">
+                        <input class="su__otp-digit" type="text" inputmode="numeric"
+                               maxlength="1" placeholder="·"
+                               autocomplete="one-time-code"
+                               aria-label="Digit 1 of 6"
+                               data-idx="0">
+                        <input class="su__otp-digit" type="text" inputmode="numeric"
+                               maxlength="1" placeholder="·"
+                               aria-label="Digit 2 of 6"
+                               data-idx="1">
+                        <input class="su__otp-digit" type="text" inputmode="numeric"
+                               maxlength="1" placeholder="·"
+                               aria-label="Digit 3 of 6"
+                               data-idx="2">
+                        <span class="su__otp-sep" aria-hidden="true">·</span>
+                        <input class="su__otp-digit" type="text" inputmode="numeric"
+                               maxlength="1" placeholder="·"
+                               aria-label="Digit 4 of 6"
+                               data-idx="3">
+                        <input class="su__otp-digit" type="text" inputmode="numeric"
+                               maxlength="1" placeholder="·"
+                               aria-label="Digit 5 of 6"
+                               data-idx="4">
+                        <input class="su__otp-digit" type="text" inputmode="numeric"
+                               maxlength="1" placeholder="·"
+                               aria-label="Digit 6 of 6"
+                               data-idx="5">
+                    </div>
+
+                    <div class="su__expiry" role="timer" aria-live="polite"
+                         aria-label="Verification code expiry countdown">
+                        <span class="su__expiry-dot" aria-hidden="true"></span>
+                        Code expires in <span id="su-countdown">10:00</span>
+                    </div>
+
+                    <button type="submit" class="su__submit" id="su-verify-btn"
+                            disabled
+                            aria-label="Verify email and create SevenStar Limo account">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        Verify &amp; Create Account
+                    </button>
+                </form>
+
+                {# ── Resend form — separate POST ── #}
+                <form method="POST" action="{% url 'verify_email' %}" style="margin:0;"
+                      aria-label="Resend verification code">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="resend">
+                    <div class="su__resend-row">
+                        Didn't receive it?&nbsp;
+                        <button type="submit" id="su-resend-btn"
+                                aria-label="Resend SevenStar Limo verification email">
+                            Resend code
+                        </button>
+                    </div>
+                </form>
+
+                <div class="su__divider" aria-hidden="true">or</div>
+
+                <div class="su__login-row">
+                    <a href="{% url 'signup' %}"
+                       title="Back to SevenStar Limo sign up">
+                        ← Back to sign up
+                    </a>
+                </div>
+
+            </div><!-- /su__card -->
+        </div>
+    </div>
+
+</div>
+</div><!-- /[data-page="verify"] -->
+{% endblock %}
+
+
+{# ─── DEFERRED JS ────────────────────────────────────────────── #}
+{% block extra_js %}
+<script src="{% static 'js/verify.js' %}" defer></script>
+{% endblock %}

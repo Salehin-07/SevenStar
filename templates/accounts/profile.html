@@ -1,0 +1,692 @@
+{% extends "base.html" %}
+{% load static %}
+
+{# ════════════════════════════════════════════════════════════════
+   SevenStar Limo & Chauffeur — profile.html
+   Split: profile.html + static/css/profile.css + static/js/profile.js
+   Auth pages: noindex — private account pages have no SEO value
+════════════════════════════════════════════════════════════════ #}
+
+{# ─── PRIMARY META ───────────────────────────────────────────── #}
+{% block title %}My Profile | SevenStar Limo & Chauffeur Melbourne{% endblock %}
+
+{% block meta_description %}Manage your SevenStar Limo & Chauffeur Melbourne account — update your personal details, change your password and view your account information.{% endblock %}
+
+{% block meta_keywords %}SevenStar Limo account, SevenStar Chauffeur my profile, Melbourne chauffeur account settings{% endblock %}
+
+{# Private account pages must not be indexed #}
+{% block meta_robots %}noindex, nofollow{% endblock %}
+
+{# ─── CANONICAL ──────────────────────────────────────────────── #}
+{% block canonical_url %}https://sevenstarlimo.com.au/accounts/profile/{% endblock %}
+
+{# ─── OPEN GRAPH ─────────────────────────────────────────────── #}
+{% block og_type %}website{% endblock %}
+{% block og_title %}My Profile | SevenStar Limo Pyt. Ltd, Melbourne{% endblock %}
+{% block og_description %}Manage your SevenStar Limo account — update details and change your password.{% endblock %}
+{% block og_url %}https://sevenstarlimo.com.au/profile/{% endblock %}
+
+{# ─── TWITTER / X ────────────────────────────────────────────── #}
+{% block twitter_title %}My Profile | SevenStar Limo & Chauffeur Melbourne{% endblock %}
+{% block twitter_description %}Manage your SevenStar Limo account — update details and change your password.{% endblock %}
+
+{# ─── STRUCTURED DATA ────────────────────────────────────────── #}
+{% block extra_schema %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://sevenstarlimo.com.au/"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "My Profile",
+            "item": "https://sevenstarlimo.com.au/profile/"
+        }
+    ]
+}
+</script>
+{% endblock %}
+
+{# ─── STYLESHEET ─────────────────────────────────────────────── #}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+
+{# ════════════════════════════════════════════════════════════════
+   BODY
+════════════════════════════════════════════════════════════════ #}
+{% block body %}
+<div data-page="profile">
+
+<!-- ════════════════════════════════
+     HERO BAND
+════════════════════════════════ -->
+<section class="pr__hero"
+         aria-label="SevenStar Limo account profile header">
+    <div class="pr__hero-bg" role="img"
+         aria-label="SevenStar Limo & Chauffeur Melbourne background"></div>
+    <div class="pr__hero-rule" aria-hidden="true"></div>
+
+    <div class="pr__hero-inner">
+
+        {# Initials avatar #}
+        <div class="pr__avatar" aria-hidden="true">
+            {{ user.first_name|first|upper }}{{ user.last_name|first|upper }}
+        </div>
+
+        <div class="pr__hero-text">
+            <p class="pr__hero-kicker">SevenStar Limo — My Account</p>
+            <h1 class="pr__hero-name">
+                {{ user.first_name }} <em>{{ user.last_name }}</em>
+            </h1>
+            <div class="pr__hero-meta">
+                <span class="pr__hero-meta-item">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                    {{ user.email }}
+                </span>
+                {% if user.extended_profile.phone %}
+                <span class="pr__hero-meta-item">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.61 5.61l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.27 16z"/>
+                    </svg>
+                    {{ user.extended_profile.phone }}
+                </span>
+                {% endif %}
+                <span class="pr__hero-meta-item">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <rect x="3" y="4" width="18" height="18" rx="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/>
+                        <line x1="8"  y1="2" x2="8"  y2="6"/>
+                        <line x1="3"  y1="10" x2="21" y2="10"/>
+                    </svg>
+                    Member since {{ user.date_joined|date:"F Y" }}
+                </span>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     BODY — SIDEBAR + PANELS
+════════════════════════════════ -->
+<div class="pr__body">
+
+    <!-- ── SIDEBAR NAV ──────────────────────────────────── -->
+    <aside class="pr__sidenav pr__reveal"
+           aria-label="SevenStar Limo account sections">
+        <div class="pr__sidenav-head">Account</div>
+        <ul class="pr__sidenav-list" role="list">
+
+            <li class="pr__sidenav-item">
+                <button class="pr__sidenav-btn pr__active"
+                        data-tab="details"
+                        aria-current="true"
+                        aria-controls="pr-panel-details">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    Personal Details
+                </button>
+            </li>
+
+            <li class="pr__sidenav-item">
+                <button class="pr__sidenav-btn"
+                        data-tab="password"
+                        aria-controls="pr-panel-password">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <rect x="3" y="11" width="18" height="11" rx="2"/>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                    Change Password
+                </button>
+            </li>
+
+            <li class="pr__sidenav-item">
+                <button class="pr__sidenav-btn"
+                        data-tab="account"
+                        aria-controls="pr-panel-account">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="12"/>
+                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                    </svg>
+                    Account Info
+                </button>
+            </li>
+
+            <li class="pr__sidenav-item" style="margin-top:.4rem;">
+                <form method="POST" action="{% url 'logout' %}" style="margin:0;">
+                    {% csrf_token %}
+                    <button type="submit"
+                            class="pr__sidenav-btn pr__sidenav-btn--logout"
+                            aria-label="Log out of SevenStar Limo account">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                            <polyline points="16 17 21 12 16 7"/>
+                            <line x1="21" y1="12" x2="9" y2="12"/>
+                        </svg>
+                        Log Out
+                    </button>
+                </form>
+            </li>
+
+        </ul>
+    </aside>
+
+    <!-- ── MAIN PANELS ──────────────────────────────────── -->
+    <div class="pr__main">
+
+        {# ── Django messages ── #}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="pr__banner pr__banner--{{ message.tags }} pr__show pr__reveal"
+                 role="alert" aria-live="assertive">
+                {% if message.tags == 'success' %}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                {% else %}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="12"/>
+                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                    </svg>
+                {% endif %}
+                <span>{{ message }}</span>
+            </div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- ══ PANEL 1 — Personal Details ══════════════════ -->
+        <div class="pr__panel pr__active pr__reveal"
+             id="pr-panel-details"
+             role="tabpanel"
+             aria-label="Personal details">
+            <div class="pr__card">
+                <div class="pr__card-head">
+                    <div class="pr__card-head-left">
+                        <div class="pr__card-ico" aria-hidden="true">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="pr__card-title">Personal Details</div>
+                            <div class="pr__card-sub">Update your name, email and phone number</div>
+                        </div>
+                    </div>
+                </div>
+
+                <form method="POST" action="{% url 'profile_update_details' %}"
+                      id="pr-details-form" novalidate
+                      aria-label="Update SevenStar Limo account personal details">
+                    {% csrf_token %}
+                    <div class="pr__card-body">
+
+                        {# First + Last name #}
+                        <div class="pr__row">
+                            <div class="pr__field">
+                                <label class="pr__label" for="pr-first">First Name</label>
+                                <div class="pr__input-shell">
+                                    <span class="pr__input-ico" aria-hidden="true">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                                             stroke="currentColor" stroke-width="2">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                            <circle cx="12" cy="7" r="4"/>
+                                        </svg>
+                                    </span>
+                                    <input class="pr__input" type="text" id="pr-first" name="first_name"
+                                           value="{{ user.first_name }}"
+                                           autocomplete="given-name"
+                                           aria-required="true"
+                                           aria-describedby="pr-first-err"
+                                           required>
+                                </div>
+                                <span class="pr__err" id="pr-first-err" role="alert" aria-live="polite">
+                                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <line x1="12" y1="8" x2="12" y2="12"/>
+                                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                                    </svg>
+                                    Please enter your first name.
+                                </span>
+                            </div>
+
+                            <div class="pr__field">
+                                <label class="pr__label" for="pr-last">Last Name</label>
+                                <div class="pr__input-shell">
+                                    <span class="pr__input-ico" aria-hidden="true">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                                             stroke="currentColor" stroke-width="2">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                            <circle cx="12" cy="7" r="4"/>
+                                        </svg>
+                                    </span>
+                                    <input class="pr__input" type="text" id="pr-last" name="last_name"
+                                           value="{{ user.last_name }}"
+                                           autocomplete="family-name"
+                                           aria-required="true"
+                                           aria-describedby="pr-last-err"
+                                           required>
+                                </div>
+                                <span class="pr__err" id="pr-last-err" role="alert" aria-live="polite">
+                                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <line x1="12" y1="8" x2="12" y2="12"/>
+                                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                                    </svg>
+                                    Please enter your last name.
+                                </span>
+                            </div>
+                        </div>
+
+                        {# Email #}
+                        <div class="pr__field">
+                            <label class="pr__label" for="pr-email">Email Address</label>
+                            <div class="pr__input-shell">
+                                <span class="pr__input-ico" aria-hidden="true">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2">
+                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                        <polyline points="22,6 12,13 2,6"/>
+                                    </svg>
+                                </span>
+                                <input class="pr__input" type="email" id="pr-email" name="email"
+                                       value="{{ user.email }}"
+                                       autocomplete="email"
+                                       aria-required="true"
+                                       aria-describedby="pr-email-err"
+                                       required>
+                            </div>
+                            <span class="pr__err" id="pr-email-err" role="alert" aria-live="polite">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="12" y1="8" x2="12" y2="12"/>
+                                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                                </svg>
+                                Please enter a valid email address.
+                            </span>
+                        </div>
+
+                        {# Phone #}
+                        <div class="pr__field">
+                            <label class="pr__label" for="pr-phone">Phone Number</label>
+                            <div class="pr__input-shell">
+                                <span class="pr__input-ico" aria-hidden="true">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2">
+                                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.61 5.61l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.27 16z"/>
+                                    </svg>
+                                </span>
+                                <input class="pr__input" type="tel" id="pr-phone" name="phone"
+                                       value="{{ user.extended_profile.phone }}"
+                                       autocomplete="tel"
+                                       aria-required="true"
+                                       aria-describedby="pr-phone-err"
+                                       required>
+                            </div>
+                            <span class="pr__err" id="pr-phone-err" role="alert" aria-live="polite">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="12" y1="8" x2="12" y2="12"/>
+                                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                                </svg>
+                                Please enter a valid Australian phone number.
+                            </span>
+                        </div>
+
+                    </div>
+                    <div class="pr__card-foot">
+                        <span class="pr__card-foot-note">Changes take effect immediately.</span>
+                        <button type="submit" class="pr__submit" id="pr-details-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- ══ PANEL 2 — Change Password ═══════════════════ -->
+        <div class="pr__panel" id="pr-panel-password"
+             role="tabpanel" aria-label="Change password">
+            <div class="pr__card">
+                <div class="pr__card-head">
+                    <div class="pr__card-head-left">
+                        <div class="pr__card-ico" aria-hidden="true">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="pr__card-title">Change Password</div>
+                            <div class="pr__card-sub">Choose a strong password you don't use elsewhere</div>
+                        </div>
+                    </div>
+                </div>
+
+                <form method="POST" action="{% url 'profile_update_password' %}"
+                      id="pr-pw-form" novalidate
+                      aria-label="Change SevenStar Limo account password">
+                    {% csrf_token %}
+                    <div class="pr__card-body">
+
+                        {# Current password #}
+                        <div class="pr__field">
+                            <label class="pr__label" for="pr-cur-pw">Current Password</label>
+                            <div class="pr__input-shell">
+                                <span class="pr__input-ico" aria-hidden="true">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="11" width="18" height="11" rx="2"/>
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                    </svg>
+                                </span>
+                                <input class="pr__input pr__input--pw" type="password"
+                                       id="pr-cur-pw" name="current_password"
+                                       placeholder="Your current password"
+                                       autocomplete="current-password"
+                                       aria-required="true"
+                                       aria-describedby="pr-cur-err"
+                                       required>
+                                <button type="button" class="pr__eye"
+                                        data-target="pr-cur-pw"
+                                        aria-label="Show current password">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <span class="pr__err" id="pr-cur-err" role="alert" aria-live="polite">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="12" y1="8" x2="12" y2="12"/>
+                                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                                </svg>
+                                Please enter your current password.
+                            </span>
+                        </div>
+
+                        {# New password #}
+                        <div class="pr__field">
+                            <label class="pr__label" for="pr-new-pw">New Password</label>
+                            <div class="pr__input-shell">
+                                <span class="pr__input-ico" aria-hidden="true">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="11" width="18" height="11" rx="2"/>
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                    </svg>
+                                </span>
+                                <input class="pr__input pr__input--pw" type="password"
+                                       id="pr-new-pw" name="new_password"
+                                       placeholder="Min. 8 characters"
+                                       autocomplete="new-password"
+                                       aria-required="true"
+                                       aria-describedby="pr-new-err pr-strength"
+                                       required>
+                                <button type="button" class="pr__eye"
+                                        data-target="pr-new-pw"
+                                        aria-label="Show new password">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <span class="pr__err" id="pr-new-err" role="alert" aria-live="polite">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="12" y1="8" x2="12" y2="12"/>
+                                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                                </svg>
+                                Password must be at least 8 characters.
+                            </span>
+                            <div class="pr__strength" id="pr-strength" aria-live="polite">
+                                <div class="pr__strength-bar">
+                                    <div class="pr__strength-fill" id="pr-strength-fill"></div>
+                                </div>
+                                <span class="pr__strength-lbl" id="pr-strength-lbl"></span>
+                            </div>
+                        </div>
+
+                        {# Confirm new password #}
+                        <div class="pr__field">
+                            <label class="pr__label" for="pr-conf-pw">Confirm New Password</label>
+                            <div class="pr__input-shell">
+                                <span class="pr__input-ico" aria-hidden="true">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="11" width="18" height="11" rx="2"/>
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                    </svg>
+                                </span>
+                                <input class="pr__input pr__input--pw" type="password"
+                                       id="pr-conf-pw" name="confirm_password"
+                                       placeholder="Repeat new password"
+                                       autocomplete="new-password"
+                                       aria-required="true"
+                                       aria-describedby="pr-conf-err"
+                                       required>
+                                <button type="button" class="pr__eye"
+                                        data-target="pr-conf-pw"
+                                        aria-label="Show confirm password">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <span class="pr__err" id="pr-conf-err" role="alert" aria-live="polite">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="12" y1="8" x2="12" y2="12"/>
+                                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                                </svg>
+                                Passwords do not match.
+                            </span>
+                        </div>
+
+                    </div>
+                    <div class="pr__card-foot">
+                        <span class="pr__card-foot-note">You'll stay logged in after changing your password.</span>
+                        <button type="submit" class="pr__submit" id="pr-pw-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <rect x="3" y="11" width="18" height="11" rx="2"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            Update Password
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- ══ PANEL 3 — Account Info ═══════════════════════ -->
+        <div class="pr__panel" id="pr-panel-account"
+             role="tabpanel" aria-label="Account information">
+            <div class="pr__card">
+                <div class="pr__card-head">
+                    <div class="pr__card-head-left">
+                        <div class="pr__card-ico" aria-hidden="true">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="8" x2="12" y2="12"/>
+                                <line x1="12" y1="16" x2="12.01" y2="16"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="pr__card-title">Account Info</div>
+                            <div class="pr__card-sub">Read-only SevenStar Limo account details</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pr__card-body">
+
+                    <div class="pr__info-row">
+                        <div class="pr__info-ico" aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="pr__info-lbl">Full Name</div>
+                            <div class="pr__info-val">{{ user.get_full_name }}</div>
+                        </div>
+                    </div>
+
+                    <div class="pr__info-row">
+                        <div class="pr__info-ico" aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="pr__info-lbl">Email Address</div>
+                            <div class="pr__info-val">{{ user.email }}</div>
+                        </div>
+                    </div>
+
+                    <div class="pr__info-row">
+                        <div class="pr__info-ico" aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.61 5.61l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.27 16z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="pr__info-lbl">Phone</div>
+                            <div class="pr__info-val">{{ user.extended_profile.phone|default:"—" }}</div>
+                        </div>
+                    </div>
+
+                    <div class="pr__info-row">
+                        <div class="pr__info-ico" aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                                <line x1="16" y1="2" x2="16" y2="6"/>
+                                <line x1="8"  y1="2" x2="8"  y2="6"/>
+                                <line x1="3"  y1="10" x2="21" y2="10"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="pr__info-lbl">Member Since</div>
+                            <div class="pr__info-val">{{ user.date_joined|date:"d F Y" }}</div>
+                        </div>
+                    </div>
+
+                    <div class="pr__info-row">
+                        <div class="pr__info-ico" aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="pr__info-lbl">Last Login</div>
+                            <div class="pr__info-val">{{ user.last_login|date:"d F Y, g:i A"|default:"—" }}</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            {# ── Danger zone ── #}
+            <div class="pr__danger-card">
+                <div class="pr__danger-head">
+                    <div class="pr__danger-ico" aria-hidden="true">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                            <line x1="12" y1="9" x2="12" y2="13"/>
+                            <line x1="12" y1="17" x2="12.01" y2="17"/>
+                        </svg>
+                    </div>
+                    <div class="pr__danger-title">Danger Zone</div>
+                </div>
+                <div class="pr__danger-body">
+                    Deleting your SevenStar Limo account is permanent and cannot be undone.
+                    All your booking history and personal details will be removed from our system.
+                </div>
+                <div class="pr__danger-foot">
+                    <form method="POST" action="{% url 'profile_delete' %}"
+                          id="pr-delete-form"
+                          aria-label="Permanently delete SevenStar Limo account">
+                        {% csrf_token %}
+                        <button type="submit" class="pr__btn-danger"
+                                onclick="return confirm('Are you sure you want to permanently delete your SevenStar Limo account? This cannot be undone.')">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <polyline points="3 6 5 6 21 6"/>
+                                <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                                <path d="M10 11v6"/><path d="M14 11v6"/>
+                                <path d="M9 6V4h6v2"/>
+                            </svg>
+                            Delete My Account
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div><!-- /pr__main -->
+</div><!-- /pr__body -->
+
+</div><!-- /[data-page="profile"] -->
+{% endblock %}
+
+
+{# ─── DEFERRED JS ────────────────────────────────────────────── #}
+{% block extra_js %}
+<script src="{% static 'js/profile.js' %}" defer></script>
+{% endblock %}

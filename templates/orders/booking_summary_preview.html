@@ -1,0 +1,319 @@
+{% extends "base.html" %}
+{% load static %}
+
+{# ════════════════════════════════════════════════════════════════
+   SevenStar Limo & Chauffeur — booking_summary.html
+   Split: booking_summary.html
+        + static/css/booking_summary.css
+        + static/js/booking_summary.js
+   Step 2 of 3 — review journey, see final price, proceed to Stripe
+════════════════════════════════════════════════════════════════ #}
+
+{# ─── PRIMARY META ───────────────────────────────────────────── #}
+{% block title %}Review Your Booking | SevenStar Limo Melbourne{% endblock %}
+
+{% block meta_description %}Review your SevenStar Limo & Chauffeur Melbourne booking — confirm your journey details and proceed to secure Stripe payment.{% endblock %}
+
+{# Transactional step — must not be indexed #}
+{% block meta_robots %}noindex, nofollow{% endblock %}
+
+{# ─── CANONICAL ──────────────────────────────────────────────── #}
+{% block canonical_url %}https://sevenstarlimo.com.au/book-now/{% endblock %}
+
+{# ─── OPEN GRAPH ─────────────────────────────────────────────── #}
+{% block og_type %}website{% endblock %}
+{% block og_title %}Review Your Booking | SevenStar Limo Melbourne{% endblock %}
+{% block og_description %}Confirm your journey details and proceed to secure payment with SevenStar Limo & Chauffeur Melbourne.{% endblock %}
+{% block og_url %}https://sevenstarlimo.com.au/book-now/{% endblock %}
+
+{# ─── STRUCTURED DATA ────────────────────────────────────────── #}
+{% block extra_schema %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home",           "item": "https://sevenstarlimo.com.au/" },
+        { "@type": "ListItem", "position": 2, "name": "Book a Transfer","item": "https://sevenstarlimo.com.au/book-now/" },
+        { "@type": "ListItem", "position": 3, "name": "Review Booking", "item": "https://sevenstarlimo.com.au/book-now/" }
+    ]
+}
+</script>
+{% endblock %}
+
+{# ─── STYLESHEET ─────────────────────────────────────────────── #}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/booking_summary.css' %}">
+{% endblock %}
+
+
+{# ════════════════════════════════════════════════════════════════
+   BODY
+════════════════════════════════════════════════════════════════ #}
+{% block body %}
+<div class="bs__page">
+
+
+<div class="bs__hero" role="banner">
+    <div class="bs__hero-bg" role="img"
+         aria-label="SevenStar Limo luxury chauffeur vehicle"></div>
+    <div class="bs__hero-rule" aria-hidden="true"></div>
+    <div class="bs__hero-inner">
+
+        <p class="bs__eyebrow">SevenStar Limo &amp; Chauffeur Melbourne</p>
+        <h1>Review Your <em>Booking</em></h1>
+        <p class="bs__hero-sub">Check everything below, then proceed to secure payment</p>
+
+        <div class="bs__badge">
+            {% if type_key == "fair" %}✈️ From Airport — Meet &amp; Greet
+            {% elif type_key == "tair" %}✈️ To Airport — Flight Tracked
+            {% elif type_key == "th" %}⏱️ 2 Hour Chauffeur Hire
+            {% elif type_key == "oh" %}🕐 1 Hour As Directed
+            {% else %}🗺️ Point to Point Transfer
+            {% endif %}
+        </div>
+
+        {# Step 2 active #}
+        <div class="bs__prog" role="list" aria-label="Booking progress">
+            <div class="bs__ps bs__ps--done" role="listitem">
+                <div class="bs__pc" aria-label="Step 1 complete">✓</div>
+                <div class="bs__plbl">Details</div>
+            </div>
+            <div class="bs__pl bs__pl--done" aria-hidden="true"></div>
+            <div class="bs__ps bs__ps--active" role="listitem" aria-current="step">
+                <div class="bs__pc" aria-label="Step 2 — current">2</div>
+                <div class="bs__plbl">Price</div>
+            </div>
+            <div class="bs__pl bs__pl--pending" aria-hidden="true"></div>
+            <div class="bs__ps bs__ps--idle" role="listitem">
+                <div class="bs__pc" aria-label="Step 3 — upcoming">3</div>
+                <div class="bs__plbl">Pay</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="bs__wrap">
+
+    <a href="javascript:history.back()" class="bs__back"
+       aria-label="Go back and edit your booking details">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.6"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Back &amp; Edit Details
+    </a>
+
+    <div class="bs__cols">
+
+
+        <div>
+
+            {# Journey summary #}
+            <div class="bs__card" aria-label="Journey summary">
+                <div class="bs__card-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                    </svg>
+                    Journey Summary
+                </div>
+
+                <div class="bs__row">
+                    <span class="bs__lbl">Pickup</span>
+                    <span class="bs__val">{{ form_data.pickup_address }}</span>
+                </div>
+
+                {% if form_data.additional_stop %}
+                <div class="bs__row">
+                    <span class="bs__lbl">Via</span>
+                    <span class="bs__val">{{ form_data.additional_stop }}</span>
+                </div>
+                {% endif %}
+
+                {% if form_data.show_destination %}
+                <div class="bs__row">
+                    <span class="bs__lbl">Destination</span>
+                    <span class="bs__val">{{ form_data.destination_address }}</span>
+                </div>
+                {% else %}
+                <div class="bs__row">
+                    <span class="bs__lbl">Journey</span>
+                    <span class="bs__val">
+                        {% if type_key == "th" %}Open route — 2 hours
+                        {% else %}Open route — 1 hour{% endif %}
+                    </span>
+                </div>
+                {% endif %}
+
+                <div class="bs__row">
+                    <span class="bs__lbl">Date &amp; Time</span>
+                    <span class="bs__val">{{ form_data.pickup_date }} at {{ form_data.pickup_time }}</span>
+                </div>
+
+                {% if breakdown.distance_km %}
+                <div class="bs__row">
+                    <span class="bs__lbl">Distance</span>
+                    <span class="bs__val">{{ breakdown.distance_km }} km</span>
+                </div>
+                {% endif %}
+
+                {% if form_data.flight_number %}
+                <div class="bs__row">
+                    <span class="bs__lbl">Flight</span>
+                    <span class="bs__val">{{ form_data.flight_number }}</span>
+                </div>
+                {% endif %}
+
+                <div class="bs__tags" aria-label="Booking summary tags">
+                    <span class="bs__tag">{{ form_data.limo_service_type }}</span>
+                    {% if type_key == "th"   %}<span class="bs__tag bs__tag--blue">⏱️ 2 Hour Hire</span>{% endif %}
+                    {% if type_key == "oh"   %}<span class="bs__tag bs__tag--blue">🕐 1 Hour Hire</span>{% endif %}
+                    {% if type_key == "fair" %}<span class="bs__tag bs__tag--blue">✈️ From Airport</span>{% endif %}
+                    {% if type_key == "tair" %}<span class="bs__tag bs__tag--blue">✈️ To Airport</span>{% endif %}
+                    <span class="bs__tag">{{ form_data.number_of_passengers }} pax</span>
+                    <span class="bs__tag">{{ form_data.number_of_bags }} bag{% if form_data.number_of_bags != '1' %}s{% endif %}</span>
+                    {% if form_data.baby_seat   %}<span class="bs__tag bs__tag--green">🍼 Baby seat</span>{% endif %}
+                    {% if form_data.return_ride %}<span class="bs__tag bs__tag--green">🔄 Return included</span>{% endif %}
+                    {% if has_tolls %}<span class="bs__tag bs__tag--toll">🛣️ Tolls</span>{% endif %}
+                </div>
+            </div>
+
+            {# Passenger details #}
+            <div class="bs__card" aria-label="Passenger details">
+                <div class="bs__card-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    Passenger Details
+                </div>
+
+                <div class="bs__row">
+                    <span class="bs__lbl">Name</span>
+                    <span class="bs__val">{{ form_data.passenger_name }}</span>
+                </div>
+                <div class="bs__row">
+                    <span class="bs__lbl">Phone</span>
+                    <span class="bs__val">{{ form_data.passenger_number }}</span>
+                </div>
+                <div class="bs__row">
+                    <span class="bs__lbl">Email</span>
+                    <span class="bs__val">{{ form_data.passenger_email }}</span>
+                </div>
+                {% if form_data.special_instruction %}
+                <div class="bs__row">
+                    <span class="bs__lbl">Instructions</span>
+                    <span class="bs__val">{{ form_data.special_instruction }}</span>
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+
+
+        <div>
+            <div class="bs__price" aria-label="Total price and payment">
+                <div class="bs__price-inner">
+
+                    <div class="bs__price-eyebrow">Total to Pay</div>
+
+                    {# Final price — clean single figure, no breakdown #}
+                    <div class="bs__price-amount">
+                        <span class="bs__price-aud">AUD</span>{{ final_price }}
+                    </div>
+                    <div class="bs__price-sub">
+                        All fees included. Fixed price, no surprises.
+                    </div>
+
+                    {# 3 % payment gateway surcharge notice #}
+                    <div class="bs__surcharge" role="note"
+                         aria-label="Payment processing surcharge information">
+                        <svg class="bs__surcharge-ico" width="14" height="14"
+                             viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="8" x2="12" y2="12"/>
+                            <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                        <span class="bs__surcharge-txt">
+                            A <strong>3% card processing fee</strong> is added by
+                            Stripe at checkout and shown on the payment page.
+                        </span>
+                    </div>
+
+                    {% if has_tolls and type_key != "th" and type_key != "oh" %}
+                    <div class="bs__toll" role="note">
+                        <span aria-hidden="true">🛣️</span>
+                        Flat $18.50 Melbourne toll fee included in your total.
+                    </div>
+                    {% endif %}
+
+                    <div class="bs__divider" aria-hidden="true"></div>
+
+                    {# Confirm form — all booking data forwarded as hidden inputs #}
+                    <form method="POST" id="bs-confirm-form"
+                          aria-label="Confirm SevenStar Limo booking and proceed to payment">
+                        {% csrf_token %}
+                        <input type="hidden" name="action"               value="confirm">
+                        <input type="hidden" name="service_type_key"     value="{{ form_data.service_type_key }}">
+                        <input type="hidden" name="passenger_name"       value="{{ form_data.passenger_name }}">
+                        <input type="hidden" name="passenger_number"     value="{{ form_data.passenger_number }}">
+                        <input type="hidden" name="passenger_email"      value="{{ form_data.passenger_email }}">
+                        <input type="hidden" name="number_of_passengers" value="{{ form_data.number_of_passengers }}">
+                        <input type="hidden" name="number_of_bags"       value="{{ form_data.number_of_bags }}">
+                        <input type="hidden" name="pickup_address"       value="{{ form_data.pickup_address }}">
+                        <input type="hidden" name="destination_address"  value="{{ form_data.destination_address }}">
+                        <input type="hidden" name="additional_stop"      value="{{ form_data.additional_stop }}">
+                        <input type="hidden" name="flight_number"        value="{{ form_data.flight_number }}">
+                        <input type="hidden" name="pickup_date"          value="{{ form_data.pickup_date }}">
+                        <input type="hidden" name="pickup_time"          value="{{ form_data.pickup_time }}">
+                        <input type="hidden" name="limo_service_type"    value="{{ form_data.limo_service_type }}">
+                        {% if form_data.baby_seat   %}<input type="hidden" name="baby_seat"   value="on">{% endif %}
+                        {% if form_data.return_ride %}<input type="hidden" name="return_ride" value="on">{% endif %}
+                        <input type="hidden" name="special_instruction"  value="{{ form_data.special_instruction }}">
+                        <input type="hidden" name="vehicle_colour"       value="{{ form_data.vehicle_colour }}">
+                        <input type="hidden" name="wedding_ribbon"       value="{{ form_data.wedding_ribbon }}">
+                        <input type="hidden" name="special_signboard"    value="{{ form_data.special_signboard }}">
+
+                        <button type="submit" class="bs__btn"
+                                id="bs-confirm-btn"
+                                aria-label="Confirm booking and proceed to Stripe secure payment">
+                            <svg id="bs-btn-arrow" width="16" height="16" viewBox="0 0 16 16"
+                                 fill="none" aria-hidden="true">
+                                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor"
+                                      stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span id="bs-btn-label">Proceed to Payment</span>
+                            <div class="bs__spin" id="bs-spin" aria-hidden="true"></div>
+                        </button>
+                    </form>
+
+                    <div class="bs__stripe-note">
+                        <svg width="11" height="13" viewBox="0 0 11 13" fill="none" aria-hidden="true">
+                            <rect x=".75" y="5.25" width="9.5" height="7.25" rx="1.25"
+                                  stroke="rgba(255,255,255,0.3)" stroke-width="1.1"/>
+                            <path d="M3 5V3.5a2.5 2.5 0 015 0V5"
+                                  stroke="rgba(255,255,255,0.3)" stroke-width="1.1" stroke-linecap="round"/>
+                        </svg>
+                        Redirected to Stripe's secure checkout
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div><!-- /.bs__wrap -->
+</div><!-- /.bs__page -->
+{% endblock %}
+
+
+{# ─── DEFERRED JS ────────────────────────────────────────────── #}
+{% block extra_js %}
+<script src="{% static 'js/booking_summary.js' %}" defer></script>
+{% endblock %}

@@ -1,0 +1,14 @@
+django
+django-jazzmin
+django-compressor
+django-pwa
+whitenoise
+dj-database-url
+requests
+googlemaps
+python-dotenv
+gunicorn
+psycopg2
+stripe
+django-anymail[resend]
+

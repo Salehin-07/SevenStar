@@ -1,0 +1,609 @@
+{% extends "base.html" %}
+{% load static %}
+
+{# ════════════════════════════════════════════════════════════════
+   SevenStar Limo & Chauffeur — booking_form.html
+   Step 1 of the booking flow — journey details & vehicle selection
+════════════════════════════════════════════════════════════════ #}
+
+{% block title %}
+    {% if type_key == "fair" %}Book From Airport | SevenStar Limo Melbourne
+    {% elif type_key == "tair" %}Book To Airport | SevenStar Limo Melbourne
+    {% elif type_key == "oh" %}Hourly Hire | SevenStar Limo Melbourne
+    {% else %}Book a Transfer | SevenStar Limo Melbourne
+    {% endif %}
+{% endblock %}
+
+{% block meta_description %}
+    {% if type_key == "fair" %}Book a professional chauffeur transfer from Melbourne Airport. Fixed prices, meet-and-greet, luxury vehicles — SevenStar Limo.
+    {% elif type_key == "tair" %}Book a punctual airport transfer to Melbourne Airport with SevenStar Limo. Flight tracking, fixed rates, luxury fleet.
+    {% elif type_key == "oh" %}Book an hourly chauffeur hire across Melbourne. Flexible itinerary, luxury vehicles — SevenStar Limo.
+    {% else %}Book a point-to-point chauffeur transfer anywhere in Melbourne. Instant price, luxury vehicles — SevenStar Limo.
+    {% endif %}
+{% endblock %}
+
+{% block meta_robots %}noindex, nofollow{% endblock %}
+
+{% block canonical_url %}https://sevenstarlimo.com.au/book-now/?type={{ type_key }}{% endblock %}
+
+{% block og_type %}website{% endblock %}
+{% block og_title %}Book a SevenStar Limo Transfer — Melbourne Chauffeur Service{% endblock %}
+{% block og_description %}Professional, punctual, premium chauffeur transfers across Melbourne. Instant pricing, luxury fleet, fixed rates.{% endblock %}
+{% block og_url %}https://sevenstarlimo.com.au/book-now/{% endblock %}
+
+{% block twitter_title %}Book a SevenStar Limo Transfer | Melbourne Chauffeur{% endblock %}
+{% block twitter_description %}Instant pricing, luxury fleet, fixed rates. Book your Melbourne chauffeur transfer now.{% endblock %}
+
+{% block extra_schema %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home",           "item": "https://sevenstarlimo.com.au/" },
+        { "@type": "ListItem", "position": 2, "name": "Book a Transfer","item": "https://sevenstarlimo.com.au/book-now/" }
+    ]
+}
+</script>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/booking_form.css' %}">
+{% endblock %}
+
+
+{% block body %}
+<div class="bf__page">
+
+<div class="bf__hero" role="banner">
+    <div class="bf__hero-bg" role="img" aria-label="SevenStar Limo luxury chauffeur vehicle"></div>
+    <div class="bf__hero-rule" aria-hidden="true"></div>
+    <div class="bf__hero-inner">
+
+        <p class="bf__eyebrow">SevenStar Limo &amp; Chauffeur Melbourne</p>
+
+        <h1>Book Your <em>Journey</em></h1>
+        <p class="bf__hero-sub">Professional, punctual, premium transport across Melbourne &amp; Victoria</p>
+
+        <div class="bf__badge">
+            {% if type_key == "fair" %}<div style="rotate: 150deg; padding:0; margin:0; display: inline-flex">✈</div> From Airport — Meet &amp; Greet
+            {% elif type_key == "tair" %}️<div style="rotate: 320deg; padding:0; margin:0; display: inline-flex">✈</div> To Airport — Flight Tracked
+            {% elif type_key == "oh" %}🧭 Hourly / As Directed
+            {% else %}🚕️ Point to Point Transfer
+            {% endif %}
+        </div>
+
+        {# Progress tracker — 3 steps for routed, 2 steps for hourly #}
+        {% if is_hourly %}
+        <div class="bf__prog" role="list" aria-label="Booking steps">
+            <div class="bf__ps bf__ps--on" role="listitem" aria-current="step">
+                <div class="bf__pc" aria-label="Step 1 — current">1</div>
+                <div class="bf__plbl">Details</div>
+            </div>
+            <div class="bf__pl" aria-hidden="true"></div>
+            <div class="bf__ps bf__ps--off" role="listitem">
+                <div class="bf__pc" aria-label="Step 2 — upcoming">2</div>
+                <div class="bf__plbl">WhatsApp</div>
+            </div>
+        </div>
+        {% else %}
+        <div class="bf__prog" role="list" aria-label="Booking steps">
+            <div class="bf__ps bf__ps--on" role="listitem" aria-current="step">
+                <div class="bf__pc" aria-label="Step 1 — current">1</div>
+                <div class="bf__plbl">Details</div>
+            </div>
+            <div class="bf__pl" aria-hidden="true"></div>
+            <div class="bf__ps bf__ps--off" role="listitem">
+                <div class="bf__pc" aria-label="Step 2 — upcoming">2</div>
+                <div class="bf__plbl">Price</div>
+            </div>
+            <div class="bf__pl" aria-hidden="true"></div>
+            <div class="bf__ps bf__ps--off" role="listitem">
+                <div class="bf__pc" aria-label="Step 3 — upcoming">3</div>
+                <div class="bf__plbl">Pay</div>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+
+
+<div class="bf__wrap">
+
+    {% if error %}
+    <div class="bf__err" role="alert" aria-live="assertive">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+            <circle cx="9" cy="9" r="8" stroke="#b83232" stroke-width="1.5"/>
+            <path d="M9 5v5M9 12.5v.5" stroke="#b83232" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        {{ error }}
+    </div>
+    {% endif %}
+
+    {# Hourly — WhatsApp routing notice #}
+    {% if type_key == "oh" %}
+    <div class="bf__notice bf__notice--wa" role="note">
+        <span class="bf__notice-ico" aria-hidden="true">💬</span>
+        <div>
+            <strong>Hourly / As Directed — Quote via WhatsApp</strong>
+            Fill in your details and we'll connect you directly with our team on WhatsApp to confirm pricing and availability. No payment required at this step.
+        </div>
+    </div>
+    {% endif %}
+
+    <form method="POST" id="bfForm" novalidate
+          aria-label="SevenStar Limo booking form">
+        {% csrf_token %}
+        <input type="hidden" name="action"            value="calculate">
+        <input type="hidden" name="service_type_key"  value="{{ type_key }}">
+        <input type="hidden" name="limo_service_type" id="bfVehicleInput"
+               value="{{ form_data.limo_service_type|default:'' }}">
+
+
+        {# ── Section 1: Your Details ── #}
+        <div class="bf__card">
+            <div class="bf__sh">
+                <div class="bf__sn" aria-hidden="true">1</div>
+                <h2>Your Details</h2>
+            </div>
+            <div class="bf__g2">
+
+                <div class="bf__f">
+                    <label for="bf-name">Full Name <span class="bf__req" aria-hidden="true">*</span></label>
+                    <input type="text" id="bf-name" name="passenger_name"
+                           placeholder="e.g. James Wilson"
+                           value="{{ form_data.passenger_name|default:'' }}"
+                           autocomplete="name"
+                           aria-required="true" required>
+                </div>
+
+                <div class="bf__f">
+                    <label for="bf-phone">Phone Number <span class="bf__req" aria-hidden="true">*</span></label>
+                    <input type="tel" id="bf-phone" name="passenger_number"
+                           placeholder="+61 4XX XXX XXX"
+                           value="{{ form_data.passenger_number|default:'' }}"
+                           autocomplete="tel"
+                           aria-required="true" required>
+                </div>
+
+                <div class="bf__f bf__s2">
+                    <label for="bf-email">Email Address <span class="bf__req" aria-hidden="true">*</span></label>
+                    <input type="email" id="bf-email" name="passenger_email"
+                           placeholder="you@example.com.au"
+                           value="{{ form_data.passenger_email|default:'' }}"
+                           autocomplete="email"
+                           aria-required="true" required>
+                </div>
+
+            </div>
+        </div>
+
+
+        {# ── Section 2: Journey Details ── #}
+        <div class="bf__card">
+            <div class="bf__sh">
+                <div class="bf__sn" aria-hidden="true">2</div>
+                <h2>Journey Details</h2>
+            </div>
+            <div class="bf__g2">
+
+                {# Pickup address #}
+                <div class="bf__f bf__s2">
+                    <label for="bf-pickup">Pickup Address <span class="bf__req" aria-hidden="true">*</span></label>
+                    {% if form_data.lock_pickup %}
+                        <div style="position:relative;">
+                            <input type="text" id="bf-pickup" name="pickup_address"
+                                   value="{{ form_data.pickup_address }}"
+                                   class="bf__locked" readonly
+                                   aria-readonly="true">
+                            <div class="bf__lockbadge" aria-hidden="true">🔒 Pre-filled</div>
+                        </div>
+                    {% else %}
+                        <div class="bf__acw">
+                            <input type="text" id="bfPickup" name="pickup_address"
+                                   placeholder="Start typing an address…"
+                                   value="{{ form_data.pickup_address|default:'' }}"
+                                   autocomplete="off"
+                                   aria-required="true"
+                                   aria-label="Pickup address"
+                                   aria-autocomplete="list"
+                                   aria-controls="bfPickupList"
+                                   required>
+                            <div class="bf__acl" id="bfPickupList"
+                                 role="listbox" aria-label="Pickup address suggestions"></div>
+                        </div>
+                    {% endif %}
+                </div>
+
+                {# Destination — hidden for hourly #}
+                {% if not is_hourly %}
+                <div class="bf__f bf__s2">
+                    <label for="bf-dest">Destination Address <span class="bf__req" aria-hidden="true">*</span></label>
+                    {% if form_data.lock_destination %}
+                        <div style="position:relative;">
+                            <input type="text" id="bf-dest" name="destination_address"
+                                   value="{{ form_data.destination_address }}"
+                                   class="bf__locked" readonly
+                                   aria-readonly="true">
+                            <div class="bf__lockbadge" aria-hidden="true">🔒 Pre-filled</div>
+                        </div>
+                    {% else %}
+                        <div class="bf__acw">
+                            <input type="text" id="bfDest" name="destination_address"
+                                   placeholder="Where are you headed?"
+                                   value="{{ form_data.destination_address|default:'' }}"
+                                   autocomplete="off"
+                                   aria-required="true"
+                                   aria-label="Destination address"
+                                   aria-autocomplete="list"
+                                   aria-controls="bfDestList"
+                                   required>
+                            <div class="bf__acl" id="bfDestList"
+                                 role="listbox" aria-label="Destination address suggestions"></div>
+                        </div>
+                    {% endif %}
+                </div>
+
+                {# Extra stop #}
+                <div class="bf__f bf__s2">
+                    <label for="bfStop">
+                        Additional Stop
+                        <small style="text-transform:none;letter-spacing:0;font-weight:300;color:var(--bf-ink-muted);">(optional)</small>
+                    </label>
+                    <div class="bf__acw">
+                        <input type="text" id="bfStop" name="additional_stop"
+                               placeholder="Add an intermediate stop"
+                               value="{{ form_data.additional_stop|default:'' }}"
+                               autocomplete="off"
+                               aria-label="Optional additional stop"
+                               aria-autocomplete="list"
+                               aria-controls="bfStopList">
+                        <div class="bf__acl" id="bfStopList"
+                             role="listbox" aria-label="Additional stop suggestions"></div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {# Date & time #}
+                <div class="bf__f">
+                    <label for="bfDate">Pickup Date <span class="bf__req" aria-hidden="true">*</span></label>
+                    <input type="date" id="bfDate" name="pickup_date"
+                           value="{{ form_data.pickup_date|default:'' }}"
+                           aria-required="true" required>
+                </div>
+
+                <div class="bf__f">
+                    <label for="bf-time">Pickup Time <span class="bf__req" aria-hidden="true">*</span></label>
+                    <input type="time" id="bf-time" name="pickup_time"
+                           value="{{ form_data.pickup_time|default:'' }}"
+                           aria-required="true" required>
+                </div>
+
+                {# Hours field — hourly only #}
+                {% if is_hourly %}
+                <div class="bf__f bf__s2">
+                    <label for="bf-hours">How Many Hours? <span class="bf__req" aria-hidden="true">*</span></label>
+                    <select id="bf-hours" name="hourly_hours" aria-required="true" required>
+                        <option value="">Select duration…</option>
+                        <option value="1 hour"{% if form_data.hourly_hours == "1 hour" %} selected{% endif %}>1 Hour</option>
+                        <option value="2 hours"{% if form_data.hourly_hours == "2 hours" %} selected{% endif %}>2 Hours</option>
+                        <option value="3 hours"{% if form_data.hourly_hours == "3 hours" %} selected{% endif %}>3 Hours</option>
+                        <option value="4 hours"{% if form_data.hourly_hours == "4 hours" %} selected{% endif %}>4 Hours</option>
+                        <option value="5 hours"{% if form_data.hourly_hours == "5 hours" %} selected{% endif %}>5 Hours</option>
+                        <option value="6 hours"{% if form_data.hourly_hours == "6 hours" %} selected{% endif %}>6 Hours</option>
+                        <option value="7 hours"{% if form_data.hourly_hours == "7 hours" %} selected{% endif %}>7 Hours</option>
+                        <option value="8 hours"{% if form_data.hourly_hours == "8 hours" %} selected{% endif %}>8 Hours</option>
+                        <option value="8+ hours"{% if form_data.hourly_hours == "8+ hours" %} selected{% endif %}>8+ Hours (custom)</option>
+                    </select>
+                </div>
+                {% endif %}
+
+                {# Flight number (airport transfers only) #}
+                {% if type_key == "fair" or type_key == "tair" %}
+                <div class="bf__f">
+                    <label for="bf-flight">Flight Number <span class="bf__req" aria-hidden="true">*</span></label>
+                    <input type="text" id="bf-flight" name="flight_number"
+                           placeholder="e.g. QF407"
+                           value="{{ form_data.flight_number|default:'' }}"
+                           aria-required="true" required>
+                </div>
+                <div class="bf__f">
+                {% else %}
+                <div class="bf__f bf__s2">
+                {% endif %}
+                    <label for="bf-instr">Special Instructions</label>
+                    <input type="text" id="bf-instr" name="special_instruction"
+                           placeholder="Any notes for your SevenStar Limo driver…"
+                           value="{{ form_data.special_instruction|default:'' }}">
+                </div>
+
+            </div>
+        </div>
+
+
+        {# ── Section 3: Vehicle & Passengers ── #}
+        <div class="bf__card">
+            <div class="bf__sh">
+                <div class="bf__sn" aria-hidden="true">3</div>
+                <h2>Vehicle &amp; Passengers</h2>
+            </div>
+
+            <div class="bf__vg" id="bfVehicleGroup"
+                 style="grid-template-columns:repeat({{ rates|length }},1fr)"
+                 role="radiogroup"
+                 aria-label="Select a SevenStar Limo vehicle">
+                {% for r in rates %}
+                <div class="bf__vc{% if form_data.limo_service_type == r.name %} sel{% elif forloop.first and not form_data.limo_service_type %} sel{% endif %}"
+                     data-name="{{ r.name }}"
+                     data-maxp="{{ r.max_passengers }}"
+                     data-maxb="{{ r.max_bags }}"
+                     data-ohrate="{{ r.oh_rate }}"
+                     data-base="{{ r.base_price }}"
+                     data-perkm="{{ r.per_km }}"
+                     onclick="bfPick(this)"
+                     role="radio"
+                     aria-checked="{% if form_data.limo_service_type == r.name %}true{% elif forloop.first and not form_data.limo_service_type %}true{% else %}false{% endif %}"
+                     tabindex="0"
+                     aria-label="{{ r.name }} — up to {{ r.max_passengers }} passengers, {{ r.max_bags }} bags">
+                    <input type="radio" name="_vr" value="{{ r.name }}"
+                           {% if form_data.limo_service_type == r.name %}checked
+                           {% elif forloop.first and not form_data.limo_service_type %}checked{% endif %}>
+                    <div class="bf__vchk" aria-hidden="true">
+                        <svg viewBox="0 0 10 8" fill="none" width="10" height="8">
+                            <path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <span class="bf__vi" aria-hidden="true">
+                        {% if r.img_url %}
+                            <img src="{{ r.img_url }}" alt="{{ r.name }}" class="bf__vimg">
+                        {% else %}
+                            {% if forloop.first %}🚗{% elif forloop.counter == 2 %}🚙{% elif forloop.counter == 3 %}🚐{% else %}🚌{% endif %}
+                        {% endif %}
+                    </span>
+                    <div class="bf__vname">{{ r.name }}</div>
+                    <div class="bf__vmeta">Up to {{ r.max_passengers }} passengers &nbsp;·&nbsp; {{ r.max_bags }} bags</div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="bf__upn" id="bfUpNote" role="alert" aria-live="polite">
+                <span aria-hidden="true">⚠️</span>
+                <span id="bfUpText"></span>
+            </div>
+
+            <div class="bf__g2" style="margin-top:1.4rem;">
+                <div class="bf__f">
+                    <label for="bfPassSel">Passengers <span class="bf__req" aria-hidden="true">*</span></label>
+                    <select id="bfPassSel" name="number_of_passengers"
+                            onchange="bfPassChange()" aria-required="true">
+                    </select>
+                </div>
+                <div class="bf__f">
+                    <label for="bfBagSel">Bags / Luggage <span class="bf__req" aria-hidden="true">*</span></label>
+                    <select id="bfBagSel" name="number_of_bags"
+                            onchange="bfBagChange()" aria-required="true">
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        {# ── Section 4: Add-ons & Extras ── #}
+        <div class="bf__card">
+            <div class="bf__sh">
+                <div class="bf__sn" aria-hidden="true">4</div>
+                <h2>Add-ons &amp; Extras</h2>
+            </div>
+            <div class="bf__tg" role="group" aria-label="Optional add-ons">
+
+                {# ── Baby / Child seat toggle ──────────────────────────────────── #}
+                <div class="bf__ti{% if form_data.baby_seat %} on{% endif %}"
+                     id="bfBabySeatToggle"
+                     onclick="bfToggle('bfBabySeatToggle','bfBabySeatCb')"
+                     role="checkbox"
+                     aria-checked="{% if form_data.baby_seat %}true{% else %}false{% endif %}"
+                     tabindex="0"
+                     aria-label="Baby / child safety seat{% if not is_hourly %} — $15.00 per seat{% endif %}"
+                     onkeydown="if(event.key==='Enter'||event.key===' '){bfToggle('bfBabySeatToggle','bfBabySeatCb');event.preventDefault();}">
+                    <div class="bf__tileft">
+                        <span class="bf__ticon" aria-hidden="true">
+                            💺
+                        </span>
+                        <div class="bf__ttxt">
+                            <strong>Baby / Child Seat</strong>
+                            <span>Approved safety seat for children up to 10 years{% if not is_hourly %} — +$15.00 per seat{% endif %}</span>
+                        </div>
+                    </div>
+                    <div class="bf__tsw" aria-hidden="true"><div class="bf__tth"></div></div>
+                    <input type="checkbox" name="baby_seat" id="bfBabySeatCb"
+                           {% if form_data.baby_seat %}checked{% endif %}>
+                </div>
+
+                {# ── Child seat fields — shown/hidden by JS ───────────── #}
+                <div class="bf__baby-fields" id="bfChildFields"
+                     style="{% if not form_data.baby_seat %}display:none;{% endif %}">
+
+                    {# Number of Seats selector #}
+                    <div class="bf__f" style="margin-bottom:1rem;">
+                        <label for="bfNumSeats">Number of Seats <span class="bf__req" aria-hidden="true">*</span></label>
+                        <select id="bfNumSeats" name="number_of_babies"
+                                aria-required="true"
+                                onchange="bfUpdateChildAgeFields(this.value)">
+                            <option value="0">Select number of seats…</option>
+                            <option value="1"{% if form_data.number_of_babies == 1 %} selected{% endif %}>1 Seat</option>
+                            <option value="2"{% if form_data.number_of_babies == 2 %} selected{% endif %}>2 Seats</option>
+                            <option value="3"{% if form_data.number_of_babies == 3 %} selected{% endif %}>3 Seats</option>
+                            <option value="4"{% if form_data.number_of_babies == 4 %} selected{% endif %}>4 Seats</option>
+                        </select>
+                        <span class="bf__help">
+                            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                                <circle cx="6" cy="6" r="5" stroke="#a09890" stroke-width="1.2"/>
+                                <path d="M6 5v3M6 3.5v.5" stroke="#a09890" stroke-width="1.2" stroke-linecap="round"/>
+                            </svg>
+                            {% if not is_hourly %}$15.00 per seat — {% endif %}up to 4 seats available
+                        </span>
+                    </div>
+
+                    {# Dynamic per-child age fields — rendered by JS, seeded here for POST errors #}
+                    <div id="bfChildAgeFields">
+                        {# JS will populate this; pre-populate on POST error if ages exist #}
+                        {% if form_data.baby_ages_list %}
+                            {% for age in form_data.baby_ages_list %}
+                            <div class="bf__child-age-row bf__g2" data-child="{{ forloop.counter }}"
+                                 style="margin-bottom:.75rem;align-items:end;">
+                                <div class="bf__f bf__s2">
+                                    <label for="bfChildAge{{ forloop.counter }}">
+                                        Age of Child {{ forloop.counter }}
+                                        <small style="text-transform:none;letter-spacing:0;font-weight:300;color:var(--bf-ink-muted);">(optional)</small>
+                                    </label>
+                                    <input type="text"
+                                           id="bfChildAge{{ forloop.counter }}"
+                                           name="child_age_{{ forloop.counter }}"
+                                           placeholder="e.g. 7 months or 3 years"
+                                           value="{{ age }}"
+                                           maxlength="30"
+                                           aria-label="Age of child {{ forloop.counter }}">
+                                    <span class="bf__help">
+                                        <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                                            <circle cx="6" cy="6" r="5" stroke="#a09890" stroke-width="1.2"/>
+                                            <path d="M6 5v3M6 3.5v.5" stroke="#a09890" stroke-width="1.2" stroke-linecap="round"/>
+                                        </svg>
+                                        Children accepted up to 10 years old
+                                    </span>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                </div>
+
+                {# ── Return journey toggle ─────────────────────────────── #}
+                {% if not is_hourly %}
+                <div class="bf__ti{% if form_data.return_ride %} on{% endif %}"
+                     id="bfReturnToggle"
+                     onclick="bfToggle('bfReturnToggle','bfReturnCb')"
+                     role="checkbox"
+                     aria-checked="{% if form_data.return_ride %}true{% else %}false{% endif %}"
+                     tabindex="0"
+                     aria-label="Return journey — same route back with return discount"
+                     onkeydown="if(event.key==='Enter'||event.key===' '){bfToggle('bfReturnToggle','bfReturnCb');event.preventDefault();}">
+                    <div class="bf__tileft">
+                        <span class="bf__ticon" aria-hidden="true">🔄</span>
+                        <div class="bf__ttxt">
+                            <strong>Return Journey</strong>
+                            <span>Same route back — return discount applied</span>
+                        </div>
+                    </div>
+                    <div class="bf__tsw" aria-hidden="true"><div class="bf__tth"></div></div>
+                    <input type="checkbox" name="return_ride" id="bfReturnCb"
+                           {% if form_data.return_ride %}checked{% endif %}>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+
+
+        {# ── Section 5: Vehicle Preferences ── #}
+        <div class="bf__card">
+            <div class="bf__sh">
+                <div class="bf__sn" aria-hidden="true">5</div>
+                <h2>Vehicle Preferences</h2>
+            </div>
+            <div class="bf__g2">
+
+                <div class="bf__f">
+                    <label for="bf-colour">Preferred Colour</label>
+                    <select id="bf-colour" name="vehicle_colour">
+                        <option value="">No preference</option>
+                    </select>
+                </div>
+
+                <div class="bf__f bf__s2">
+                    <label for="bf-sign">Special Signboard / Name Display</label>
+                    <input type="text" id="bf-sign" name="special_signboard"
+                           placeholder="e.g. Welcome, Mr. Johnson"
+                           value="{{ form_data.special_signboard|default:'' }}">
+                </div>
+
+            </div>
+        </div>
+
+        {# ── Submit ── #}
+        {% if is_hourly %}
+        <button type="submit" class="bf__btn bf__btn--wa" id="bfSubmit">
+            <span id="bfBtnTxt">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="flex-shrink:0;">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                Send via WhatsApp
+            </span>
+            <div class="bf__spin" id="bfSpin" aria-hidden="true"></div>
+        </button>
+        <p class="bf__note">
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <circle cx="7" cy="7" r="6" stroke="#a09890" stroke-width="1.2"/>
+                <path d="M7 4v3.5L9 9" stroke="#a09890" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+            You'll be redirected to WhatsApp — our team will confirm pricing &amp; availability.
+        </p>
+        {% else %}
+        <button type="submit" class="bf__btn" id="bfSubmit">
+            <span id="bfBtnTxt">Calculate Price &amp; Continue</span>
+            <svg id="bfBtnArrow" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="bf__spin" id="bfSpin" aria-hidden="true"></div>
+        </button>
+        <p class="bf__note">
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <circle cx="7" cy="7" r="6" stroke="#a09890" stroke-width="1.2"/>
+                <path d="M7 4v3.5L9 9" stroke="#a09890" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+            No charge until you confirm payment on the next step.
+        </p>
+        {% endif %}
+
+    </form>
+
+</div><!-- /.bf__wrap -->
+</div><!-- /.bf__page -->
+{% endblock %}
+
+
+{% block extra_js %}
+<script>
+window.BF_TYPE         = "{{ type_key|escapejs }}";
+window.BF_FLAT         = (window.BF_TYPE === "oh");
+window.BF_IS_HOURLY    = {{ is_hourly|yesno:"true,false" }};
+window.BF_LOCK_PICKUP  = {% if form_data.lock_pickup %}true{% else %}false{% endif %};
+window.BF_LOCK_DEST    = {% if form_data.lock_destination %}true{% else %}false{% endif %};
+window.BF_DEFAULT_PASS = {{ form_data.number_of_passengers|default:2 }};
+window.BF_DEFAULT_BAGS = {{ form_data.number_of_bags|default:2 }};
+
+// Seed the child age fields on page load if coming back from a POST error
+window.BF_CHILD_AGES   = {{ form_data.baby_ages_list|default:"[]"|safe }};
+
+window.BF_RATES = [];
+document.querySelectorAll(".bf__vc").forEach(function (card) {
+    window.BF_RATES.push({
+        name:   card.dataset.name,
+        maxP:   parseInt(card.dataset.maxp,  10),
+        maxB:   parseInt(card.dataset.maxb,  10),
+        ohRate: parseFloat(card.dataset.ohrate),
+        base:   parseFloat(card.dataset.base),
+        perKm:  parseFloat(card.dataset.perkm),
+    });
+});
+
+window.bfCurrent = document.getElementById("bfVehicleInput").value
+    || (window.BF_RATES[0] && window.BF_RATES[0].name)
+    || "";
+</script>
+
+<script src="{% static 'js/booking_form.js' %}" defer></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_key }}&libraries=places&callback=bfMapsReady" async defer></script>
+{% endblock %}

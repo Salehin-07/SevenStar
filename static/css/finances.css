@@ -1,0 +1,389 @@
+/* ============================================================
+   SevenStar Limo — Finance Dashboard
+   static/css/finances.css
+   ============================================================ */
+
+.fin__page {
+  --gold:         #c9a84c;
+  --gold-light:   #e2c47a;
+  --gold-dim:     rgba(201, 168, 76, 0.15);
+  --gold-border:  rgba(201, 168, 76, 0.3);
+  --bg:           #080808;
+  --bg-card:      #111111;
+  --bg-row:       #141414;
+  --bg-row-alt:   #0e0e0e;
+  --border:       rgba(255,255,255,0.06);
+  --text-primary: #f0ebe0;
+  --text-muted:   #7a7060;
+  --text-dim:     #4a4540;
+  --green:        #4caf7a;
+  --red:          #e05a5a;
+  --radius:       4px;
+  --font-serif:   'Cormorant Garamond', Georgia, serif;
+  --font-sans:    'Jost', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── PAGE SHELL ── */
+.fin__page {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+}
+
+/* ── HEADER ── */
+.fin__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--gold-border);
+}
+
+.fin__heading {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+.fin__heading span { color: var(--gold); }
+
+.fin__subtitle {
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+.fin__timestamp {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+/* ── SUMMARY CARDS ── */
+.fin__summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
+.fin__card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.25s;
+}
+
+.fin__card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.fin__card--earnings::before { background: var(--gold); }
+.fin__card--cost::before     { background: var(--red); }
+.fin__card--profit::before   { background: var(--green); }
+
+.fin__card:hover { border-color: rgba(255,255,255,0.12); }
+
+.fin__card-label {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+
+.fin__card-value {
+  font-family: var(--font-serif);
+  font-size: clamp(26px, 3vw, 36px);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1;
+}
+.fin__card-value--earnings { color: var(--gold-light); }
+.fin__card-value--cost     { color: var(--red); }
+.fin__card-value--profit   { color: var(--green); }
+.fin__card-value--loss     { color: var(--red); }
+
+.fin__card-sub {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-top: 8px;
+}
+
+.fin__card-badge {
+  position: absolute;
+  top: 20px; right: 20px;
+  font-size: 18px;
+  opacity: 0.18;
+}
+
+/* ── FILTER TABS ── */
+.fin__tabs-wrap {
+  margin-bottom: 20px;
+}
+
+.fin__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 4px;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.fin__tab {
+  padding: 7px 15px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+  white-space: nowrap;
+}
+.fin__tab:hover {
+  color: var(--gold-light);
+  background: var(--gold-dim);
+}
+.fin__tab.active {
+  background: var(--gold);
+  color: #080808;
+  font-weight: 500;
+}
+
+/* Visual separator — left margin + thin line before grouped tabs */
+.fin__tab--sep {
+  margin-left: 8px;
+  position: relative;
+}
+.fin__tab--sep::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 5px;
+  bottom: 5px;
+  width: 1px;
+  background: var(--border);
+}
+
+/* ── CUSTOM DATE RANGE PANEL ── */
+.fin__custom-range {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding: 14px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius);
+  width: fit-content;
+  flex-wrap: wrap;
+}
+.fin__custom-range.visible { display: flex; }
+
+.fin__custom-range label {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.fin__date-input {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 7px 12px;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+  color-scheme: dark;
+}
+.fin__date-input:focus { border-color: var(--gold); }
+
+.fin__apply-btn {
+  padding: 8px 20px;
+  background: var(--gold);
+  color: #080808;
+  border: none;
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.fin__apply-btn:hover { background: var(--gold-light); }
+
+.fin__range-sep { color: var(--text-dim); font-size: 11px; }
+
+/* ── PERIOD LABEL ── */
+.fin__period-label {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  padding-left: 2px;
+  min-height: 18px;
+}
+
+/* ── TABLE ── */
+.fin__table-wrap {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.fin__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.fin__table thead {
+  background: #0c0c0c;
+  border-bottom: 1px solid var(--gold-border);
+}
+
+.fin__table th {
+  padding: 14px 18px;
+  text-align: left;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  white-space: nowrap;
+}
+.fin__table th.right { text-align: right; }
+
+.fin__table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+.fin__table tbody tr:nth-child(even) { background: var(--bg-row-alt); }
+.fin__table tbody tr:nth-child(odd)  { background: var(--bg-row); }
+.fin__table tbody tr:hover           { background: rgba(201,168,76,0.04); }
+/* Don't highlight totals row on hover */
+.fin__totals-row:hover               { background: #0c0c0c !important; }
+
+.fin__table td {
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+.fin__table td.right { text-align: right; font-variant-numeric: tabular-nums; }
+.fin__table td.muted { color: var(--text-muted); font-size: 12px; }
+
+/* service badge */
+.fin__badge {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 2px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: var(--gold-dim);
+  color: var(--gold-light);
+  border: 1px solid var(--gold-border);
+}
+
+/* money cells */
+.fin__earnings { color: var(--gold-light) !important; font-variant-numeric: tabular-nums; }
+.fin__cost     { color: var(--red) !important;        font-variant-numeric: tabular-nums; }
+.fin__profit   { color: var(--green) !important;      font-variant-numeric: tabular-nums; font-weight: 500; }
+.fin__loss     { color: var(--red) !important;        font-variant-numeric: tabular-nums; font-weight: 500; }
+
+/* ── TOTALS ROW ── */
+.fin__totals-row {
+  background: #0c0c0c !important;
+  border-top: 1px solid var(--gold-border) !important;
+}
+.fin__totals-row td {
+  padding: 18px 18px !important;
+  font-family: var(--font-serif) !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+}
+.fin__totals-label {
+  font-family: var(--font-sans) !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold) !important;
+}
+
+/* ── EMPTY STATE ── */
+.fin__empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-dim);
+}
+.fin__empty-icon { font-size: 36px; margin-bottom: 12px; opacity: 0.4; }
+.fin__empty-text {
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar        { width: 6px; height: 6px; }
+::-webkit-scrollbar-track  { background: var(--bg); }
+::-webkit-scrollbar-thumb  { background: #2a2520; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .fin__page    { padding: 28px 16px 60px; }
+  .fin__summary { grid-template-columns: 1fr; gap: 10px; }
+  .fin__header  { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .fin__tabs    { width: 100%; }
+  .fin__custom-range { width: 100%; }
+
+  /* Hide pickup date on small screens */
+  .fin__table th:nth-child(4),
+  .fin__table td:nth-child(4) { display: none; }
+}
+
+@media (max-width: 600px) {
+  .fin__table td:nth-child(2) > div:last-child { display: none; }
+}

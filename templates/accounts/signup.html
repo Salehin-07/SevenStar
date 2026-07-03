@@ -1,0 +1,471 @@
+{% extends "base.html" %}
+{% load static %}
+
+{# ════════════════════════════════════════════════════════════════
+   SevenStar Limo & Chauffeur — signup.html
+   Split: signup.html + static/css/signup.css + static/js/signup.js
+   Auth pages: noindex (no value indexing registration forms)
+════════════════════════════════════════════════════════════════ #}
+
+{# ─── PRIMARY META ───────────────────────────────────────────── #}
+{% block title %}Create Account | SevenStar Limo & Chauffeur Melbourne{% endblock %}
+
+{% block meta_description %}Create your free SevenStar Limo & Chauffeur Melbourne account. Book, manage and track your chauffeur transfers from one place — airport runs, point-to-point, hourly hire and more.{% endblock %}
+
+{% block meta_keywords %}SevenStar Limo create account, SevenStar Chauffeur sign up, Melbourne chauffeur booking account, limo service Melbourne account{% endblock %}
+
+{# Registration pages should not be indexed — no SEO value, avoids thin content #}
+{% block meta_robots %}noindex, nofollow{% endblock %}
+
+{# ─── CANONICAL ──────────────────────────────────────────────── #}
+{% block canonical_url %}https://sevenstarlimo.com.au/accounts/signup/{% endblock %}
+
+{# ─── OPEN GRAPH ─────────────────────────────────────────────── #}
+{% block og_type %}website{% endblock %}
+{% block og_title %}Create Account | SevenStar Limo & Chauffeur Melbourne{% endblock %}
+{% block og_description %}Create your free SevenStar Limo account. Book, manage and track Melbourne chauffeur transfers from one place.{% endblock %}
+{% block og_url %}https://sevenstarlimo.com.au/signup/{% endblock %}
+
+{# ─── TWITTER / X ────────────────────────────────────────────── #}
+{% block twitter_title %}Create Account | SevenStar Limo & Chauffeur Melbourne{% endblock %}
+{% block twitter_description %}Create your free SevenStar Limo account to book and manage Melbourne chauffeur transfers.{% endblock %}
+
+{# ─── STRUCTURED DATA ────────────────────────────────────────── #}
+{% block extra_schema %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://sevenstarlimo.com.au/"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Create Account",
+            "item": "https://sevenstarlimo.com.au/signup/"
+        }
+    ]
+}
+</script>
+{% endblock %}
+
+{# ─── STYLESHEET ─────────────────────────────────────────────── #}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+{% endblock %}
+
+
+{# ════════════════════════════════════════════════════════════════
+   BODY
+════════════════════════════════════════════════════════════════ #}
+{% block body %}
+<div data-page="signup">
+<div class="su__page">
+
+    <!-- ════════════════════════════════
+         LEFT BRAND PANEL
+    ════════════════════════════════ -->
+    <div class="su__panel" aria-hidden="true">
+        <div class="su__panel-bg"></div>
+        <div class="su__panel-rule"></div>
+        <div class="su__panel-rule-h"></div>
+
+        <div class="su__panel-inner">
+            <p class="su__panel-eyebrow">SevenStar Limo — Member Benefits</p>
+            <h2 class="su__panel-title">Travel Smarter,<br><em>Every Time</em></h2>
+            <p class="su__panel-sub">
+                Create your SevenStar Limo account and unlock a faster, more personalised
+                booking experience across Melbourne and Victoria.
+            </p>
+
+            <div class="su__perks">
+                <div class="su__perk">
+                    <div class="su__perk-ico" aria-hidden="true">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                        </svg>
+                    </div>
+                    Instant booking confirmations
+                </div>
+                <div class="su__perk">
+                    <div class="su__perk-ico" aria-hidden="true">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    Full booking history &amp; receipts
+                </div>
+                <div class="su__perk">
+                    <div class="su__perk-ico" aria-hidden="true">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                    </div>
+                    Save favourite addresses
+                </div>
+                <div class="su__perk">
+                    <div class="su__perk-ico" aria-hidden="true">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                    </div>
+                    Priority SevenStar Limo customer support
+                </div>
+            </div>
+
+            <div class="su__panel-login">
+                Already have a SevenStar Limo account?
+                <a href="{% url 'login' %}" title="Log in to SevenStar Limo">Log in here</a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ════════════════════════════════
+         RIGHT — FORM
+    ════════════════════════════════ -->
+    <div class="su__right">
+        <div class="su__form-wrap">
+
+            <!-- Mobile-only top bar -->
+            <div class="su__mobile-top">
+                <a href="{% url 'home' %}" class="su__back-link"
+                   aria-label="Back to SevenStar Limo home">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                        <line x1="19" y1="12" x2="5" y2="12"/>
+                        <polyline points="12 19 5 12 12 5"/>
+                    </svg>
+                    Back
+                </a>
+                <a href="{% url 'login' %}"
+                   style="font-size:.8rem;color:var(--su-gold);text-decoration:none;font-weight:500;"
+                   title="Log in to your SevenStar Limo account">
+                    Sign In
+                </a>
+            </div>
+
+            <div class="su__form-heading">
+                <p class="su__form-eyebrow">New SevenStar Limo Account</p>
+                <h1 class="su__form-title">Create Your <em>Account</em></h1>
+                <p class="su__form-desc">Secure, private and free. Takes less than a minute.</p>
+            </div>
+
+            <div class="su__card">
+
+                {# ── Django messages ── #}
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="su__banner su__banner--{{ message.tags }} su__show"
+                         role="alert" aria-live="assertive">
+                        {% if message.tags == 'success' %}
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        {% else %}
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="8" x2="12" y2="12"/>
+                                <line x1="12" y1="16" x2="12.01" y2="16"/>
+                            </svg>
+                        {% endif %}
+                        <span>{{ message }}</span>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+
+                <form
+                    id="su-form"
+                    method="POST"
+                    action="{% url 'signup' %}"
+                    novalidate
+                    aria-label="Create a SevenStar Limo account"
+                >
+                    {% csrf_token %}
+
+                    {# ── First name + Last name ── #}
+                    <div class="su__row">
+                        <div class="su__field">
+                            <label class="su__label" for="su-first">First Name</label>
+                            <div class="su__input-shell">
+                                <span class="su__input-ico" aria-hidden="true">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                        <circle cx="12" cy="7" r="4"/>
+                                    </svg>
+                                </span>
+                                <input
+                                    class="su__input"
+                                    type="text"
+                                    id="su-first"
+                                    name="first_name"
+                                    placeholder="Jane"
+                                    autocomplete="given-name"
+                                    aria-required="true"
+                                    aria-describedby="su-first-err"
+                                    required
+                                    value="{{ form.first_name.value|default:'' }}"
+                                >
+                            </div>
+                            <span class="su__err" id="su-first-err" role="alert" aria-live="polite">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="12" y1="8" x2="12" y2="12"/>
+                                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                                </svg>
+                                Please enter your first name.
+                            </span>
+                        </div>
+
+                        <div class="su__field">
+                            <label class="su__label" for="su-last">Last Name</label>
+                            <div class="su__input-shell">
+                                <span class="su__input-ico" aria-hidden="true">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                        <circle cx="12" cy="7" r="4"/>
+                                    </svg>
+                                </span>
+                                <input
+                                    class="su__input"
+                                    type="text"
+                                    id="su-last"
+                                    name="last_name"
+                                    placeholder="Smith"
+                                    autocomplete="family-name"
+                                    aria-required="true"
+                                    aria-describedby="su-last-err"
+                                    required
+                                    value="{{ form.last_name.value|default:'' }}"
+                                >
+                            </div>
+                            <span class="su__err" id="su-last-err" role="alert" aria-live="polite">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="12" y1="8" x2="12" y2="12"/>
+                                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                                </svg>
+                                Please enter your last name.
+                            </span>
+                        </div>
+                    </div>
+
+                    {# ── Email ── #}
+                    <div class="su__field">
+                        <label class="su__label" for="su-email">Email Address</label>
+                        <div class="su__input-shell">
+                            <span class="su__input-ico" aria-hidden="true">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" stroke-width="2">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                    <polyline points="22,6 12,13 2,6"/>
+                                </svg>
+                            </span>
+                            <input
+                                class="su__input"
+                                type="email"
+                                id="su-email"
+                                name="email"
+                                placeholder="jane@email.com.au"
+                                autocomplete="email"
+                                aria-required="true"
+                                aria-describedby="su-email-err"
+                                required
+                                value="{{ form.email.value|default:'' }}"
+                            >
+                        </div>
+                        <span class="su__err" id="su-email-err" role="alert" aria-live="polite">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="8" x2="12" y2="12"/>
+                                <line x1="12" y1="16" x2="12.01" y2="16"/>
+                            </svg>
+                            Please enter a valid email address.
+                        </span>
+                    </div>
+
+                    {# ── Phone ── #}
+                    <div class="su__field">
+                        <label class="su__label" for="su-phone">Phone Number</label>
+                        <div class="su__input-shell">
+                            <span class="su__input-ico" aria-hidden="true">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" stroke-width="2">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.61 5.61l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.27 16z"/>
+                                </svg>
+                            </span>
+                            <input
+                                class="su__input"
+                                type="tel"
+                                id="su-phone"
+                                name="phone"
+                                placeholder="04XX XXX XXX"
+                                autocomplete="tel"
+                                aria-required="true"
+                                aria-describedby="su-phone-err"
+                                required
+                                value="{{ form.phone.value|default:'' }}"
+                            >
+                        </div>
+                        <span class="su__err" id="su-phone-err" role="alert" aria-live="polite">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="8" x2="12" y2="12"/>
+                                <line x1="12" y1="16" x2="12.01" y2="16"/>
+                            </svg>
+                            Please enter a valid Australian phone number.
+                        </span>
+                    </div>
+
+                    {# ── Password ── #}
+                    <div class="su__field">
+                        <label class="su__label" for="su-pw">Password</label>
+                        <div class="su__input-shell">
+                            <span class="su__input-ico" aria-hidden="true">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2"/>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                </svg>
+                            </span>
+                            <input
+                                class="su__input su__input--pw"
+                                type="password"
+                                id="su-pw"
+                                name="password1"
+                                placeholder="Min. 8 characters"
+                                autocomplete="new-password"
+                                aria-required="true"
+                                aria-describedby="su-pw-err su-strength"
+                                required
+                            >
+                            <button type="button" class="su__eye" id="su-pw-eye"
+                                    aria-label="Show password">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <span class="su__err" id="su-pw-err" role="alert" aria-live="polite">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="8" x2="12" y2="12"/>
+                                <line x1="12" y1="16" x2="12.01" y2="16"/>
+                            </svg>
+                            Password must be at least 8 characters.
+                        </span>
+                        <div class="su__strength" id="su-strength" aria-live="polite">
+                            <div class="su__strength-bar">
+                                <div class="su__strength-fill" id="su-strength-fill"></div>
+                            </div>
+                            <span class="su__strength-lbl" id="su-strength-lbl"></span>
+                        </div>
+                    </div>
+
+                    {# ── Confirm Password ── #}
+                    <div class="su__field">
+                        <label class="su__label" for="su-pw2">Confirm Password</label>
+                        <div class="su__input-shell">
+                            <span class="su__input-ico" aria-hidden="true">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2"/>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                </svg>
+                            </span>
+                            <input
+                                class="su__input su__input--pw"
+                                type="password"
+                                id="su-pw2"
+                                name="password2"
+                                placeholder="Repeat password"
+                                autocomplete="new-password"
+                                aria-required="true"
+                                aria-describedby="su-pw2-err"
+                                required
+                            >
+                            <button type="button" class="su__eye" id="su-pw2-eye"
+                                    aria-label="Show confirm password">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <span class="su__err" id="su-pw2-err" role="alert" aria-live="polite">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="8" x2="12" y2="12"/>
+                                <line x1="12" y1="16" x2="12.01" y2="16"/>
+                            </svg>
+                            Passwords do not match.
+                        </span>
+                    </div>
+
+                    {# ── Terms & Privacy checkbox ── #}
+                    <div class="su__check-row">
+                        <input class="su__check" type="checkbox"
+                               id="su-terms" name="terms"
+                               aria-required="true" required>
+                        <label class="su__check-lbl" for="su-terms">
+                            I agree to SevenStar Limo's
+                            <a href="{% url 'terms' %}" target="_blank" rel="noopener"
+                               title="SevenStar Limo Terms & Conditions">Terms &amp; Conditions</a>
+                            and
+                            <a href="{% url 'privacy_policy' %}" target="_blank" rel="noopener"
+                               title="SevenStar Limo Privacy Policy">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="su__submit" id="su-btn">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <line x1="19" y1="8" x2="19" y2="14"/>
+                            <line x1="22" y1="11" x2="16" y2="11"/>
+                        </svg>
+                        Create Account
+                    </button>
+
+                </form>
+
+                <div class="su__divider" aria-hidden="true">or</div>
+
+                <div class="su__login-row">
+                    Already have a SevenStar Limo account?
+                    <a href="{% url 'login' %}" title="Log in to SevenStar Limo">Sign in</a>
+                </div>
+
+            </div><!-- /su__card -->
+        </div>
+    </div>
+
+</div>
+</div><!-- /[data-page="signup"] -->
+{% endblock %}
+
+
+{# ─── DEFERRED JS ────────────────────────────────────────────── #}
+{% block extra_js %}
+<script src="{% static 'js/signup.js' %}" defer></script>
+{% endblock %}

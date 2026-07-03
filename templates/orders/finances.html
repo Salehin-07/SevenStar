@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Finance Dashboard — SevenStar Limo Admin{% endblock %}
+{% block meta_robots %}noindex, nofollow{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/finances.css' %}">
+{% endblock %}
+
+{% block body %}
+<div class="fin__page">
+
+  <!-- ── HEADER ── -->
+  <div class="fin__header">
+    <div>
+      <h1 class="fin__heading">Finance <span>Overview</span></h1>
+      <p class="fin__subtitle">SevenStar Limo &amp; Chauffeur · Internal Admin</p>
+    </div>
+    <span class="fin__timestamp" id="fin-timestamp"></span>
+  </div>
+
+  <!-- ── SUMMARY CARDS ── -->
+  <div class="fin__summary">
+
+    <div class="fin__card fin__card--earnings">
+      <div class="fin__card-label">Total Earnings</div>
+      <div class="fin__card-value fin__card-value--earnings">
+        ${{ total_earnings|floatformat:2 }}
+      </div>
+      <div class="fin__card-sub">Revenue from customers</div>
+      <div class="fin__card-badge">$</div>
+    </div>
+
+    <div class="fin__card fin__card--cost">
+      <div class="fin__card-label">Total Driver Cost</div>
+      <div class="fin__card-value fin__card-value--cost">
+        ${{ total_cost|floatformat:2 }}
+      </div>
+      <div class="fin__card-sub">Driver fees paid out</div>
+      <div class="fin__card-badge">↓</div>
+    </div>
+
+    <div class="fin__card fin__card--profit">
+      <div class="fin__card-label">Net Profit</div>
+      <div class="fin__card-value fin__card-value--profit {% if total_profit < 0 %}fin__card-value--loss{% endif %}">
+        {% if total_profit < 0 %}−${{ total_profit|floatformat:2|slice:"1:" }}{% else %}${{ total_profit|floatformat:2 }}{% endif %}
+      </div>
+      <div class="fin__card-sub">
+        {{ order_count }} booking{{ order_count|pluralize }}
+      </div>
+      <div class="fin__card-badge">✦</div>
+    </div>
+
+  </div>
+
+  <!-- ── FILTER FORM ── -->
+  <form method="post" action="{% url 'finances_data' %}" id="fin-form">
+    {% csrf_token %}
+    <input type="hidden" name="tab"         id="fin-input-tab"         value="{{ active_tab }}">
+    <input type="hidden" name="custom_from" id="fin-input-custom-from" value="{{ custom_from }}">
+    <input type="hidden" name="custom_to"   id="fin-input-custom-to"   value="{{ custom_to }}">
+
+    <!-- ── TABS ── -->
+    <div class="fin__tabs-wrap">
+      <div class="fin__tabs">
+        {% for tab in tabs %}
+        <button type="button"
+                class="fin__tab{% if tab.separator %} fin__tab--sep{% endif %}{% if tab.active %} active{% endif %}"
+                data-tab="{{ tab.key }}">
+          {{ tab.label }}
+        </button>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- ── CUSTOM DATE RANGE PANEL ── -->
+    <div class="fin__custom-range{% if active_tab == 'custom' %} visible{% endif %}"
+         id="fin-custom-panel">
+      <label for="fin-from">From</label>
+      <input type="date" class="fin__date-input" id="fin-from"
+             value="{{ custom_from }}" min="2020-01-01">
+      <span class="fin__range-sep">→</span>
+      <label for="fin-to">To</label>
+      <input type="date" class="fin__date-input" id="fin-to"
+             value="{{ custom_to }}" min="2020-01-01">
+      <button type="button" class="fin__apply-btn" id="fin-apply">Apply</button>
+    </div>
+
+  </form>
+
+  <!-- ── PERIOD LABEL ── -->
+  <div class="fin__period-label">{{ period_label }}</div>
+
+  <!-- ── TABLE ── -->
+  <div class="fin__table-wrap">
+    <table class="fin__table" role="table" aria-label="Finance records">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Passenger</th>
+          <th>Service Type</th>
+          <th>Pickup Date</th>
+          <th class="right">Earnings (AUD)</th>
+          <th class="right">Driver Cost</th>
+          <th class="right">Profit</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% if orders %}
+
+          {% for o in orders %}
+          <tr>
+            <td class="muted">{{ forloop.counter }}</td>
+            <td>
+              <div style="font-weight:500">{{ o.passenger_name }}</div>
+              <div style="font-size:11px;color:var(--text-dim);margin-top:2px">
+                {{ o.passenger_email }}
+              </div>
+            </td>
+            <td><span class="fin__badge">{{ o.service_type }}</span></td>
+            <td class="muted">{{ o.pickup_date }}</td>
+            <td class="right fin__earnings">
+              ${{ o.total_price|floatformat:2 }}
+            </td>
+            <td class="right fin__cost">
+              ${{ o.driver_fee|floatformat:2 }}
+            </td>
+            <td class="right {% if o.profit >= 0 %}fin__profit{% else %}fin__loss{% endif %}">
+              {% if o.profit < 0 %}
+                −${{ o.profit|floatformat:2|slice:"1:" }}
+              {% else %}
+                ${{ o.profit|floatformat:2 }}
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+
+          <!-- Totals row -->
+          <tr class="fin__totals-row">
+            <td colspan="4" class="fin__totals-label">
+              Totals — {{ order_count }} order{{ order_count|pluralize }}
+            </td>
+            <td class="right fin__earnings">
+              ${{ total_earnings|floatformat:2 }}
+            </td>
+            <td class="right fin__cost">
+              ${{ total_cost|floatformat:2 }}
+            </td>
+            <td class="right {% if total_profit >= 0 %}fin__profit{% else %}fin__loss{% endif %}">
+              {% if total_profit < 0 %}
+                −${{ total_profit|floatformat:2|slice:"1:" }}
+              {% else %}
+                ${{ total_profit|floatformat:2 }}
+              {% endif %}
+            </td>
+          </tr>
+
+        {% else %}
+
+          <tr>
+            <td colspan="7">
+              <div class="fin__empty">
+                <div class="fin__empty-icon">◈</div>
+                <div class="fin__empty-text">No orders in this period</div>
+              </div>
+            </td>
+          </tr>
+
+        {% endif %}
+
+      </tbody>
+    </table>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/finances.js' %}" defer></script>
+{% endblock %}

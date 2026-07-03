@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ blog.meta_title|default:blog.title }} | SevenStar Limo Blog{% endblock %}
+{% block meta_description %}{{ blog.meta_description|default:blog.description|truncatewords:30 }}{% endblock %}
+{% block meta_keywords %}{{ blog.category.name }}, SevenStar Limo, {{ blog.title }}, Melbourne chauffeur, luxury travel{% endblock %}
+{% block canonical_url %}https://sevenstarlimo.com.au/blog/{{ blog.category.slug }}/{{ blog.slug }}/{% endblock %}
+{% block og_title %}{{ blog.meta_title|default:blog.title }} | SevenStar Limo{% endblock %}
+{% block og_description %}{{ blog.meta_description|default:blog.description|truncatewords:30 }}{% endblock %}
+{% block og_image %}{% if blog.img_url %}{{ blog.img_url }}{% else %}{% static 'img/logo.png' %}{% endif %}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block twitter_title %}{{ blog.meta_title|default:blog.title }} | SevenStar Limo{% endblock %}
+{% block twitter_description %}{{ blog.meta_description|default:blog.description|truncatewords:30 }}{% endblock %}
+{% block twitter_image %}{% if blog.img_url %}{{ blog.img_url }}{% else %}{% static 'img/logo.png' %}{% endif %}{% endblock %}
+
+{% block extra_schema %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "{{ blog.title|escapejs }}",
+    "description": "{{ blog.description|truncatewords:30|escapejs }}",
+    "image": "{% if blog.img_url %}{{ blog.img_url|escapejs }}{% else %}{% static 'img/logo.png' %}{% endif %}",
+    "author": {
+        "@type": "Person",
+        "name": "{{ blog.author.get_full_name|default:blog.author.username|escapejs }}"
+    },
+    "datePublished": "{{ blog.published_at|date:'c' }}",
+    "dateModified": "{{ blog.updated_at|date:'c' }}",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://sevenstarlimo.com.au/blog/{{ blog.category.slug }}/{{ blog.slug }}/"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "SevenStar Limo",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://sevenstarlimo.com.au/static/img/logo.png"
+        }
+    }
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://sevenstarlimo.com.au/"},
+        {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://sevenstarlimo.com.au/blog/"},
+        {"@type": "ListItem", "position": 3, "name": "{{ blog.category.name|escapejs }}", "item": "https://sevenstarlimo.com.au/blog/?category={{ blog.category.slug }}"},
+        {"@type": "ListItem", "position": 4, "name": "{{ blog.title|escapejs }}", "item": "https://sevenstarlimo.com.au/blog/{{ blog.category.slug }}/{{ blog.slug }}/"}
+    ]
+}
+</script>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+{% endblock %}
+
+{% block body %}
+<div data-page="blog">
+
+    <!-- ════════════════════════════════
+         ARTICLE HEADER
+    ════════════════════════════════ -->
+    <article class="bl__detail" itemscope itemtype="https://schema.org/BlogPosting">
+        <meta itemprop="datePublished" content="{{ blog.published_at|date:'c' }}">
+        <meta itemprop="dateModified" content="{{ blog.updated_at|date:'c' }}">
+
+        <header class="bl__detail-header">
+            {% if blog.img_url %}
+            <div class="bl__detail-bg" style="background-image: url('{{ blog.img_url }}');" role="img" aria-label="{{ blog.title }}"></div>
+            {% else %}
+            <div class="bl__detail-bg bl__detail-bg--placeholder" role="img" aria-label="{{ blog.title }}"></div>
+            {% endif %}
+            <div class="bl__detail-overlay"></div>
+            <div class="bl__detail-header-inner">
+                <a href="{% url 'blog:blog_list' %}?category={{ blog.category.slug }}" class="bl__detail-category">{{ blog.category.name }}</a>
+                <h1 class="bl__detail-title" itemprop="headline">{{ blog.title }}</h1>
+                <div class="bl__detail-meta">
+                    <span class="bl__detail-author" itemprop="author">{{ blog.author.get_full_name|default:blog.author.username }}</span>
+                    <span class="bl__detail-sep" aria-hidden="true">·</span>
+                    <time class="bl__detail-date" datetime="{{ blog.published_at|date:'c' }}" itemprop="datePublished">{{ blog.published_at|date:"d F Y" }}</time>
+                    <span class="bl__detail-sep" aria-hidden="true">·</span>
+                    <span>{{ blog.description|wordcount|divisibleby:200|yesno:"1,2" }} min read</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="bl__detail-body-wrap">
+            <div class="bl__detail-body" itemprop="articleBody">
+                <div class="bl__detail-body-content">{{ blog.content|linebreaks }}</div>
+            </div>
+
+            <!-- ════════════════════════════════
+                 LIKE & SHARE BAR
+            ════════════════════════════════ -->
+            <div class="bl__detail-actions">
+                {% if user.is_authenticated %}
+                <a href="{% url 'blog:blog_like' category_slug=blog.category.slug blog_slug=blog.slug %}" class="bl__action-btn {% if user_liked %}bl__action-btn--liked{% endif %}" aria-label="{% if user_liked %}Unlike{% else %}Like{% endif %} this post">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="{% if user_liked %}currentColor{% else %}none{% endif %}" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    <span>{{ blog.like_count }} {% if blog.like_count == 1 %}Like{% else %}Likes{% endif %}</span>
+                </a>
+                {% else %}
+                <span class="bl__action-btn bl__action-btn--disabled">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    <span>{{ blog.like_count }} {% if blog.like_count == 1 %}Like{% else %}Likes{% endif %}</span>
+                </span>
+                {% endif %}
+            </div>
+
+            <!-- ════════════════════════════════
+                 COMMENTS
+            ════════════════════════════════ -->
+            <section class="bl__comments" aria-labelledby="bl-comments-heading">
+                <h2 class="bl__comments-heading" id="bl-comments-heading">
+                    Comments <span class="bl__comments-count">({{ comments|length }})</span>
+                </h2>
+
+                {% if user.is_authenticated %}
+                <form method="POST" class="bl__comment-form">
+                    {% csrf_token %}
+                    {{ form.body }}
+                    <button type="submit" class="bl__btn bl__btn--gold bl__btn--sm">Post Comment</button>
+                </form>
+                {% else %}
+                <p class="bl__comment-login">
+                    <a href="{% url 'login' %}">Log in</a> to leave a comment.
+                </p>
+                {% endif %}
+
+                {% if messages %}
+                <div class="bl__messages">
+                    {% for message in messages %}
+                    <p class="bl__message bl__message--{{ message.tags }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <div class="bl__comments-list">
+                    {% for comment in comments %}
+                    <div class="bl__comment" itemscope itemtype="https://schema.org/Comment">
+                        <meta itemprop="dateCreated" content="{{ comment.created_at|date:'c' }}">
+                        <div class="bl__comment-avatar" aria-hidden="true">
+                            {{ comment.user.first_name|first|default:comment.user.username|first|upper }}
+                        </div>
+                        <div class="bl__comment-body">
+                            <div class="bl__comment-author" itemprop="author">{{ comment.user.get_full_name|default:comment.user.username }}</div>
+                            <div class="bl__comment-time">{{ comment.created_at|timesince }} ago</div>
+                            <p class="bl__comment-text" itemprop="text">{{ comment.body }}</p>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p class="bl__comments-empty">No comments yet. Be the first to share your thoughts!</p>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+    </article>
+
+    <!-- ════════════════════════════════
+         RELATED POSTS
+    ════════════════════════════════ -->
+    {% if related_blogs %}
+    <section class="bl__section bl__section--cream" aria-labelledby="bl-related-heading">
+        <div class="bl__wrap">
+            <p class="bl__eyebrow">Related Articles</p>
+            <h2 class="bl__title" id="bl-related-heading">More from <em>{{ blog.category.name }}</em></h2>
+            <div class="bl__grid bl__grid--related">
+                {% for related in related_blogs %}
+                <article class="bl__card bl__reveal">
+                    <a href="{% url 'blog:blog_detail' category_slug=related.category.slug blog_slug=related.slug %}" class="bl__card-link">
+                        {% if related.img_url %}
+                        <div class="bl__card-thumb">
+                            <img src="{{ related.img_url }}" alt="{{ related.title }}" loading="lazy" width="400" height="225">
+                        </div>
+                        {% else %}
+                        <div class="bl__card-thumb bl__card-thumb--placeholder">
+                            <div class="bl__card-placeholder-icon" aria-hidden="true">✧</div>
+                        </div>
+                        {% endif %}
+                        <div class="bl__card-body">
+                            <h3 class="bl__card-title" style="font-size:1.1rem;">{{ related.title }}</h3>
+                            <p class="bl__card-desc">{{ related.description|truncatewords:20 }}</p>
+                            <span class="bl__card-arrow">
+                                Read More
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                            </span>
+                        </div>
+                    </a>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- ════════════════════════════════
+         CTA
+    ════════════════════════════════ -->
+    <section class="bl__cta" aria-labelledby="bl-cta-heading-detail">
+        <div class="bl__cta-orb-1" aria-hidden="true"></div>
+        <div class="bl__cta-orb-2" aria-hidden="true"></div>
+        <div class="bl__cta-inner bl__reveal">
+            <p class="bl__eyebrow bl__eyebrow--light" style="justify-content:center;">Experience Luxury Travel</p>
+            <h2 class="bl__title bl__title--light" id="bl-cta-heading-detail" style="text-align:center;">Ready to Ride with <em>SevenStar</em>?</h2>
+            <p class="bl__cta-sub">Book your Melbourne chauffeur today and experience the difference.</p>
+            <div class="bl__cta-actions">
+                <a href="{% url 'orders' %}" class="bl__btn bl__btn--gold">
+                    Book Your Transfer
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+                <a href="{% url 'tours' %}" class="bl__btn bl__btn--ghost">Book a Tour</a>
+                <a href="{% url 'contact' %}" class="bl__btn bl__btn--ghost">Get in Touch</a>
+            </div>
+        </div>
+    </section>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/blog.js' %}"></script>
+{% endblock %}

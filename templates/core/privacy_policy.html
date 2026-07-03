@@ -1,0 +1,529 @@
+{% extends "base.html" %}
+{% load static %}
+
+{# ════════════════════════════════════════════════════════════════
+   SevenStar Limo & Chauffeur — privacy.html
+   Contact details pulled from context_processor → {{ contact }}
+   Zero design changes. SEO-hardened child template.
+   Melbourne, VIC, Australia · Australian Privacy Act 1988 compliant
+════════════════════════════════════════════════════════════════ #}
+
+{# ─── PRIMARY META ───────────────────────────────────────────── #}
+{% block title %}Privacy Policy | SevenStar Limo & Chauffeur Melbourne{% endblock %}
+
+{% block meta_description %}Read the Privacy Policy for SevenStar Limo & Chauffeur Melbourne. We explain how we collect, use and protect your personal information in compliance with the Australian Privacy Act 1988 and the Australian Privacy Principles (APPs).{% endblock %}
+
+{% block meta_keywords %}SevenStar Limo privacy policy, SevenStar Chauffeur data policy, Melbourne chauffeur privacy, limo service personal information Melbourne, Australian Privacy Act chauffeur{% endblock %}
+
+{# Privacy & legal pages: index but no snippet — protects legal text from being
+   truncated in SERPs. Still indexable for brand trust signals. #}
+{% block meta_robots %}index, follow, max-snippet:-1{% endblock %}
+
+{# ─── CANONICAL ──────────────────────────────────────────────── #}
+{% block canonical_url %}https://sevenstarlimo.com.au/privacy-policy/{% endblock %}
+
+{# ─── OPEN GRAPH ─────────────────────────────────────────────── #}
+{% block og_type %}website{% endblock %}
+{% block og_title %}Privacy Policy | SevenStar Limo & Chauffeur Melbourne{% endblock %}
+{% block og_description %}How SevenStar Limo & Chauffeur collects, uses and protects your personal information. Compliant with the Australian Privacy Act 1988 and Australian Privacy Principles.{% endblock %}
+{% block og_image %}{% static 'img/logo.png' %}{% endblock %}
+{% block og_image_secure %}{% static 'img/logo.png' %}{% endblock %}
+{% block og_image_alt %}SevenStar Limo & Chauffeur Melbourne Privacy Policy{% endblock %}
+{% block og_url %}https://sevenstarlimo.com.au/privacy-policy/{% endblock %}
+
+{# ─── TWITTER / X ────────────────────────────────────────────── #}
+{% block twitter_title %}Privacy Policy | SevenStar Limo & Chauffeur Melbourne{% endblock %}
+{% block twitter_description %}Our commitment to protecting your personal information. SevenStar Limo complies with the Australian Privacy Act 1988 and Australian Privacy Principles.{% endblock %}
+{% block twitter_image %}{% static 'img/logo.png' %}{% endblock %}
+{% block twitter_image_alt %}SevenStar Limo & Chauffeur Melbourne Privacy Policy{% endblock %}
+
+{# ─── PRELOAD HERO ───────────────────────────────────────────── #}
+{% block preload_hero %}
+<link rel="preload" as="image" href="{% static 'img/logo.png' %}" fetchpriority="high">
+{% endblock %}
+
+{# ─── PAGE-LEVEL STRUCTURED DATA ─────────────────────────────── #}
+{% block extra_schema %}
+
+{# WebPage + PrivacyPolicy schema — legal page signal for Google #}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": ["WebPage", "PrivacyPolicy"],
+    "name": "Privacy Policy — SevenStar Limo & Chauffeur Melbourne",
+    "url": "https://sevenstarlimo.com.au/privacy-policy/",
+    "description": "Privacy Policy for SevenStar Limo & Chauffeur Melbourne. Explains how personal information is collected, used and protected in accordance with the Australian Privacy Act 1988.",
+    "inLanguage": "en-AU",
+    "dateModified": "2026-04-04",
+    "datePublished": "2026-03-03",
+    "isPartOf": { "@id": "https://sevenstarlimo.com.au/" },
+    "about": {
+        "@type": ["LocalBusiness", "TaxiService"],
+        "@id": "https://sevenstarlimo.com.au/",
+        "name": "SevenStar Limo & Chauffeur",
+        "telephone": "{% if contact %}{{ contact.phone }}{% else %}+61483841489{% endif %}",
+        "email": "{% if contact %}{{ contact.email }}{% else %}info@sevenstarlimo.com.au{% endif %}",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "{% if contact %}{{ contact.location }}{% else %}Melbourne{% endif %}",
+            "addressRegion": "VIC",
+            "addressCountry": "AU"
+        }
+    }
+}
+</script>
+
+{# BreadcrumbList schema #}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://sevenstarlimo.com.au/"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Privacy Policy",
+            "item": "https://sevenstarlimo.com.au/privacy-policy/"
+        }
+    ]
+}
+</script>
+
+{% endblock %}
+
+
+{# ─── STYLESHEET ─────────────────────────────────────────────── #}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/privacy.css' %}">
+{% endblock %}
+
+
+{# ════════════════════════════════════════════════════════════════
+   BODY
+════════════════════════════════════════════════════════════════ #}
+{% block body %}
+<div data-page="privacy">
+
+<!-- ════════════════════════════════
+     HERO
+════════════════════════════════ -->
+<section class="pp__hero" aria-label="SevenStar Limo Privacy Policy">
+    <div class="pp__hero-bg"
+         role="img"
+         aria-label="SevenStar Limo & Chauffeur Melbourne luxury vehicle"></div>
+    <div class="pp__hero-rule-h" aria-hidden="true"></div>
+    <div class="pp__hero-rule-v" aria-hidden="true"></div>
+
+    <div class="pp__hero-inner">
+        <p class="pp__hero-kicker">Legal &amp; Compliance — SevenStar Limo</p>
+        <h1 class="pp__hero-title">Privacy <em>Policy</em></h1>
+        <div class="pp__hero-meta">
+            <span class="pp__hero-meta-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <rect x="3" y="4" width="18" height="18" rx="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                Last updated: January 2025
+            </span>
+            <span class="pp__hero-meta-sep" aria-hidden="true"></span>
+            <span class="pp__hero-meta-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                Australian Privacy Act 1988
+            </span>
+            <span class="pp__hero-meta-sep" aria-hidden="true"></span>
+            <span class="pp__hero-meta-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <circle cx="12" cy="10" r="3"/>
+                    <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 14 8 14s8-8.75 8-14a8 8 0 0 0-8-8z"/>
+                </svg>
+                {% if contact %}{{ contact.location }}{% else %}Melbourne, Victoria, Australia{% endif %}
+            </span>
+        </div>
+    </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     TOC + CONTENT
+════════════════════════════════ -->
+<section class="pp__section" aria-label="SevenStar Limo Privacy Policy content">
+    <div class="pp__wrap">
+        <div class="pp__body-grid">
+
+            <!-- ── TABLE OF CONTENTS ──────────────────── -->
+            <nav class="pp__toc pp__reveal"
+                 aria-label="Privacy Policy table of contents">
+                <div class="pp__toc-head">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <line x1="8" y1="6" x2="21" y2="6"/>
+                        <line x1="8" y1="12" x2="21" y2="12"/>
+                        <line x1="8" y1="18" x2="21" y2="18"/>
+                        <line x1="3" y1="6" x2="3.01" y2="6"/>
+                        <line x1="3" y1="12" x2="3.01" y2="12"/>
+                        <line x1="3" y1="18" x2="3.01" y2="18"/>
+                    </svg>
+                    Contents
+                </div>
+                <ol class="pp__toc-list">
+                    <li class="pp__toc-item"><a href="#pp-1"  class="pp__toc-link"><span class="pp__toc-num">01</span>Who We Are</a></li>
+                    <li class="pp__toc-item"><a href="#pp-2"  class="pp__toc-link"><span class="pp__toc-num">02</span>Information We Collect</a></li>
+                    <li class="pp__toc-item"><a href="#pp-3"  class="pp__toc-link"><span class="pp__toc-num">03</span>How We Collect It</a></li>
+                    <li class="pp__toc-item"><a href="#pp-4"  class="pp__toc-link"><span class="pp__toc-num">04</span>How We Use It</a></li>
+                    <li class="pp__toc-item"><a href="#pp-5"  class="pp__toc-link"><span class="pp__toc-num">05</span>Disclosure to Third Parties</a></li>
+                    <li class="pp__toc-item"><a href="#pp-6"  class="pp__toc-link"><span class="pp__toc-num">06</span>Storage &amp; Security</a></li>
+                    <li class="pp__toc-item"><a href="#pp-7"  class="pp__toc-link"><span class="pp__toc-num">07</span>Cookies &amp; Tracking</a></li>
+                    <li class="pp__toc-item"><a href="#pp-8"  class="pp__toc-link"><span class="pp__toc-num">08</span>Your Rights</a></li>
+                    <li class="pp__toc-item"><a href="#pp-9"  class="pp__toc-link"><span class="pp__toc-num">09</span>Retention</a></li>
+                    <li class="pp__toc-item"><a href="#pp-10" class="pp__toc-link"><span class="pp__toc-num">10</span>Contact &amp; Complaints</a></li>
+                </ol>
+                <a href="{% url 'contact' %}"
+                   class="pp__toc-cta"
+                   title="Submit a privacy enquiry to SevenStar Limo Melbourne">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                    Privacy Enquiry
+                </a>
+            </nav>
+
+
+            <!-- ── CONTENT ────────────────────────────── -->
+            <div class="pp__content">
+
+                <div class="pp__intro pp__reveal">
+                    <strong>Your privacy matters to us.</strong> This Privacy Policy explains
+                    how SevenStar Limo &amp; Chauffeur ("we", "us", "our") collects, uses,
+                    stores and discloses your personal information. We are committed to handling
+                    your information in accordance with the
+                    <strong>Australian Privacy Act 1988 (Cth)</strong> and the Australian Privacy
+                    Principles (APPs). By using our services or website, you consent to the
+                    practices described in this policy.
+                </div>
+
+
+                <!-- ── 1. Who We Are ──────────────────── -->
+                <div class="pp__clause pp__reveal" id="pp-1">
+                    <div class="pp__clause-head">
+                        <span class="pp__clause-num" aria-hidden="true">01</span>
+                        <h2 class="pp__clause-title">Who We Are</h2>
+                    </div>
+                    <p>
+                        SevenStar Limo &amp; Chauffeur is a private ground transport operator
+                        registered and operating in Victoria, Australia. We provide chauffeur,
+                        limousine and passenger transfer services to individuals, corporations
+                        and event organisers throughout Melbourne and Victoria.
+                    </p>
+                    <p>
+                        <strong>Business name:</strong> SevenStar Limo &amp; Chauffeur<br>
+                        {% if contact and contact.abn %}
+                        <strong>ABN:</strong> {{ contact.abn }}<br>
+                        {% endif %}
+                        <strong>Address:</strong>
+                        {% if contact %}{{ contact.location }}{% else %}Melbourne, Victoria, Australia{% endif %}<br>
+                        <strong>Privacy enquiries:</strong>
+                        <a href="mailto:{% if contact %}{{ contact.email }}{% else %}privacy@sevenstarlimo.com.au{% endif %}"
+                            title="Email SevenStar Limo privacy enquiries">
+                             {% if contact %}{{ contact.email }}{% else %}privacy@sevenstarlimo.com.au{% endif %}
+                         </a><br>
+                         <strong>Phone:</strong>
+                         <a href="tel:{% if contact %}{{ contact.phone }}{% else %}+61483841489{% endif %}"
+                            title="Call SevenStar Limo Melbourne">
+                             {% if contact %}{{ contact.phone }}{% else %}+61 4 8384 1489{% endif %}
+                        </a>
+                    </p>
+                </div>
+
+
+                <!-- ── 2. Information We Collect ──────── -->
+                <div class="pp__clause pp__reveal" id="pp-2">
+                    <div class="pp__clause-head">
+                        <span class="pp__clause-num" aria-hidden="true">02</span>
+                        <h2 class="pp__clause-title">Information We Collect</h2>
+                    </div>
+                    <p>
+                        SevenStar Limo &amp; Chauffeur collects only the personal information
+                        necessary to provide our services, process bookings and communicate
+                        with you. The types of personal information we may collect include:
+                    </p>
+                    <ul class="pp__list">
+                        <li><span><strong>Identity information:</strong> Your first name, last name and, where applicable, the name of your organisation.</span></li>
+                        <li><span><strong>Contact information:</strong> Email address, phone number and postal address where provided.</span></li>
+                        <li><span><strong>Booking information:</strong> Pickup and drop-off locations, travel dates and times, flight numbers, passenger count and any special requests or requirements.</span></li>
+                        <li><span><strong>Payment information:</strong> Credit or debit card details processed securely through our payment provider (Stripe). We do not store full card numbers on our systems.</span></li>
+                        <li><span><strong>Account information:</strong> Username and hashed password if you create an account on our website.</span></li>
+                        <li><span><strong>Communication records:</strong> Emails, SMS messages and phone call notes where relevant to your booking or enquiry.</span></li>
+                        <li><span><strong>Technical information:</strong> IP address, browser type, device information and website usage data collected automatically when you visit our website.</span></li>
+                    </ul>
+                    <div class="pp__highlight">
+                        <strong>Sensitive information:</strong> SevenStar Limo does not intentionally collect sensitive information such as health, racial, political or religious data. Please do not provide this to us unless it is strictly necessary for your booking (for example, accessibility requirements).
+                    </div>
+                </div>
+
+
+                <!-- ── 3. How We Collect It ───────────── -->
+                <div class="pp__clause pp__reveal" id="pp-3">
+                    <div class="pp__clause-head">
+                        <span class="pp__clause-num" aria-hidden="true">03</span>
+                        <h2 class="pp__clause-title">How We Collect It</h2>
+                    </div>
+                    <p>We collect personal information through the following means:</p>
+                    <ul class="pp__list">
+                        <li><span><strong>Directly from you</strong> when you make a booking online at sevenstarlimo.com.au, by phone, by email, create an account, submit a contact form or communicate with us.</span></li>
+                        <li><span><strong>Automatically</strong> through cookies and similar tracking technologies when you visit our website. See Section 7 for details.</span></li>
+                        <li><span><strong>From third parties</strong> such as corporate accounts who book on behalf of passengers, travel agents or event coordinators acting as your representative.</span></li>
+                        <li><span><strong>From publicly available sources</strong> such as flight tracking services used to monitor arrival times for Melbourne airport pickups.</span></li>
+                    </ul>
+                    <p>Where practicable, we collect personal information directly from you. If we collect your information from a third party, we will take reasonable steps to inform you that this has occurred.</p>
+                </div>
+
+
+                <!-- ── 4. How We Use It ───────────────── -->
+                <div class="pp__clause pp__reveal" id="pp-4">
+                    <div class="pp__clause-head">
+                        <span class="pp__clause-num" aria-hidden="true">04</span>
+                        <h2 class="pp__clause-title">How We Use It</h2>
+                    </div>
+                    <p>We use your personal information only for the purposes for which it was collected, or for directly related purposes. These include:</p>
+                    <ul class="pp__list">
+                        <li><span>Processing, confirming and managing your SevenStar Limo booking.</span></li>
+                        <li><span>Contacting you about your booking, including sending confirmations, driver details and journey reminders.</span></li>
+                        <li><span>Providing and improving our Melbourne chauffeur and limousine services.</span></li>
+                        <li><span>Processing payments and issuing invoices or receipts.</span></li>
+                        <li><span>Responding to enquiries, complaints or feedback.</span></li>
+                        <li><span>Sending service-related communications and, with your consent, promotional information about SevenStar Limo offerings.</span></li>
+                        <li><span>Complying with our legal obligations under Victorian and Australian law.</span></li>
+                        <li><span>Analysing website usage to improve the user experience at sevenstarlimo.com.au.</span></li>
+                    </ul>
+                    <div class="pp__highlight">
+                        SevenStar Limo will never use your personal information to send you marketing communications from third parties, or sell it to advertisers or data brokers. <strong>Your data is not for sale.</strong>
+                    </div>
+                </div>
+
+
+                <!-- ── 5. Disclosure to Third Parties ─── -->
+                <div class="pp__clause pp__reveal" id="pp-5">
+                    <div class="pp__clause-head">
+                        <span class="pp__clause-num" aria-hidden="true">05</span>
+                        <h2 class="pp__clause-title">Disclosure to Third Parties</h2>
+                    </div>
+                    <p>SevenStar Limo does not sell, rent or trade your personal information. We may disclose your information to third parties only in the following limited circumstances:</p>
+                    <ul class="pp__list">
+                        <li><span><strong>Assigned drivers:</strong> Your name, phone number, pickup location and relevant booking details are shared with your assigned SevenStar Limo driver to fulfil the booking.</span></li>
+                        <li><span><strong>Payment processors:</strong> Your payment details are passed securely to Stripe for transaction processing. Stripe is bound by its own privacy policy and PCI-DSS security requirements.</span></li>
+                        <li><span><strong>IT and hosting providers:</strong> Our website and booking system are hosted by third-party infrastructure providers under data processing agreements that require them to protect your information.</span></li>
+                        <li><span><strong>Legal requirements:</strong> We may disclose your information if required to do so by law, court order, or a regulatory authority.</span></li>
+                        <li><span><strong>Corporate bookings:</strong> If your booking was made by a corporate account holder, relevant booking details may be shared with that account holder for billing and reconciliation purposes.</span></li>
+                    </ul>
+                    <p>We do not disclose personal information to overseas recipients except where our hosting or processing infrastructure operates overseas, in which case we take reasonable steps to ensure equivalent privacy protections are in place.</p>
+                </div>
+
+
+                <!-- ── 6. Storage & Security ──────────── -->
+                <div class="pp__clause pp__reveal" id="pp-6">
+                    <div class="pp__clause-head">
+                        <span class="pp__clause-num" aria-hidden="true">06</span>
+                        <h2 class="pp__clause-title">Storage &amp; Security</h2>
+                    </div>
+                    <p>SevenStar Limo takes reasonable steps to protect the personal information we hold from misuse, interference, loss, and unauthorised access, modification or disclosure. Our security measures include:</p>
+                    <ul class="pp__list">
+                        <li><span>HTTPS encryption for all data transmitted through sevenstarlimo.com.au.</span></li>
+                        <li><span>Hashed and salted password storage — we never store passwords in plain text.</span></li>
+                        <li><span>Payment card data is handled entirely by Stripe (PCI-DSS compliant) and is not stored on our servers.</span></li>
+                        <li><span>Access to personal information is restricted to staff who need it to perform their duties.</span></li>
+                        <li><span>Regular security reviews of our website and booking systems.</span></li>
+                    </ul>
+                    <p>
+                        Despite these measures, no method of data transmission or storage is completely secure.
+                        If you have reason to believe your information has been compromised, please contact us immediately at
+                        <a href="mailto:{% if contact %}{{ contact.email }}{% else %}privacy@sevenstarlimo.com.au{% endif %}"
+                           title="Report a data security concern to SevenStar Limo">
+                            {% if contact %}{{ contact.email }}{% else %}privacy@sevenstarlimo.com.au{% endif %}
+                        </a>.
+                    </p>
+                    <div class="pp__highlight">
+                        <strong>Data breach notification:</strong> In the event of a serious data breach likely to cause harm, SevenStar Limo will notify affected individuals and the Office of the Australian Information Commissioner (OAIC) as required under the Notifiable Data Breaches scheme.
+                    </div>
+                </div>
+
+
+                <!-- ── 7. Cookies & Tracking ──────────── -->
+                <div class="pp__clause pp__reveal" id="pp-7">
+                    <div class="pp__clause-head">
+                        <span class="pp__clause-num" aria-hidden="true">07</span>
+                        <h2 class="pp__clause-title">Cookies &amp; Tracking</h2>
+                    </div>
+                    <p>Our website uses cookies and similar technologies to improve your browsing experience and analyse how the site is used. A cookie is a small text file stored on your device by your browser.</p>
+                    <ul class="pp__list">
+                        <li><span><strong>Essential cookies:</strong> Required for the website to function, including session management and CSRF protection for forms. These cannot be disabled.</span></li>
+                        <li><span><strong>Analytics cookies:</strong> Used to understand how visitors interact with sevenstarlimo.com.au (e.g. pages visited, time on site). We use anonymised, aggregated data only.</span></li>
+                        <li><span><strong>Preference cookies:</strong> Store your settings and preferences to improve your experience on return visits.</span></li>
+                    </ul>
+                    <p>You can control or disable non-essential cookies through your browser settings at any time. Disabling cookies may affect some functionality of the website. We do not use advertising or third-party tracking cookies.</p>
+                </div>
+
+
+                <!-- ── 8. Your Rights ─────────────────── -->
+                <div class="pp__clause pp__reveal" id="pp-8">
+                    <div class="pp__clause-head">
+                        <span class="pp__clause-num" aria-hidden="true">08</span>
+                        <h2 class="pp__clause-title">Your Rights</h2>
+                    </div>
+                    <p>Under the Australian Privacy Act 1988, you have the following rights in relation to your personal information held by SevenStar Limo &amp; Chauffeur:</p>
+                    <ul class="pp__list">
+                        <li><span><strong>Access:</strong> You may request a copy of the personal information we hold about you.</span></li>
+                        <li><span><strong>Correction:</strong> If you believe information we hold is inaccurate, incomplete or out of date, you may request we correct it. You can also update your details directly through your account profile.</span></li>
+                        <li><span><strong>Deletion:</strong> You may request that we delete your personal information, subject to our legal and contractual retention obligations.</span></li>
+                        <li><span><strong>Opt-out of marketing:</strong> You may unsubscribe from marketing communications at any time by clicking "unsubscribe" in any email we send, or by contacting us directly.</span></li>
+                        <li><span><strong>Complaints:</strong> You may lodge a complaint about how SevenStar Limo has handled your information. See Section 10.</span></li>
+                    </ul>
+                    <p>
+                        To exercise any of these rights, please contact us at
+                        <a href="mailto:{% if contact %}{{ contact.email }}{% else %}privacy@sevenstarlimo.com.au{% endif %}"
+                           title="Email SevenStar Limo to exercise your privacy rights">
+                            {% if contact %}{{ contact.email }}{% else %}privacy@sevenstarlimo.com.au{% endif %}
+                        </a>.
+                        We will respond within 30 days. In some cases we may need to verify your identity before processing a request.
+                    </p>
+                </div>
+
+
+                <!-- ── 9. Retention ───────────────────── -->
+                <div class="pp__clause pp__reveal" id="pp-9">
+                    <div class="pp__clause-head">
+                        <span class="pp__clause-num" aria-hidden="true">09</span>
+                        <h2 class="pp__clause-title">Retention</h2>
+                    </div>
+                    <p>SevenStar Limo retains personal information only for as long as necessary to fulfil the purposes for which it was collected, or as required by law. Our general retention periods are:</p>
+                    <ul class="pp__list">
+                        <li><span><strong>Booking and transaction records:</strong> 7 years, as required for tax and financial record-keeping under Australian law.</span></li>
+                        <li><span><strong>Account information:</strong> For the duration your account is active. If you delete your account, your personal data is removed within 30 days, except where retention is required by law.</span></li>
+                        <li><span><strong>Communication records:</strong> 2 years from the date of last contact, unless the communication relates to a booking or dispute.</span></li>
+                        <li><span><strong>Website analytics data:</strong> Anonymised and aggregated. Not subject to individual retention limits.</span></li>
+                    </ul>
+                    <p>When personal information is no longer required, SevenStar Limo takes reasonable steps to destroy or de-identify it securely.</p>
+                </div>
+
+
+                <!-- ── 10. Contact & Complaints ───────── -->
+                <div class="pp__clause pp__reveal" id="pp-10">
+                    <div class="pp__clause-head">
+                        <span class="pp__clause-num" aria-hidden="true">10</span>
+                        <h2 class="pp__clause-title">Contact &amp; Complaints</h2>
+                    </div>
+                    <p>If you have a question, concern or complaint about how SevenStar Limo handles your personal information, please contact us in the first instance:</p>
+                    <p>
+                        <strong>Email:</strong>
+                        <a href="mailto:{% if contact %}{{ contact.email }}{% else %}privacy@sevenstarlimo.com.au{% endif %}"
+                            title="Email SevenStar Limo privacy team">
+                             {% if contact %}{{ contact.email }}{% else %}privacy@sevenstarlimo.com.au{% endif %}
+                         </a><br>
+                         <strong>Phone:</strong>
+                         <a href="tel:{% if contact %}{{ contact.phone }}{% else %}+61483841489{% endif %}"
+                            title="Call SevenStar Limo Melbourne">
+                             {% if contact %}{{ contact.phone }}{% else %}+61 4 8384 1489{% endif %}
+                        </a><br>
+                        <strong>Post:</strong> Privacy Officer, SevenStar Limo &amp; Chauffeur,
+                        {% if contact %}{{ contact.location }}{% else %}Melbourne VIC, Australia{% endif %}
+                    </p>
+                    <p>
+                        We will acknowledge your complaint within 5 business days and aim to resolve
+                        it within 30 days. If you are not satisfied with our response, you may
+                        escalate your complaint to the
+                        <strong>Office of the Australian Information Commissioner (OAIC)</strong>:
+                    </p>
+                    <ul class="pp__list">
+                        <li><span>Website: <a href="https://www.oaic.gov.au" target="_blank" rel="noopener noreferrer" title="Office of the Australian Information Commissioner">www.oaic.gov.au</a></span></li>
+                        <li><span>Phone: 1300 363 992</span></li>
+                        <li><span>Post: GPO Box 5218, Sydney NSW 2001</span></li>
+                    </ul>
+                    <p>
+                        This Privacy Policy was last updated in January 2025. SevenStar Limo reserves
+                        the right to update it at any time. The current version will always be
+                        available at
+                        <a href="{% url 'privacy_policy' %}"
+                           title="SevenStar Limo Privacy Policy — current version">
+                            sevenstarlimo.com.au/privacy/
+                        </a>.
+                        Continued use of our services after a policy update constitutes acceptance
+                        of the revised policy.
+                    </p>
+                </div>
+
+            </div><!-- /pp__content -->
+        </div>
+    </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     CTA BANNER
+════════════════════════════════ -->
+<section class="pp__cta-banner" aria-labelledby="pp-cta-heading">
+    <div class="pp__cta-inner">
+        <p class="pp__cta-label">Questions About Your Data?</p>
+        <h2 class="pp__cta-title" id="pp-cta-heading">
+            We're Open, Transparent<br>&amp; Here to Help
+        </h2>
+        <p class="pp__cta-sub">
+            If you have any questions about this Privacy Policy or how SevenStar Limo
+            handles your information, get in touch with us directly
+            {% if contact %}
+            on
+            <a href="tel:{{ contact.phone }}"
+               style="color:rgba(255,255,255,.95);text-decoration:none;font-weight:600;"
+               title="Call SevenStar Limo Melbourne">{{ contact.phone }}</a>
+            or at
+            <a href="mailto:{{ contact.email }}"
+               style="color:rgba(255,255,255,.95);text-decoration:none;font-weight:600;"
+               title="Email SevenStar Limo Melbourne">{{ contact.email }}</a>
+            {% endif %}.
+        </p>
+        <div class="pp__cta-actions">
+            <a href="{% url 'contact' %}"
+               class="pp__btn-white"
+               title="Contact SevenStar Limo & Chauffeur Melbourne about privacy">
+                Contact Us
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12"/>
+                    <polyline points="12 5 19 12 12 19"/>
+                </svg>
+            </a>
+            <a href="{% url 'terms' %}"
+               class="pp__btn-outline"
+               title="Read SevenStar Limo Terms & Conditions">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                </svg>
+                Terms &amp; Conditions
+            </a>
+        </div>
+    </div>
+</section>
+
+</div><!-- /[data-page="privacy"] -->
+{% endblock %}
+
+
+{# ─── DEFERRED JS ────────────────────────────────────────────── #}
+{% block extra_js %}
+<script src="{% static 'js/privacy.js' %}" defer></script>
+{% endblock %}

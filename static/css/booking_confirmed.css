@@ -1,0 +1,289 @@
+/* ════════════════════════════════════════════════════════════════
+   SevenStar Limo & Chauffeur — booking_confirmed.css
+   Payment confirmation page · all classes prefixed bc__
+   Scoped to .bc__page — zero conflict with nav__ ftr__ bf__ bs__ pr__ etc.
+════════════════════════════════════════════════════════════════ */
+
+.bc__page {
+    --bc-ink:        #1a1714;
+    --bc-ink-2:      #2e2a26;
+    --bc-ink-soft:   #4a4540;
+    --bc-ink-muted:  #a09890;
+    --bc-cream:      #faf8f3;
+    --bc-cream-2:    #f3efe6;
+    --bc-white:      #ffffff;
+    --bc-gold:       #b8902e;
+    --bc-gold-lt:    #d4aa4a;
+    --bc-gold-dk:    #9a7520;
+    --bc-gold-bg:    rgba(184,144,46,0.07);
+    --bc-gold-brd:   rgba(184,144,46,0.25);
+    --bc-border:     #e8e2d6;
+    --bc-border-2:   #f0ece4;
+    --bc-ok:         #2a6e48;
+    --bc-ok-bg:      rgba(42,110,72,0.07);
+    --bc-ok-brd:     rgba(42,110,72,0.25);
+    --bc-ok-lt:      #a8d5be;
+    --bc-serif:      'Cormorant Garamond', Georgia, serif;
+    --bc-sans:       'Jost', system-ui, sans-serif;
+    --bc-ease:       cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --bc-r:          14px;
+    --bc-rs:         10px;
+    --bc-shadow:     0 2px 24px rgba(26,23,20,.06);
+    --bc-shadow-h:   0 8px 40px rgba(26,23,20,.12);
+
+    font-family: var(--bc-sans);
+    background: var(--bc-cream);
+    color: var(--bc-ink);
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* ════════════════════════════════════════════════════════════
+   HERO BAND
+════════════════════════════════════════════════════════════ */
+.bc__hero {
+    background: var(--bc-ink);
+    padding: calc(36px + 68px + 2.5rem) 2rem 0;
+    text-align: center;
+    position: relative; overflow: hidden;
+}
+.bc__hero-bg {
+    position: absolute; inset: 0;
+    background:
+        radial-gradient(ellipse 80% 55% at 50% 110%, rgba(42,110,72,.2) 0%, transparent 70%),
+        linear-gradient(180deg, rgba(26,23,20,.96) 0%, rgba(26,23,20,.88) 100%),
+        url("../img/hero-car.jpg") center / cover no-repeat;
+}
+.bc__hero-rule {
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 120px; height: 2px;
+    background: linear-gradient(to right, transparent, var(--bc-gold), transparent);
+}
+.bc__hero-inner { position: relative; z-index: 2; }
+
+.bc__eyebrow {
+    font-size: .6rem; font-weight: 600; letter-spacing: .3em; text-transform: uppercase;
+    color: var(--bc-gold-lt); display: inline-flex; align-items: center; gap: .65rem;
+    margin-bottom: .9rem;
+}
+.bc__eyebrow::before, .bc__eyebrow::after {
+    content: ''; width: 20px; height: 1px; background: var(--bc-gold-lt);
+}
+.bc__hero h1 {
+    font-family: var(--bc-serif); font-size: clamp(1.9rem, 5vw, 3rem);
+    font-weight: 300; color: #f8f5ef; line-height: 1.1;
+    letter-spacing: -.02em; margin: 0;
+}
+.bc__hero h1 em { font-style: italic; color: var(--bc-gold-lt); }
+.bc__hero-sub {
+    margin-top: .55rem; color: rgba(248,245,239,.45);
+    font-size: .88rem; font-weight: 300;
+}
+
+/* all-done progress tracker */
+.bc__prog {
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 1.8rem; padding-bottom: 2rem; position: relative; z-index: 2;
+}
+.bc__ps { display: flex; flex-direction: column; align-items: center; gap: .5rem; }
+.bc__pl {
+    width: 60px; height: 1px; margin-bottom: 1.4rem; flex-shrink: 0;
+    background: var(--bc-gold);
+}
+.bc__pc {
+    width: 30px; height: 30px; border-radius: 50%;
+    border: 2px solid var(--bc-gold); background: var(--bc-gold);
+    color: var(--bc-ink); font-size: .72rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+}
+.bc__plbl {
+    font-size: .6rem; letter-spacing: .12em; text-transform: uppercase;
+    font-weight: 600; color: var(--bc-gold);
+}
+
+/* ════════════════════════════════════════════════════════════
+   SUCCESS BLOCK
+════════════════════════════════════════════════════════════ */
+.bc__wrap {
+    max-width: 760px; margin: 0 auto;
+    padding: 0 1.5rem 6rem;
+}
+
+/* animated check ring */
+.bc__ring {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: var(--bc-ok-bg); border: 2px solid var(--bc-ok-brd);
+    display: flex; align-items: center; justify-content: center;
+    margin: 2.8rem auto 1.2rem;
+    animation: bc-pop .55s cubic-bezier(.34,1.56,.64,1) both;
+}
+.bc__ring svg path {
+    stroke-dasharray: 40; stroke-dashoffset: 40;
+    animation: bc-draw .6s ease .4s forwards;
+}
+
+.bc__success-title {
+    text-align: center;
+    font-family: var(--bc-serif); font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 400; color: var(--bc-ink); margin-bottom: .4rem;
+}
+.bc__success-title em { font-style: italic; color: var(--bc-ok); }
+
+.bc__success-sub {
+    text-align: center; color: var(--bc-ink-muted);
+    font-size: .88rem; margin-bottom: 2.2rem;
+}
+
+/* booking reference badge */
+.bc__ref {
+    display: block; width: fit-content; margin: 0 auto 2.4rem;
+    background: var(--bc-ink); color: var(--bc-gold-lt);
+    font-family: var(--bc-serif); font-size: 1.2rem; font-weight: 400;
+    letter-spacing: .15em; padding: .8rem 1.8rem;
+    border-radius: var(--bc-rs); text-align: center;
+}
+.bc__ref small {
+    display: block; font-family: var(--bc-sans);
+    font-size: .6rem; font-weight: 600; letter-spacing: .2em;
+    text-transform: uppercase; opacity: .5; margin-bottom: .2rem;
+}
+
+/* ── Summary cards ───────────────────────────────────────── */
+.bc__card {
+    background: var(--bc-white);
+    border: 1px solid var(--bc-border);
+    border-radius: var(--bc-r);
+    box-shadow: var(--bc-shadow);
+    padding: 1.8rem 1.8rem 1.6rem;
+    margin-bottom: 1.2rem;
+    position: relative; overflow: hidden;
+    transition: box-shadow .25s var(--bc-ease);
+    animation: bc-up .45s var(--bc-ease) both;
+}
+.bc__card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(to right, var(--bc-gold), var(--bc-gold-lt) 55%, transparent);
+    opacity: 0; transition: opacity .25s;
+}
+.bc__card:hover { box-shadow: var(--bc-shadow-h); }
+.bc__card:hover::before { opacity: 1; }
+.bc__card:nth-child(1) { animation-delay: .1s; }
+.bc__card:nth-child(2) { animation-delay: .18s; }
+
+.bc__card-title {
+    font-family: var(--bc-serif); font-size: 1.1rem; font-weight: 500;
+    color: var(--bc-ink); margin-bottom: 1.2rem; padding-bottom: .85rem;
+    border-bottom: 1px solid var(--bc-border-2);
+    display: flex; align-items: center; gap: .65rem;
+}
+
+.bc__row {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding: .6rem 0; border-bottom: 1px solid var(--bc-border-2);
+    font-size: .875rem;
+}
+.bc__row:last-of-type { border-bottom: none; }
+.bc__lbl { color: var(--bc-ink-muted); font-weight: 300; flex-shrink: 0; margin-right: 1.2rem; }
+.bc__val { color: var(--bc-ink-2); font-weight: 400; text-align: right; }
+
+/* tags */
+.bc__tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.1rem; }
+.bc__tag {
+    padding: .28rem .8rem; border-radius: 100px;
+    font-size: .68rem; font-weight: 600;
+    display: flex; align-items: center; gap: .3rem;
+    background: var(--bc-gold-bg); color: var(--bc-gold-dk);
+    border: 1px solid var(--bc-gold-brd);
+}
+.bc__tag--green { background: var(--bc-ok-bg); color: var(--bc-ok); border-color: var(--bc-ok-brd); }
+
+/* ── Amount charged panel ────────────────────────────────── */
+.bc__paid {
+    background: var(--bc-ink);
+    border-radius: var(--bc-r);
+    padding: 2rem 1.8rem 1.8rem;
+    position: relative; overflow: hidden;
+    margin-bottom: 1.2rem;
+    animation: bc-up .45s var(--bc-ease) .3s both;
+}
+.bc__paid::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 80% at 110% 110%, rgba(184,144,46,.22) 0%, transparent 65%);
+    pointer-events: none;
+}
+.bc__paid-inner { position: relative; z-index: 2; }
+
+.bc__paid-eyebrow {
+    font-size: .6rem; letter-spacing: .24em; text-transform: uppercase;
+    color: var(--bc-gold); font-weight: 600; margin-bottom: .5rem;
+}
+.bc__paid-amount {
+    font-family: var(--bc-serif); font-size: 3.2rem; font-weight: 300;
+    color: #f8f5ef; line-height: 1; letter-spacing: -.02em;
+}
+.bc__paid-aud {
+    font-size: 1.1rem; font-weight: 300; opacity: .5;
+    margin-right: .25rem; vertical-align: top; line-height: 2.65;
+}
+.bc__paid-tags {
+    display: flex; flex-wrap: wrap; gap: .5rem;
+    margin-top: 1.1rem; padding-top: 1.1rem;
+    border-top: 1px solid rgba(255,255,255,.1);
+}
+.bc__paid-tag {
+    background: rgba(255,255,255,.09); color: rgba(255,255,255,.6);
+    font-size: .7rem; padding: .28rem .85rem; border-radius: 100px;
+    display: flex; align-items: center; gap: .35rem;
+}
+.bc__paid-tag--green { background: rgba(42,110,72,.22); color: var(--bc-ok-lt); }
+
+.bc__paid-badge {
+    display: inline-flex; align-items: center; gap: .45rem;
+    background: rgba(42,110,72,.18); color: var(--bc-ok-lt);
+    border: 1px solid rgba(42,110,72,.35);
+    font-size: .7rem; font-weight: 600; padding: .28rem .85rem;
+    border-radius: 100px; margin-top: 1rem;
+}
+
+/* ── What's next block ───────────────────────────────────── */
+.bc__next {
+    background: var(--bc-gold-bg); border: 1px solid var(--bc-gold-brd);
+    border-radius: var(--bc-r); padding: 1.8rem;
+    margin-top: 1.2rem;
+    animation: bc-up .45s var(--bc-ease) .38s both;
+}
+.bc__next h3 {
+    font-family: var(--bc-serif); font-size: 1.1rem; font-weight: 500;
+    color: var(--bc-ink); margin-bottom: 1.2rem;
+}
+.bc__step {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: .8rem 0; border-bottom: 1px solid rgba(184,144,46,.2);
+}
+.bc__step:last-child { border-bottom: none; padding-bottom: 0; }
+.bc__step-n {
+    width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+    background: var(--bc-gold); color: #fff;
+    font-size: .7rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+}
+.bc__step-txt strong { display: block; font-size: .87rem; font-weight: 500; color: var(--bc-ink); margin-bottom: .15rem; }
+.bc__step-txt span   { font-size: .8rem; color: var(--bc-ink-soft); line-height: 1.55; }
+
+/* ════════════════════════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+    .bc__card, .bc__paid, .bc__next { padding: 1.4rem 1.2rem; }
+    .bc__paid-amount { font-size: 2.6rem; }
+    .bc__wrap { padding: 0 1rem 5rem; }
+}
+
+/* ── Animations ──────────────────────────────────────────── */
+@keyframes bc-pop  { from { opacity: 0; transform: scale(.5); }  to { opacity: 1; transform: scale(1); } }
+@keyframes bc-draw { to { stroke-dashoffset: 0; } }
+@keyframes bc-up   { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }

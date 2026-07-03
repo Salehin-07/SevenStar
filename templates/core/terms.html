@@ -1,0 +1,526 @@
+{% extends "base.html" %}
+{% load static %}
+
+{# ════════════════════════════════════════════════════════════════
+   SevenStar Limo & Chauffeur — terms.html
+   Contact details pulled from context_processor → {{ contact }}
+   Images served from /static/img/
+   Zero design changes. SEO-hardened child template.
+   Melbourne, VIC, Australia · Governed by Victorian law
+════════════════════════════════════════════════════════════════ #}
+
+{# ─── PRIMARY META ───────────────────────────────────────────── #}
+{% block title %}Terms & Conditions | SevenStar Limo & Chauffeur Melbourne{% endblock %}
+
+{% block meta_description %}Read the Terms and Conditions for SevenStar Limo & Chauffeur Melbourne. Covers bookings, cancellations, fixed pricing, passenger conduct, airport transfers, liability and more. Governed by Victorian law.{% endblock %}
+
+{% block meta_keywords %}SevenStar Limo terms conditions, SevenStar Chauffeur booking terms, Melbourne chauffeur cancellation policy, limo hire terms Melbourne, chauffeur fixed pricing terms, airport transfer terms Melbourne{% endblock %}
+
+{# Legal pages: index but protect from snippet extraction #}
+{% block meta_robots %}index, follow, max-snippet:-1{% endblock %}
+
+{# ─── CANONICAL ──────────────────────────────────────────────── #}
+{% block canonical_url %}https://sevenstarlimo.com.au/terms-and-condition/{% endblock %}
+
+{# ─── OPEN GRAPH ─────────────────────────────────────────────── #}
+{% block og_type %}website{% endblock %}
+{% block og_title %}Terms & Conditions | SevenStar Limo & Chauffeur Melbourne{% endblock %}
+{% block og_description %}Booking terms, cancellation policy, fixed pricing and liability for SevenStar Limo & Chauffeur Melbourne. All journeys are covered by our transparent, no-surprise Terms & Conditions.{% endblock %}
+{% block og_image %}{% static 'img/logo.png' %}{% endblock %}
+{% block og_image_secure %}{% static 'img/logo.png' %}{% endblock %}
+{% block og_image_alt %}SevenStar Limo & Chauffeur Melbourne Terms and Conditions{% endblock %}
+{% block og_url %}https://sevenstarlimo.com.au/terms-and-condition/{% endblock %}
+
+{# ─── TWITTER / X ────────────────────────────────────────────── #}
+{% block twitter_title %}Terms & Conditions | SevenStar Limo & Chauffeur Melbourne{% endblock %}
+{% block twitter_description %}Booking terms, cancellation policy and fixed pricing for SevenStar Limo & Chauffeur Melbourne. Clear, fair, no surprises.{% endblock %}
+{% block twitter_image %}{% static 'img/logo.png' %}{% endblock %}
+{% block twitter_image_alt %}SevenStar Limo & Chauffeur Melbourne Terms and Conditions{% endblock %}
+
+{# ─── PRELOAD HERO ───────────────────────────────────────────── #}
+{% block preload_hero %}
+<link rel="preload" as="image" href="{% static 'img/logo.png' %}" fetchpriority="high">
+{% endblock %}
+
+{# ─── PAGE-LEVEL STRUCTURED DATA ─────────────────────────────── #}
+{% block extra_schema %}
+
+{# WebPage schema with TermsOfService type signal #}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Terms & Conditions — SevenStar Limo & Chauffeur Melbourne",
+    "url": "https://sevenstarlimo.com.au/terms-and-condition/",
+    "description": "Terms and Conditions for SevenStar Limo & Chauffeur Melbourne. Covers bookings, cancellations, pricing, passenger conduct, airport transfers, liability and governing law.",
+    "inLanguage": "en-AU",
+    "dateModified": "2026-04-04",
+    "datePublished": "2026-03-03",
+    "isPartOf": { "@id": "https://sevenstarlimo.com.au/" },
+    "about": {
+        "@type": ["LocalBusiness", "TaxiService"],
+        "@id": "https://sevenstarlimo.com.au/",
+        "name": "SevenStar Limo Pyt. Ltd.",
+        "telephone": "{% if contact %}{{ contact.phone }}{% else %}+61483841489{% endif %}",
+        "email": "{% if contact %}{{ contact.email }}{% else %}info@sevenstarlimo.com.au{% endif %}",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "{% if contact %}{{ contact.location }}{% else %}Melbourne{% endif %}",
+            "addressRegion": "VIC",
+            "addressCountry": "AU"
+        }
+    }
+}
+</script>
+
+{# BreadcrumbList schema #}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://sevenstarlimo.com.au/"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Terms & Conditions",
+            "item": "https://sevenstarlimo.com.au/terms-and-condition/"
+        }
+    ]
+}
+</script>
+
+{# FAQPage — cancellation policy questions are high-value SERP features #}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What is SevenStar Limo's cancellation policy?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "SevenStar Limo & Chauffeur offers a full refund for cancellations made more than 24 hours before the booking. Cancellations between 4 and 24 hours attract a 50% fee. Cancellations with less than 4 hours notice or no-shows are charged at 100% of the fare. Special events require 72 hours notice for a full refund."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Does SevenStar Limo charge surge or hidden fees?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. SevenStar Limo & Chauffeur operates fixed pricing only. The price confirmed at the time of booking is the price you pay — there is no surge pricing, hidden airport fees or metered billing. All prices include GST."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How long will my SevenStar Limo driver wait at Melbourne Airport?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "SevenStar Limo drivers wait 45 minutes complimentary for domestic Melbourne airport pickups and 60 minutes for international arrivals, measured from the scheduled flight arrival time. All flights are monitored in real time, so delayed flights are automatically tracked at no extra charge."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How do I cancel or modify a SevenStar Limo booking?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "To cancel or modify a SevenStar Limo booking, contact us by phone{% if contact %} on {{ contact.phone }}{% endif %} or email{% if contact %} at {{ contact.email }}{% endif %} with your booking reference number. Cancellation fees apply based on the notice period given."
+            }
+        }
+    ]
+}
+</script>
+
+{% endblock %}
+
+
+{# ─── STYLESHEET ─────────────────────────────────────────────── #}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/terms.css' %}">
+{% endblock %}
+
+
+{# ════════════════════════════════════════════════════════════════
+   BODY
+════════════════════════════════════════════════════════════════ #}
+{% block body %}
+<div data-page="terms">
+
+<!-- ════════════════════════════════
+     HERO
+════════════════════════════════ -->
+<section class="tc__hero"
+         aria-label="SevenStar Limo & Chauffeur Terms and Conditions">
+
+    <div class="tc__hero-bg"
+         role="img"
+         aria-label="SevenStar Limo & Chauffeur Melbourne luxury vehicle"></div>
+    <div class="tc__hero-rule-h" aria-hidden="true"></div>
+    <div class="tc__hero-rule-v" aria-hidden="true"></div>
+
+    <div class="tc__hero-inner">
+        <p class="tc__hero-kicker">Legal &amp; Booking — SevenStar Limo</p>
+        <h1 class="tc__hero-title">Terms &amp; <em>Conditions</em></h1>
+        <div class="tc__hero-meta">
+            <span class="tc__hero-meta-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <rect x="3" y="4" width="18" height="18" rx="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                Last updated: January 2025
+            </span>
+            <span class="tc__hero-meta-sep" aria-hidden="true"></span>
+            <span class="tc__hero-meta-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="8" x2="12" y2="12"/>
+                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+                Applies to all bookings
+            </span>
+            <span class="tc__hero-meta-sep" aria-hidden="true"></span>
+            <span class="tc__hero-meta-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <circle cx="12" cy="10" r="3"/>
+                    <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 14 8 14s8-8.75 8-14a8 8 0 0 0-8-8z"/>
+                </svg>
+                {% if contact %}{{ contact.location }}{% else %}Melbourne, Victoria, Australia{% endif %}
+            </span>
+        </div>
+    </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     TOC + CONTENT
+════════════════════════════════ -->
+<section class="tc__section"
+         aria-label="SevenStar Limo Terms and Conditions content">
+    <div class="tc__wrap">
+        <div class="tc__body-grid">
+
+            <!-- ── TABLE OF CONTENTS ──────────────────── -->
+            <nav class="tc__toc tc__reveal"
+                 aria-label="Terms and Conditions table of contents">
+                <div class="tc__toc-head">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <line x1="8" y1="6" x2="21" y2="6"/>
+                        <line x1="8" y1="12" x2="21" y2="12"/>
+                        <line x1="8" y1="18" x2="21" y2="18"/>
+                        <line x1="3" y1="6" x2="3.01" y2="6"/>
+                        <line x1="3" y1="12" x2="3.01" y2="12"/>
+                        <line x1="3" y1="18" x2="3.01" y2="18"/>
+                    </svg>
+                    Contents
+                </div>
+                <ol class="tc__toc-list">
+                    <li class="tc__toc-item"><a href="#tc-1"  class="tc__toc-link"><span class="tc__toc-num">01</span>Definitions</a></li>
+                    <li class="tc__toc-item"><a href="#tc-2"  class="tc__toc-link"><span class="tc__toc-num">02</span>Bookings &amp; Confirmation</a></li>
+                    <li class="tc__toc-item"><a href="#tc-3"  class="tc__toc-link"><span class="tc__toc-num">03</span>Pricing &amp; Payment</a></li>
+                    <li class="tc__toc-item"><a href="#tc-4"  class="tc__toc-link"><span class="tc__toc-num">04</span>Cancellations &amp; Refunds</a></li>
+                    <li class="tc__toc-item"><a href="#tc-5"  class="tc__toc-link"><span class="tc__toc-num">05</span>Passenger Conduct</a></li>
+                    <li class="tc__toc-item"><a href="#tc-6"  class="tc__toc-link"><span class="tc__toc-num">06</span>Wait Time &amp; No-Show</a></li>
+                    <li class="tc__toc-item"><a href="#tc-7"  class="tc__toc-link"><span class="tc__toc-num">07</span>Airport Transfers</a></li>
+                    <li class="tc__toc-item"><a href="#tc-8"  class="tc__toc-link"><span class="tc__toc-num">08</span>Liability</a></li>
+                    <li class="tc__toc-item"><a href="#tc-9"  class="tc__toc-link"><span class="tc__toc-num">09</span>Privacy</a></li>
+                    <li class="tc__toc-item"><a href="#tc-10" class="tc__toc-link"><span class="tc__toc-num">10</span>Governing Law</a></li>
+                </ol>
+                <a href="{% url 'orders' %}"
+                   class="tc__toc-cta"
+                   title="Book a SevenStar Limo Melbourne transfer now">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                        <polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                    Book Now
+                </a>
+            </nav>
+
+
+            <!-- ── CONTENT ────────────────────────────── -->
+            <div class="tc__content">
+
+                <div class="tc__intro tc__reveal">
+                    <strong>Please read these Terms and Conditions carefully before making a booking.</strong>
+                    By completing a booking with SevenStar Limo &amp; Chauffeur ("we", "us", "our"),
+                    you agree to be bound by these Terms. These Terms apply to all bookings made online,
+                    by phone or by email, and constitute the entire agreement between you and SevenStar Limo.
+                </div>
+
+
+                <!-- ── 1. Definitions ─────────────────── -->
+                <div class="tc__clause tc__reveal" id="tc-1">
+                    <div class="tc__clause-head">
+                        <span class="tc__clause-num" aria-hidden="true">01</span>
+                        <h2 class="tc__clause-title">Definitions</h2>
+                    </div>
+                    <p>In these Terms and Conditions, the following definitions apply:</p>
+                    <ul class="tc__list">
+                        <li><span><strong>"Service"</strong> means any chauffeur, limousine or transfer service provided by SevenStar Limo &amp; Chauffeur.</span></li>
+                        <li><span><strong>"Booking"</strong> means a confirmed reservation for a Service, whether made online at sevenstarlimo.com.au, by telephone or by email.</span></li>
+                        <li><span><strong>"Client"</strong> means any person or entity who makes a Booking or uses our Service.</span></li>
+                        <li><span><strong>"Passenger"</strong> means any person travelling in a vehicle as part of the Service.</span></li>
+                        <li><span><strong>"Vehicle"</strong> means any motor vehicle used by SevenStar Limo to provide the Service.</span></li>
+                        <li><span><strong>"Driver"</strong> means a CPV-accredited driver employed or contracted by SevenStar Limo &amp; Chauffeur.</span></li>
+                        <li><span><strong>"Fixed Price"</strong> means the fare quoted and confirmed at the time of Booking, inclusive of GST, with no surge pricing or hidden fees.</span></li>
+                    </ul>
+                </div>
+
+
+                <!-- ── 2. Bookings & Confirmation ──────── -->
+                <div class="tc__clause tc__reveal" id="tc-2">
+                    <div class="tc__clause-head">
+                        <span class="tc__clause-num" aria-hidden="true">02</span>
+                        <h2 class="tc__clause-title">Bookings &amp; Confirmation</h2>
+                    </div>
+                    <p>A Booking is considered confirmed only upon receipt of a written confirmation from SevenStar Limo via email or SMS. We recommend making Bookings at least 24 hours in advance, particularly for Melbourne airport transfers and peak-period travel.</p>
+                    <ul class="tc__list">
+                        <li><span>Bookings may be made online through sevenstarlimo.com.au, by telephone{% if contact %} on {{ contact.phone }}{% endif %} or by email{% if contact %} at {{ contact.email }}{% endif %}.</span></li>
+                        <li><span>You are responsible for providing accurate pickup details, including date, time, address and passenger count.</span></li>
+                        <li><span>SevenStar Limo reserves the right to decline any Booking at our sole discretion.</span></li>
+                        <li><span>Any special requests (child seats, additional stops, luggage requirements) must be noted at the time of Booking and are subject to availability.</span></li>
+                        <li><span>A Booking is made on behalf of all Passengers and the Client warrants they have authority to accept these Terms on behalf of all Passengers.</span></li>
+                    </ul>
+                    <div class="tc__highlight">
+                        <strong>Note:</strong> Last-minute Bookings (less than 4 hours' notice) are accepted subject to vehicle availability and may attract a short-notice surcharge. Please call SevenStar Limo directly{% if contact %} on {{ contact.phone }}{% endif %} for urgent bookings.
+                    </div>
+                </div>
+
+
+                <!-- ── 3. Pricing & Payment ───────────── -->
+                <div class="tc__clause tc__reveal" id="tc-3">
+                    <div class="tc__clause-head">
+                        <span class="tc__clause-num" aria-hidden="true">03</span>
+                        <h2 class="tc__clause-title">Pricing &amp; Payment</h2>
+                    </div>
+                    <p>All SevenStar Limo fares are quoted as Fixed Prices and include GST. The price confirmed at the time of Booking is the price you pay — we do not operate surge pricing, hidden fees or metered billing.</p>
+                    <ul class="tc__list">
+                        <li><span>Payment is accepted by major credit card, debit card or bank transfer via our secure Stripe payment gateway.</span></li>
+                        <li><span>Full payment is required at the time of Booking unless a corporate account has been established with SevenStar Limo.</span></li>
+                        <li><span>Additional charges may apply for: waiting time beyond the complimentary allowance; additional stops not included in the original Booking; tolls and parking fees where applicable; and cleaning fees in the event of damage or excessive soiling of the Vehicle.</span></li>
+                        <li><span>Prices quoted do not include gratuities. Tipping is entirely at your discretion.</span></li>
+                        <li><span>Corporate account clients are invoiced monthly. Payment terms are 14 days from invoice date.</span></li>
+                    </ul>
+                    <div class="tc__highlight">
+                        <strong>All prices include GST.</strong> A tax invoice will be issued upon request.
+                        {% if contact and contact.abn %}Our ABN is {{ contact.abn }}.{% endif %}
+                    </div>
+                </div>
+
+
+                <!-- ── 4. Cancellations & Refunds ──────── -->
+                <div class="tc__clause tc__reveal" id="tc-4">
+                    <div class="tc__clause-head">
+                        <span class="tc__clause-num" aria-hidden="true">04</span>
+                        <h2 class="tc__clause-title">Cancellations &amp; Refunds</h2>
+                    </div>
+                    <p>We understand that plans change. SevenStar Limo's cancellation policy is as follows:</p>
+                    <ul class="tc__list">
+                        <li><span><strong>More than 24 hours' notice:</strong> Full refund. No cancellation fee.</span></li>
+                        <li><span><strong>Between 4 and 24 hours' notice:</strong> 50% of the Booking fare is charged as a cancellation fee.</span></li>
+                        <li><span><strong>Less than 4 hours' notice or no-show:</strong> 100% of the Booking fare is charged. No refund will be issued.</span></li>
+                        <li><span><strong>Special events and peak periods</strong> (New Year's Eve, Grand Prix, major concerts): A minimum 72-hour cancellation notice is required for a full refund. Cancellations within 72 hours attract a 100% cancellation fee.</span></li>
+                    </ul>
+                    <p>Refunds, where applicable, will be processed to the original payment method within 5–10 business days. To request a cancellation, please contact SevenStar Limo{% if contact %} by phone on {{ contact.phone }} or email at {{ contact.email }}{% endif %} with your Booking reference number.</p>
+                    <div class="tc__highlight">
+                        <strong>SevenStar Limo reserves the right to cancel a Booking</strong> in circumstances beyond our reasonable control, including but not limited to extreme weather, traffic incidents, vehicle breakdown or driver illness. In such cases, a full refund will be issued or an alternative vehicle arranged where possible.
+                    </div>
+                </div>
+
+
+                <!-- ── 5. Passenger Conduct ───────────── -->
+                <div class="tc__clause tc__reveal" id="tc-5">
+                    <div class="tc__clause-head">
+                        <span class="tc__clause-num" aria-hidden="true">05</span>
+                        <h2 class="tc__clause-title">Passenger Conduct</h2>
+                    </div>
+                    <p>All Passengers are expected to conduct themselves in a respectful and lawful manner during the Service. SevenStar Limo Drivers have the right to terminate a journey without refund if any Passenger:</p>
+                    <ul class="tc__list">
+                        <li><span>Is abusive, threatening or aggressive towards the Driver or any other person.</span></li>
+                        <li><span>Is intoxicated to a degree that poses a risk to themselves, the Driver or the Vehicle.</span></li>
+                        <li><span>Smokes or vapes inside the Vehicle.</span></li>
+                        <li><span>Tampers with, damages or soils the Vehicle or its fittings.</span></li>
+                        <li><span>Causes an unreasonable disturbance or engages in unlawful behaviour.</span></li>
+                    </ul>
+                    <p>The Client will be held responsible for any damage caused to the Vehicle by Passengers. Cleaning and repair costs will be invoiced at market rates and are payable within 7 days.</p>
+                    <p>Seatbelts must be worn by all Passengers at all times. Eating is not permitted in Vehicles without prior arrangement. Alcohol consumption in Vehicles is subject to applicable Victorian law and may only be permitted in licensed hire vehicles with prior written consent from SevenStar Limo.</p>
+                </div>
+
+
+                <!-- ── 6. Wait Time & No-Show ─────────── -->
+                <div class="tc__clause tc__reveal" id="tc-6">
+                    <div class="tc__clause-head">
+                        <span class="tc__clause-num" aria-hidden="true">06</span>
+                        <h2 class="tc__clause-title">Wait Time &amp; No-Show</h2>
+                    </div>
+                    <p>SevenStar Limo Drivers will wait for the following complimentary periods beyond the scheduled pickup time:</p>
+                    <ul class="tc__list">
+                        <li><span><strong>Standard point-to-point and hourly bookings:</strong> 15 minutes complimentary wait time.</span></li>
+                        <li><span><strong>Domestic Melbourne airport pickups (Tullamarine):</strong> 45 minutes complimentary from the scheduled flight arrival time.</span></li>
+                        <li><span><strong>International Melbourne airport pickups:</strong> 60 minutes complimentary from the scheduled flight arrival time.</span></li>
+                    </ul>
+                    <p>After the complimentary period expires, wait time is charged at the applicable hourly rate, billed in 15-minute increments. If no contact is made with SevenStar Limo within the wait period, the Driver may depart and the Booking will be treated as a no-show. No-show Bookings are charged at 100% of the fare.</p>
+                    <div class="tc__highlight">
+                        <strong>SevenStar Limo monitors all flights in real time.</strong> If your inbound flight is delayed, your Driver will be automatically updated and will adjust their arrival accordingly at no additional charge.
+                    </div>
+                </div>
+
+
+                <!-- ── 7. Airport Transfers ───────────── -->
+                <div class="tc__clause tc__reveal" id="tc-7">
+                    <div class="tc__clause-head">
+                        <span class="tc__clause-num" aria-hidden="true">07</span>
+                        <h2 class="tc__clause-title">Airport Transfers</h2>
+                    </div>
+                    <p>For all Melbourne airport pickup Bookings, Passengers should meet their SevenStar Limo Driver at the designated meet-and-greet area in the arrivals hall, unless otherwise specified at the time of Booking.</p>
+                    <ul class="tc__list">
+                        <li><span>Your Driver will carry a name sign for easy identification.</span></li>
+                        <li><span>Please provide your flight number at the time of Booking to enable real-time flight tracking by SevenStar Limo.</span></li>
+                        <li><span>Luggage allowance is subject to the capacity of the booked Vehicle. Additional baggage requirements should be declared at the time of Booking.</span></li>
+                        <li><span>SevenStar Limo services both Melbourne (Tullamarine) Airport and Avalon Airport. Please specify the correct airport at time of Booking.</span></li>
+                        <li><span>For drop-off transfers, the Client is responsible for allowing sufficient travel time, particularly during Melbourne peak hours. SevenStar Limo is not liable for missed flights due to unforeseen traffic conditions.</span></li>
+                    </ul>
+                </div>
+
+
+                <!-- ── 8. Liability ───────────────────── -->
+                <div class="tc__clause tc__reveal" id="tc-8">
+                    <div class="tc__clause-head">
+                        <span class="tc__clause-num" aria-hidden="true">08</span>
+                        <h2 class="tc__clause-title">Liability</h2>
+                    </div>
+                    <p>All SevenStar Limo Vehicles are fully insured and comply with all Victorian legislative requirements for commercial passenger vehicle operators. However, to the extent permitted by law:</p>
+                    <ul class="tc__list">
+                        <li><span>SevenStar Limo is not liable for any loss, delay or consequential damage arising from circumstances beyond our reasonable control, including traffic conditions, accidents, extreme weather, road closures or mechanical failure.</span></li>
+                        <li><span>SevenStar Limo is not liable for any personal property left in a Vehicle. Passengers are responsible for their own belongings.</span></li>
+                        <li><span>Our total liability to you for any claim arising from or in connection with a Booking shall not exceed the total fare paid for that Booking.</span></li>
+                        <li><span>Nothing in these Terms limits any rights you may have under the Australian Consumer Law.</span></li>
+                    </ul>
+                    <p>SevenStar Limo carries public liability insurance and professional indemnity insurance appropriate to our operations. Details are available upon request{% if contact %} by contacting us at {{ contact.email }}{% endif %}.</p>
+                </div>
+
+
+                <!-- ── 9. Privacy ─────────────────────── -->
+                <div class="tc__clause tc__reveal" id="tc-9">
+                    <div class="tc__clause-head">
+                        <span class="tc__clause-num" aria-hidden="true">09</span>
+                        <h2 class="tc__clause-title">Privacy</h2>
+                    </div>
+                    <p>SevenStar Limo collects personal information from you in the course of providing our Services, including your name, contact details, payment information and travel preferences. This information is used solely for the purpose of fulfilling your Booking and improving our Service.</p>
+                    <ul class="tc__list">
+                        <li><span>We do not sell, share or disclose your personal information to third parties except as required to fulfil your Booking (e.g. assigned Driver) or as required by law.</span></li>
+                        <li><span>Payment information is processed securely via Stripe and is not stored on our systems.</span></li>
+                        <li><span>You may request access to, or correction of, your personal information at any time by contacting SevenStar Limo{% if contact %} at {{ contact.email }}{% endif %}.</span></li>
+                    </ul>
+                    <p>
+                        Our full Privacy Policy is available at
+                        <a href="{% url 'privacy_policy' %}"
+                           title="SevenStar Limo Privacy Policy">sevenstarlimo.com.au/privacy/</a>
+                        and forms part of our agreement with you.
+                    </p>
+                </div>
+
+
+                <!-- ── 10. Governing Law ──────────────── -->
+                <div class="tc__clause tc__reveal" id="tc-10">
+                    <div class="tc__clause-head">
+                        <span class="tc__clause-num" aria-hidden="true">10</span>
+                        <h2 class="tc__clause-title">Governing Law</h2>
+                    </div>
+                    <p>These Terms and Conditions are governed by and construed in accordance with the laws of the State of Victoria, Australia. Any disputes arising out of or in connection with these Terms shall be subject to the exclusive jurisdiction of the courts of Victoria.</p>
+                    <p>If any provision of these Terms is found to be invalid or unenforceable, that provision shall be severed and the remaining Terms shall continue in full force and effect.</p>
+                    <p>SevenStar Limo reserves the right to update these Terms at any time without prior notice. The current version, as published at
+                        <a href="{% url 'terms' %}"
+                           title="SevenStar Limo Terms and Conditions — current version">
+                            sevenstarlimo.com.au/terms-and-condition/
+                        </a>, will apply to all Bookings made from the date of publication.
+                    </p>
+                    <p>
+                        If you have any questions about these Terms, please contact SevenStar Limo at
+                        {% if contact %}
+                            <a href="mailto:{{ contact.email }}"
+                               title="Email SevenStar Limo Melbourne">{{ contact.email }}</a>
+                            or call
+                            <a href="tel:{{ contact.phone }}"
+                               title="Call SevenStar Limo Melbourne">{{ contact.phone }}</a>.
+                        {% else %}
+                            <a href="{% url 'contact' %}"
+                               title="Contact SevenStar Limo Melbourne">our contact page</a>.
+                        {% endif %}
+                    </p>
+                </div>
+
+            </div><!-- /tc__content -->
+        </div>
+    </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     CTA BANNER
+════════════════════════════════ -->
+<section class="tc__cta-banner" aria-labelledby="tc-cta-heading">
+    <div class="tc__cta-inner">
+        <p class="tc__cta-label">Ready to Book with SevenStar Limo?</p>
+        <h2 class="tc__cta-title" id="tc-cta-heading">
+            Luxury Travel, Fixed Pricing,<br>No Surprises
+        </h2>
+        <p class="tc__cta-sub">
+            By booking with SevenStar Limo &amp; Chauffeur you agree to the above Terms &amp; Conditions.
+            Questions?
+            {% if contact %}
+                Call us on
+                <a href="tel:{{ contact.phone }}"
+                   style="color:rgba(255,255,255,.95);text-decoration:none;font-weight:600;"
+                   title="Call SevenStar Limo Melbourne now">{{ contact.phone }}</a>
+                —
+            {% endif %}
+            we're available
+            {% if contact %}{{ contact.opening_hours_week }}{% else %}24/7{% endif %}.
+        </p>
+        <div class="tc__cta-actions">
+            <a href="{% url 'orders' %}"
+               class="tc__btn-white"
+               title="Book a SevenStar Limo Melbourne transfer now">
+                Book Your Transfer
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12"/>
+                    <polyline points="12 5 19 12 12 19"/>
+                </svg>
+            </a>
+            <a href="{% url 'contact' %}"
+               class="tc__btn-outline"
+               title="Contact SevenStar Limo & Chauffeur Melbourne">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                </svg>
+                Contact Us
+            </a>
+        </div>
+    </div>
+</section>
+
+</div><!-- /[data-page="terms"] -->
+{% endblock %}
+
+
+{# ─── DEFERRED JS ────────────────────────────────────────────── #}
+{% block extra_js %}
+<script src="{% static 'js/terms.js' %}" defer></script>
+{% endblock %}
