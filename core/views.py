@@ -1,16 +1,41 @@
+from django.conf import settings
 from django.shortcuts import render, redirect
 from .models import ContactRequest, FAQ
 from django.contrib import messages
+from orders.models import Rates
 
-# Create your views here.
+
+def _get_home_rates():
+    qs = Rates.objects.all().order_by("base_price")
+    if qs.exists():
+        return [
+            {
+                "name": r.name,
+                "img_url": r.img_url or "",
+                "max_passengers": r.max_passangers,
+                "max_bags": r.max_bags,
+                "base_price": float(r.base_price),
+                "per_km": float(r.per_km_rate),
+                "stop": float(r.stop),
+                "oh_rate": float(r.oh_rate),
+                "remote_pickup_multiplier": float(r.remote_pickup_multiplier),
+            }
+            for r in qs
+        ]
+    return []
 
 
 def home(request):
-    
+    rates = _get_home_rates()
     faq = FAQ.objects.all()
-    
+
     context = {
-        'faq':faq,
+        'faq': faq,
+        'google_maps_key': settings.GOOGLE_MAPS_API_KEY,
+        'rates': rates,
+        'type_key': 'ptp',
+        'is_hourly': False,
+        'form_data': {},
     }
     return render(request, 'core/index.html', context)
 

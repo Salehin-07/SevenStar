@@ -34,7 +34,7 @@
         "Yarra Valley", "Geelong", "Ballarat", "Bendigo", "Phillip Island"
     ],
     "sameAs": [
-        "https://www.facebook.com/sevenstarlimo",
+        "https://www.facebook.com/sevenstarlimousine",
         "https://www.instagram.com/sevenstarlimo"
     ]
 }
@@ -176,6 +176,7 @@
 
 
 {% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/booking_form.css' %}">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
@@ -202,6 +203,36 @@
     --hp-font-serif:  'Cormorant Garamond', Georgia, serif;
     --hp-font-sans:   'Jost', system-ui, sans-serif;
     --hp-ease:        cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    --bf-ink:         #1a1714;
+    --bf-ink-2:       #2e2a26;
+    --bf-ink-soft:    #4a4540;
+    --bf-ink-muted:   #a09890;
+    --bf-cream:       #faf8f3;
+    --bf-cream-2:     #f3efe6;
+    --bf-white:       #ffffff;
+    --bf-gold:        #b8902e;
+    --bf-gold-lt:     #d4aa4a;
+    --bf-gold-dk:     #9a7520;
+    --bf-gold-bg:     rgba(184,144,46,0.07);
+    --bf-gold-ring:   rgba(184,144,46,0.18);
+    --bf-border:      #e8e2d6;
+    --bf-border-f:    #b8902e;
+    --bf-err:         #b83232;
+    --bf-warn-bg:     #fffbf0;
+    --bf-warn-border: #e8d08a;
+    --bf-warn-text:   #7a5c00;
+    --bf-wa:          #25D366;
+    --bf-wa-dk:       #1da851;
+    --bf-wa-bg:       rgba(37,211,102,0.09);
+    --bf-wa-border:   rgba(37,211,102,0.3);
+    --bf-serif:       'Cormorant Garamond', Georgia, serif;
+    --bf-sans:        'Jost', system-ui, sans-serif;
+    --bf-ease:        cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --bf-r:           14px;
+    --bf-rs:          10px;
+    --bf-shadow:      0 2px 24px rgba(26,23,20,.06);
+    --bf-shadow-h:    0 8px 40px rgba(26,23,20,.12);
 }
 
 [data-page="home"] {
@@ -510,6 +541,74 @@
 @keyframes hp-pulse {
     0%,100% { transform: scaleY(1);   opacity: 0.4; }
     50%      { transform: scaleY(0.6); opacity: 0.8; }
+}
+
+/* ══════════════════════════════════════════════
+   1B. BOOKING SECTION — below hero
+══════════════════════════════════════════════ */
+.hp__booking {
+    padding: 5.5rem 2rem;
+    background: var(--hp-cream);
+}
+.hp__booking .hp__wrap { max-width: 860px; margin: 0 auto; }
+.hp__booking-intro { text-align: center; margin-bottom: 3rem; }
+.hp__booking-intro .hp__label { justify-content: center; }
+.hp__booking-intro .hp__sub { margin: 1rem auto 0; max-width: 520px; }
+
+/* Booking form card */
+.hp__hb-card {
+    background: var(--bf-white);
+    border: 1px solid var(--hp-border);
+    border-radius: 12px;
+    box-shadow: 0 2px 24px rgba(26,23,20,.06);
+    overflow: hidden;
+}
+.hp__hb-card .bf__card {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 1.5rem 2rem;
+    margin-bottom: 0;
+    border-bottom: 1px solid var(--hp-border);
+}
+.hp__hb-card .bf__card::before { display: none; }
+.hp__hb-card .bf__card:last-of-type { border-bottom: none; }
+.hp__hb-card .bf__sh { margin-bottom: 1.2rem; }
+.hp__hb-card .bf__sh h2 { font-size: 1rem; }
+.hp__hb-card .bf__sn { width: 24px; height: 24px; font-size: 0.6rem; }
+.hp__hb-card .bf__g2 { gap: 1rem; }
+.hp__hb-card .bf__f input,
+.hp__hb-card .bf__f select {
+    padding: 0.7rem 1rem;
+    font-size: 0.88rem;
+    border-radius: 6px;
+}
+.hp__hb-card .bf__f label { font-size: 0.62rem; margin-bottom: 0.4rem; }
+.hp__hb-card .bf__btn {
+    margin: 1.5rem 2rem;
+    width: calc(100% - 4rem);
+}
+.hp__hb-card .bf__note { padding: 0 2rem 1.5rem; }
+.hp__hb-card .bf__vg { gap: 0.75rem; }
+.hp__hb-card .bf__vc { padding: 1rem 0.75rem; }
+.hp__hb-card .bf__vi { font-size: 1.5rem; min-height: 40px; }
+.hp__hb-card .bf__vname { font-size: 0.88rem; }
+.hp__hb-card .bf__vmeta { font-size: 0.68rem; }
+.hp__hb-card .bf__vimg { width: 70px; height: 42px; }
+.hp__hb-card .bf__ti { padding: 0.85rem 1rem; }
+.hp__hb-card .bf__ttxt strong { font-size: 0.85rem; }
+.hp__hb-card .bf__ttxt span { font-size: 0.72rem; }
+.hp__hb-card .bf__baby-fields { padding: 1rem 1.2rem; }
+.hp__hb-card .bf__help { font-size: 0.68rem; }
+
+@media (max-width: 640px) {
+    .hp__booking { padding: 3rem 1rem; }
+    .hp__booking-intro { margin-bottom: 2rem; }
+    .hp__hb-card .bf__card { padding: 1rem 1.2rem; }
+    .hp__hb-card .bf__g2 { grid-template-columns: 1fr; }
+    .hp__hb-card .bf__vg { grid-template-columns: 1fr !important; }
+    .hp__hb-card .bf__btn { margin: 1rem 1.2rem; width: calc(100% - 2.4rem); }
 }
 
 /* ══════════════════════════════════════════════
@@ -1026,19 +1125,291 @@
 <div data-page="home">
 
 <!-- ════════════════════════════════
+     1B. BOOKING FORM SECTION
+════════════════════════════════ -->
+<section class="hp__booking" id="hp-booking" aria-label="Book your SevenStar Limo transfer">
+
+    <div class="hp__wrap">
+
+        <div class="hp__booking-intro">
+            <p class="hp__label hp__reveal">Book Online</p>
+            <h2 class="hp__title hp__reveal hp__d1">Book Your <em>SevenStar</em> Transfer</h2>
+            <p class="hp__sub hp__reveal hp__d2">Fill in your details below and get your fixed price instantly. No charge until you confirm.</p>
+        </div>
+
+        <div class="hp__hb-card hp__reveal hp__d3" id="hpBookingCard">
+
+            <form method="POST" action="{% url 'orders' %}" id="bfForm" novalidate>
+                {% csrf_token %}
+                <input type="hidden" name="action" value="calculate">
+                <input type="hidden" name="service_type_key" value="{{ type_key }}">
+                <input type="hidden" name="limo_service_type" id="bfVehicleInput"
+                       value="{{ form_data.limo_service_type|default:'' }}">
+
+                <div class="bf__card">
+                    <div class="bf__sh">
+                        <div class="bf__sn" aria-hidden="true">1</div>
+                        <h2>Your Details</h2>
+                    </div>
+                    <div class="bf__g2">
+                        <div class="bf__f">
+                            <label for="bf-name">Full Name <span class="bf__req" aria-hidden="true">*</span></label>
+                            <input type="text" id="bf-name" name="passenger_name"
+                                   placeholder="e.g. James Wilson"
+                                   value="{{ form_data.passenger_name|default:'' }}"
+                                   autocomplete="name" aria-required="true" required>
+                        </div>
+                        <div class="bf__f">
+                            <label for="bf-phone">Phone Number <span class="bf__req" aria-hidden="true">*</span></label>
+                            <input type="tel" id="bf-phone" name="passenger_number"
+                                   placeholder="+61 4XX XXX XXX"
+                                   value="{{ form_data.passenger_number|default:'' }}"
+                                   autocomplete="tel" aria-required="true" required>
+                        </div>
+                        <div class="bf__f bf__s2">
+                            <label for="bf-email">Email Address <span class="bf__req" aria-hidden="true">*</span></label>
+                            <input type="email" id="bf-email" name="passenger_email"
+                                   placeholder="you@example.com.au"
+                                   value="{{ form_data.passenger_email|default:'' }}"
+                                   autocomplete="email" aria-required="true" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bf__card">
+                    <div class="bf__sh">
+                        <div class="bf__sn" aria-hidden="true">2</div>
+                        <h2>Journey Details</h2>
+                    </div>
+                    <div class="bf__g2">
+                        <div class="bf__f bf__s2">
+                            <label for="bfPickup">Pickup Address <span class="bf__req" aria-hidden="true">*</span></label>
+                            <div class="bf__acw">
+                                <input type="text" id="bfPickup" name="pickup_address"
+                                       placeholder="Start typing an address…"
+                                       value="{{ form_data.pickup_address|default:'' }}"
+                                       autocomplete="off" aria-required="true"
+                                       aria-label="Pickup address" aria-autocomplete="list"
+                                       aria-controls="bfPickupList" required>
+                                <div class="bf__acl" id="bfPickupList"
+                                     role="listbox" aria-label="Pickup address suggestions"></div>
+                            </div>
+                        </div>
+                        <div class="bf__f bf__s2">
+                            <label for="bfDest">Destination Address <span class="bf__req" aria-hidden="true">*</span></label>
+                            <div class="bf__acw">
+                                <input type="text" id="bfDest" name="destination_address"
+                                       placeholder="Where are you headed?"
+                                       value="{{ form_data.destination_address|default:'' }}"
+                                       autocomplete="off" aria-required="true"
+                                       aria-label="Destination address" aria-autocomplete="list"
+                                       aria-controls="bfDestList" required>
+                                <div class="bf__acl" id="bfDestList"
+                                     role="listbox" aria-label="Destination address suggestions"></div>
+                            </div>
+                        </div>
+                        <div class="bf__f bf__s2">
+                            <label for="bfStop">Additional Stop
+                                <small style="text-transform:none;letter-spacing:0;font-weight:300;color:var(--bf-ink-muted);">(optional)</small>
+                            </label>
+                            <div class="bf__acw">
+                                <input type="text" id="bfStop" name="additional_stop"
+                                       placeholder="Add an intermediate stop"
+                                       value="{{ form_data.additional_stop|default:'' }}"
+                                       autocomplete="off" aria-label="Optional additional stop"
+                                       aria-autocomplete="list" aria-controls="bfStopList">
+                                <div class="bf__acl" id="bfStopList"
+                                     role="listbox" aria-label="Additional stop suggestions"></div>
+                            </div>
+                        </div>
+                        <div class="bf__f">
+                            <label for="bfDate">Pickup Date <span class="bf__req" aria-hidden="true">*</span></label>
+                            <input type="date" id="bfDate" name="pickup_date"
+                                   value="{{ form_data.pickup_date|default:'' }}"
+                                   aria-required="true" required>
+                        </div>
+                        <div class="bf__f">
+                            <label for="bf-time">Pickup Time <span class="bf__req" aria-hidden="true">*</span></label>
+                            <input type="time" id="bf-time" name="pickup_time"
+                                   value="{{ form_data.pickup_time|default:'' }}"
+                                   aria-required="true" required>
+                        </div>
+                        <div class="bf__f bf__s2">
+                            <label for="bf-instr">Special Instructions</label>
+                            <input type="text" id="bf-instr" name="special_instruction"
+                                   placeholder="Any notes for your SevenStar Limo driver…"
+                                   value="{{ form_data.special_instruction|default:'' }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bf__card">
+                    <div class="bf__sh">
+                        <div class="bf__sn" aria-hidden="true">3</div>
+                        <h2>Vehicle &amp; Passengers</h2>
+                    </div>
+                    <div class="bf__vg" id="bfVehicleGroup"
+                         style="grid-template-columns:repeat({{ rates|length }},1fr)"
+                         role="radiogroup" aria-label="Select a SevenStar Limo vehicle">
+                        {% for r in rates %}
+                        <div class="bf__vc{% if forloop.first %} sel{% endif %}"
+                             data-name="{{ r.name }}"
+                             data-maxp="{{ r.max_passengers }}"
+                             data-maxb="{{ r.max_bags }}"
+                             data-ohrate="{{ r.oh_rate }}"
+                             data-base="{{ r.base_price }}"
+                             data-perkm="{{ r.per_km }}"
+                             onclick="bfPick(this)"
+                             role="radio"
+                             aria-checked="{% if forloop.first %}true{% else %}false{% endif %}"
+                             tabindex="0"
+                             aria-label="{{ r.name }} — up to {{ r.max_passengers }} passengers, {{ r.max_bags }} bags">
+                            <input type="radio" name="_vr" value="{{ r.name }}"
+                                   {% if forloop.first %}checked{% endif %}>
+                            <div class="bf__vchk" aria-hidden="true">
+                                <svg viewBox="0 0 10 8" fill="none" width="10" height="8">
+                                    <path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <span class="bf__vi" aria-hidden="true">
+                                {% if r.img_url %}
+                                    <img src="{{ r.img_url }}" alt="{{ r.name }}" class="bf__vimg">
+                                {% else %}
+                                    {% if forloop.first %}🚗{% elif forloop.counter == 2 %}🚙{% elif forloop.counter == 3 %}🚐{% else %}🚌{% endif %}
+                                {% endif %}
+                            </span>
+                            <div class="bf__vname">{{ r.name }}</div>
+                            <div class="bf__vmeta">Up to {{ r.max_passengers }} passengers &nbsp;·&nbsp; {{ r.max_bags }} bags</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="bf__upn" id="bfUpNote" role="alert" aria-live="polite">
+                        <span aria-hidden="true">⚠️</span>
+                        <span id="bfUpText"></span>
+                    </div>
+                    <div class="bf__g2" style="margin-top:1.4rem;">
+                        <div class="bf__f">
+                            <label for="bfPassSel">Passengers <span class="bf__req" aria-hidden="true">*</span></label>
+                            <select id="bfPassSel" name="number_of_passengers"
+                                    onchange="bfPassChange()" aria-required="true"></select>
+                        </div>
+                        <div class="bf__f">
+                            <label for="bfBagSel">Bags / Luggage <span class="bf__req" aria-hidden="true">*</span></label>
+                            <select id="bfBagSel" name="number_of_bags"
+                                    onchange="bfBagChange()" aria-required="true"></select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bf__card">
+                    <div class="bf__sh">
+                        <div class="bf__sn" aria-hidden="true">4</div>
+                        <h2>Add-ons &amp; Extras</h2>
+                    </div>
+                    <div class="bf__tg" role="group" aria-label="Optional add-ons">
+                        <div class="bf__ti"
+                             id="bfBabySeatToggle"
+                             onclick="bfToggle('bfBabySeatToggle','bfBabySeatCb')"
+                             role="checkbox" aria-checked="false" tabindex="0"
+                             aria-label="Baby / child safety seat — $15.00 per seat"
+                             onkeydown="if(event.key==='Enter'||event.key===' '){bfToggle('bfBabySeatToggle','bfBabySeatCb');event.preventDefault();}">
+                            <div class="bf__tileft">
+                                <span class="bf__ticon" aria-hidden="true">💺</span>
+                                <div class="bf__ttxt">
+                                    <strong>Baby / Child Seat</strong>
+                                    <span>Approved safety seat for children up to 10 years — +$15.00 per seat</span>
+                                </div>
+                            </div>
+                            <div class="bf__tsw" aria-hidden="true"><div class="bf__tth"></div></div>
+                            <input type="checkbox" name="baby_seat" id="bfBabySeatCb">
+                        </div>
+                        <div class="bf__baby-fields" id="bfChildFields" style="display:none;">
+                            <div class="bf__f" style="margin-bottom:1rem;">
+                                <label for="bfNumSeats">Number of Seats <span class="bf__req" aria-hidden="true">*</span></label>
+                                <select id="bfNumSeats" name="number_of_babies" aria-required="true"
+                                        onchange="bfUpdateChildAgeFields(this.value)">
+                                    <option value="0">Select number of seats…</option>
+                                    <option value="1">1 Seat</option>
+                                    <option value="2">2 Seats</option>
+                                    <option value="3">3 Seats</option>
+                                    <option value="4">4 Seats</option>
+                                </select>
+                                <span class="bf__help">
+                                    <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><circle cx="6" cy="6" r="5" stroke="#a09890" stroke-width="1.2"/><path d="M6 5v3M6 3.5v.5" stroke="#a09890" stroke-width="1.2" stroke-linecap="round"/></svg>
+                                    $15.00 per seat — up to 4 seats available
+                                </span>
+                            </div>
+                            <div id="bfChildAgeFields"></div>
+                        </div>
+                        <div class="bf__ti"
+                             id="bfReturnToggle"
+                             onclick="bfToggle('bfReturnToggle','bfReturnCb')"
+                             role="checkbox" aria-checked="false" tabindex="0"
+                             aria-label="Return journey — same route back with return discount"
+                             onkeydown="if(event.key==='Enter'||event.key===' '){bfToggle('bfReturnToggle','bfReturnCb');event.preventDefault();}">
+                            <div class="bf__tileft">
+                                <span class="bf__ticon" aria-hidden="true">🔄</span>
+                                <div class="bf__ttxt">
+                                    <strong>Return Journey</strong>
+                                    <span>Same route back — return discount applied</span>
+                                </div>
+                            </div>
+                            <div class="bf__tsw" aria-hidden="true"><div class="bf__tth"></div></div>
+                            <input type="checkbox" name="return_ride" id="bfReturnCb">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bf__card">
+                    <div class="bf__sh">
+                        <div class="bf__sn" aria-hidden="true">5</div>
+                        <h2>Vehicle Preferences</h2>
+                    </div>
+                    <div class="bf__g2">
+                        <div class="bf__f">
+                            <label for="bf-colour">Preferred Colour</label>
+                            <select id="bf-colour" name="vehicle_colour">
+                                <option value="">No preference</option>
+                            </select>
+                        </div>
+                        <div class="bf__f bf__s2">
+                            <label for="bf-sign">Special Signboard / Name Display</label>
+                            <input type="text" id="bf-sign" name="special_signboard"
+                                   placeholder="e.g. Welcome, Mr. Johnson"
+                                   value="{{ form_data.special_signboard|default:'' }}">
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="bf__btn" id="bfSubmit">
+                    <span id="bfBtnTxt">Calculate Price &amp; Continue</span>
+                    <svg id="bfBtnArrow" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                        <path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <div class="bf__spin" id="bfSpin" aria-hidden="true"></div>
+                </button>
+                <p class="bf__note">
+                    <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                        <circle cx="7" cy="7" r="6" stroke="#a09890" stroke-width="1.2"/>
+                        <path d="M7 4v3.5L9 9" stroke="#a09890" stroke-width="1.2" stroke-linecap="round"/>
+                    </svg>
+                    No charge until you confirm payment on the next step.
+                </p>
+            </form>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ════════════════════════════════
      1. HERO
 ════════════════════════════════ -->
-<section class="hp__hero" aria-label="SevenStar Limo — Melbourne's Premier Chauffeur &amp; Limousine Service">
+<section class="hp__hero" aria-label="SevenStar Limo — Melbourne's Premier Chauffeur Service">
 
     <div class="hp__hero-bg" role="img" aria-label="Luxury black limousine driven by SevenStar Limo chauffeur in Melbourne"></div>
     <div class="hp__hero-accent-h" aria-hidden="true"></div>
     <div class="hp__hero-accent-v" aria-hidden="true"></div>
-
-    <!-- Subtle brand watermark -->
-    <div class="hp__hero-brand" aria-hidden="true">
-        <span class="hp__hero-brand-stars">★★★★★★★</span>
-        <span class="hp__hero-brand-name">SevenStar Limo</span>
-    </div>
 
     <div class="hp__hero-inner">
 
@@ -1053,14 +1424,6 @@
             Luxury chauffeur and limousine transfers across Melbourne, Tullamarine &amp; Avalon Airports,
             Mornington Peninsula &amp; all of Victoria — 24 hours a day, 7 days a week.
         </p>
-
-        <div class="hp__hero-actions">
-            <a href="{% url 'orders' %}?type=ptp" class="hp__btn hp__btn--gold">
-                Book Your Transfer
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-            <a href="{% url 'about' %}" class="hp__btn hp__btn--ghost">Discover SevenStar</a>
-        </div>
 
         <div class="hp__hero-stats" aria-label="SevenStar Limo key service highlights">
             <div>
@@ -1083,9 +1446,9 @@
 
     </div>
 
-    <a href="#hp-bstrip" class="hp__scroll-cue" aria-label="Scroll to booking options">
+    <a href="#hp-bstrip" class="hp__scroll-cue" aria-label="Scroll to explore SevenStar services">
         <div class="hp__scroll-line"></div>
-        <span>Scroll</span>
+        <span>Book Now</span>
     </a>
 
 </section>
@@ -1123,6 +1486,68 @@
         </a>
     </div>
 </nav>
+
+
+<!-- ════════════════════════════════
+     4. SERVICES
+════════════════════════════════ -->
+<section class="hp__section hp__section--cream" aria-labelledby="hp-services-heading">
+    <div class="hp__wrap">
+        <div class="hp__services-hdr">
+            <div>
+                <p class="hp__label hp__reveal">SevenStar Limo Services</p>
+                <h2 class="hp__title hp__reveal hp__d1" id="hp-services-heading">Every Journey, <em>Perfected</em></h2>
+            </div>
+            <a href="{% url 'orders' %}?type=ptp" class="hp__btn hp__btn--gold hp__reveal hp__d2" style="align-self:flex-end;">
+                Book Now
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+        </div>
+
+        <div class="hp__services-grid">
+
+            <a href="{% url 'orders' %}?type=fair" class="hp__scard hp__reveal">
+                <div class="hp__scard-thumb">
+                    <img src="{% static 'img/service-airport.jpg' %}" alt="SevenStar Limo Melbourne Airport chauffeur transfer service — Tullamarine &amp; Avalon" loading="lazy" width="400" height="225">
+                    <span class="hp__scard-tag">Most Popular</span>
+                </div>
+                <div class="hp__scard-body">
+                    <span class="hp__scard-icon" aria-hidden="true">✈</span>
+                    <h3 class="hp__scard-title">Airport Transfers</h3>
+                    <p class="hp__scard-desc">Stress-free pick-ups and drop-offs at Melbourne Tullamarine &amp; Avalon Airport. Live flight tracking included at no extra cost.</p>
+                    <span class="hp__scard-arrow">Book Airport Transfer <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+                </div>
+            </a>
+
+            <a href="{% url 'orders' %}?type=ptp" class="hp__scard hp__reveal hp__d1">
+                <div class="hp__scard-thumb">
+                    <img src="{% static 'img/service-corporate.jpg' %}" alt="SevenStar Limo corporate chauffeur service Melbourne CBD — executive point-to-point transfers" loading="lazy" width="400" height="225">
+                    <span class="hp__scard-tag">Corporate</span>
+                </div>
+                <div class="hp__scard-body">
+                    <span class="hp__scard-icon" aria-hidden="true">💼</span>
+                    <h3 class="hp__scard-title">Corporate Transfers</h3>
+                    <p class="hp__scard-desc">Make the right impression. Executive point-to-point limo transfers for Melbourne's business community — billed simply, every time.</p>
+                    <span class="hp__scard-arrow">Book Corporate Transfer <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+                </div>
+            </a>
+
+            <a href="{% url 'orders' %}?type=th" class="hp__scard hp__reveal hp__d2">
+                <div class="hp__scard-thumb">
+                    <img src="{% static 'img/service-events.jpg' %}" alt="SevenStar Limo wedding and events chauffeur hire Melbourne — hourly limousine packages" loading="lazy" width="400" height="225">
+                    <span class="hp__scard-tag">Flexible</span>
+                </div>
+                <div class="hp__scard-body">
+                    <span class="hp__scard-icon" aria-hidden="true">🥂</span>
+                    <h3 class="hp__scard-title">Events &amp; Occasions</h3>
+                    <p class="hp__scard-desc">Weddings, galas, winery tours &amp; special celebrations. Hourly or 2-hour SevenStar Limo packages tailored to your occasion.</p>
+                    <span class="hp__scard-arrow">Book Events Transfer <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+                </div>
+            </a>
+
+        </div>
+    </div>
+</section>
 
 
 <!-- ════════════════════════════════
@@ -1190,66 +1615,7 @@
 </section>
 
 
-<!-- ════════════════════════════════
-     4. SERVICES
-════════════════════════════════ -->
-<section class="hp__section hp__section--cream" aria-labelledby="hp-services-heading">
-    <div class="hp__wrap">
-        <div class="hp__services-hdr">
-            <div>
-                <p class="hp__label hp__reveal">SevenStar Limo Services</p>
-                <h2 class="hp__title hp__reveal hp__d1" id="hp-services-heading">Every Journey, <em>Perfected</em></h2>
-            </div>
-            <a href="{% url 'orders' %}?type=ptp" class="hp__btn hp__btn--gold hp__reveal hp__d2" style="align-self:flex-end;">
-                Book Now
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-        </div>
 
-        <div class="hp__services-grid">
-
-            <a href="{% url 'orders' %}?type=fair" class="hp__scard hp__reveal">
-                <div class="hp__scard-thumb">
-                    <img src="{% static 'img/service-airport.jpg' %}" alt="SevenStar Limo Melbourne Airport chauffeur transfer service — Tullamarine &amp; Avalon" loading="lazy" width="400" height="225">
-                    <span class="hp__scard-tag">Most Popular</span>
-                </div>
-                <div class="hp__scard-body">
-                    <span class="hp__scard-icon" aria-hidden="true">✈</span>
-                    <h3 class="hp__scard-title">Airport Transfers</h3>
-                    <p class="hp__scard-desc">Stress-free pick-ups and drop-offs at Melbourne Tullamarine &amp; Avalon Airport. Live flight tracking included at no extra cost.</p>
-                    <span class="hp__scard-arrow">Book Airport Transfer <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-                </div>
-            </a>
-
-            <a href="{% url 'orders' %}?type=ptp" class="hp__scard hp__reveal hp__d1">
-                <div class="hp__scard-thumb">
-                    <img src="{% static 'img/service-corporate.jpg' %}" alt="SevenStar Limo corporate chauffeur service Melbourne CBD — executive point-to-point transfers" loading="lazy" width="400" height="225">
-                    <span class="hp__scard-tag">Corporate</span>
-                </div>
-                <div class="hp__scard-body">
-                    <span class="hp__scard-icon" aria-hidden="true">💼</span>
-                    <h3 class="hp__scard-title">Corporate Transfers</h3>
-                    <p class="hp__scard-desc">Make the right impression. Executive point-to-point limo transfers for Melbourne's business community — billed simply, every time.</p>
-                    <span class="hp__scard-arrow">Book Corporate Transfer <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-                </div>
-            </a>
-
-            <a href="{% url 'orders' %}?type=th" class="hp__scard hp__reveal hp__d2">
-                <div class="hp__scard-thumb">
-                    <img src="{% static 'img/service-events.jpg' %}" alt="SevenStar Limo wedding and events chauffeur hire Melbourne — hourly limousine packages" loading="lazy" width="400" height="225">
-                    <span class="hp__scard-tag">Flexible</span>
-                </div>
-                <div class="hp__scard-body">
-                    <span class="hp__scard-icon" aria-hidden="true">🥂</span>
-                    <h3 class="hp__scard-title">Events &amp; Occasions</h3>
-                    <p class="hp__scard-desc">Weddings, galas, winery tours &amp; special celebrations. Hourly or 2-hour SevenStar Limo packages tailored to your occasion.</p>
-                    <span class="hp__scard-arrow">Book Events Transfer <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-                </div>
-            </a>
-
-        </div>
-    </div>
-</section>
 
 
 <!-- ════════════════════════════════
@@ -1531,14 +1897,12 @@
             var answer = item.querySelector('.hp__faq-answer');
             var isOpen = item.classList.contains('hp__faq-open');
 
-            /* Close all */
             document.querySelectorAll('.hp__faq-item.hp__faq-open').forEach(function (i) {
                 i.classList.remove('hp__faq-open');
                 i.querySelector('.hp__faq-q').setAttribute('aria-expanded', 'false');
                 i.querySelector('.hp__faq-answer').setAttribute('aria-hidden', 'true');
             });
 
-            /* Open clicked */
             if (!isOpen) {
                 item.classList.add('hp__faq-open');
                 btn.setAttribute('aria-expanded', 'true');
@@ -1547,7 +1911,7 @@
         });
     });
 
-    /* ── Hero scroll cue ────────────────────────────────────── */
+    /* ── Scroll cue ─────────────────────────────────────────── */
     var cue = document.querySelector('.hp__scroll-cue');
     if (cue) {
         cue.addEventListener('click', function (e) {
@@ -1555,7 +1919,43 @@
             document.getElementById('hp-bstrip').scrollIntoView({ behavior: 'smooth' });
         });
     }
-
-}());
+})();
 </script>
+
+<script>
+window.BF_TYPE         = "ptp";
+window.BF_FLAT         = false;
+window.BF_IS_HOURLY    = false;
+window.BF_LOCK_PICKUP  = false;
+window.BF_LOCK_DEST    = false;
+window.BF_DEFAULT_PASS = 2;
+window.BF_DEFAULT_BAGS = 2;
+window.BF_CHILD_AGES   = [];
+
+window.BF_RATES = [];
+document.querySelectorAll(".bf__vc").forEach(function (card) {
+    window.BF_RATES.push({
+        name:   card.dataset.name,
+        maxP:   parseInt(card.dataset.maxp,  10),
+        maxB:   parseInt(card.dataset.maxb,  10),
+        ohRate: parseFloat(card.dataset.ohrate),
+        base:   parseFloat(card.dataset.base),
+        perKm:  parseFloat(card.dataset.perkm),
+    });
+});
+
+window.bfCurrent = document.getElementById("bfVehicleInput").value
+    || (window.BF_RATES[0] && window.BF_RATES[0].name)
+    || "";
+</script>
+
+<script>
+/* Guard: if Google Maps loads before booking_form.js, bfMapsReady
+   must exist or Maps errors. This no-op is replaced by the real fn. */
+window.bfMapsReady = window.bfMapsReady || function(){};
+</script>
+
+<script src="{% static 'js/booking_form.js' %}" defer></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_key }}&libraries=places&callback=bfMapsReady" async defer></script>
 {% endblock %}

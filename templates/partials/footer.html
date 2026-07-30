@@ -87,7 +87,7 @@
 
                 <!-- Social links -->
                 <div class="ftr__social" aria-label="Follow SevenStar Limo on social media">
-                    <a href="https://www.facebook.com/SevenStarLimo"
+                    <a href="https://www.facebook.com/sevenstarlimousine"
                        class="ftr__social-btn"
                        target="_blank" rel="noopener noreferrer"
                        aria-label="SevenStar Limo on Facebook"
@@ -107,26 +107,7 @@
                             <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
                         </svg>
                     </a>
-                    <a href="https://www.linkedin.com/company/SevenStarLimo"
-                       class="ftr__social-btn"
-                       target="_blank" rel="noopener noreferrer"
-                       aria-label="SevenStar Limo on LinkedIn"
-                       title="Connect with SevenStar Limo Melbourne on LinkedIn">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-                            <rect x="2" y="9" width="4" height="12"/>
-                            <circle cx="4" cy="4" r="2"/>
-                        </svg>
-                    </a>
-                    <a href="https://twitter.com/SevenStarLimo"
-                       class="ftr__social-btn"
-                       target="_blank" rel="noopener noreferrer"
-                       aria-label="SevenStar Limo on X / Twitter"
-                       title="Follow SevenStar Limo Melbourne on X">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                        </svg>
-                    </a>
+
                     {# WhatsApp / Live Contact — silently links to wa.me #}
                     <a href="https://wa.me/{% if contact %}{{ contact.phone|cut:' '|cut:'+'|cut:'-' }}{% else %}61483841489{% endif %}?text=Hi%2C%20I%27d%20like%20to%20enquire%20about%20a%20SevenStar%20Limo%20booking."
                        class="ftr__social-btn ftr__social-btn--wa"

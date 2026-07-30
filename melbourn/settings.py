@@ -38,7 +38,8 @@ ALLOWED_HOSTS = [
     'sevenstar-inq1.onrender.com',
     '*.onrender.com',
     'onrender.com',
-    '.onrender.com'
+    '.onrender.com',
+    
 ]
 CSRF_TRUSTED_ORIGINS = [
     'https://sevenstarlimo.com.au',

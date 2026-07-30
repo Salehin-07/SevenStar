@@ -570,12 +570,12 @@ def _resolve_type(request):
     return raw if raw in SERVICE_TYPES else "ptp"
 
 
-@login_required
 def orders(request):
     stripe.api_key = settings.STRIPE_SECRET_KEY
     type_key = _resolve_type(request)
     svc      = SERVICE_TYPES[type_key]
     rates    = _get_rates()
+    user     = request.user if request.user.is_authenticated else None
 
     is_hourly = type_key in _WHATSAPP_SERVICE_TYPES
 
@@ -656,7 +656,7 @@ def orders(request):
 
             try:
                 order = Order.objects.create(
-                    user=request.user,
+                    user=user,
                     service_type=type_key,
                     passenger_name=form_data["passenger_name"],
                     passenger_number=form_data["passenger_number"],
@@ -734,7 +734,7 @@ def orders(request):
 
             try:
                 order = Order.objects.create(
-                    user=request.user,
+                    user=user,
                     service_type=type_key,
                     passenger_name=form_data["passenger_name"],
                     passenger_number=form_data["passenger_number"],
@@ -763,9 +763,9 @@ def orders(request):
             except Exception as exc:
                 return form_error(f"Could not save your booking: {exc}")
 
-            base_status_url = request.build_absolute_uri(reverse("status", args=[order.id]))
-            success_url     = base_status_url + "?session_id={CHECKOUT_SESSION_ID}"
-            cancel_url      = base_status_url
+            base_success_url = request.build_absolute_uri(reverse("payment_status", args=[order.id]))
+            success_url     = base_success_url + "?session_id={CHECKOUT_SESSION_ID}"
+            cancel_url      = request.build_absolute_uri(reverse("status", args=[order.id]))
 
             try:
                 session = stripe.checkout.Session.create(
@@ -807,12 +807,16 @@ def orders(request):
                 return form_error(f"Payment setup failed: {exc.user_message}")
 
     # ── GET ───────────────────────────────────────────────────────────────
-    prefill_email = request.user.email or ""
-    prefill_phone = ""
-    try:
-        prefill_phone = request.user.extended_profile.phone or ""
-    except AttributeError:
-        pass
+    if request.user.is_authenticated:
+        prefill_email = request.user.email or ""
+        prefill_phone = ""
+        try:
+            prefill_phone = request.user.extended_profile.phone or ""
+        except AttributeError:
+            pass
+    else:
+        prefill_email = ""
+        prefill_phone = ""
 
     form_data = {
         "service_type_key":     type_key,
@@ -921,10 +925,9 @@ def payment_status(request, order_id):
 # Order status
 # ─────────────────────────────────────────────────────────────────────────────
 
-@login_required
 def order_status(request, order_id):
     stripe.api_key = settings.STRIPE_SECRET_KEY
-    order = get_object_or_404(Order, id=order_id, user=request.user)
+    order = get_object_or_404(Order, id=order_id)
 
     session_id = request.GET.get("session_id")
     if session_id and not order.paid:

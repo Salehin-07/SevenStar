@@ -603,6 +603,12 @@ window.bfCurrent = document.getElementById("bfVehicleInput").value
     || "";
 </script>
 
+<script>
+/* Guard: if Google Maps loads before booking_form.js, bfMapsReady
+   must exist or Maps errors. booking_form.js replaces this. */
+window.bfMapsReady = window.bfMapsReady || function(){};
+</script>
+
 <script src="{% static 'js/booking_form.js' %}" defer></script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_key }}&libraries=places&callback=bfMapsReady" async defer></script>

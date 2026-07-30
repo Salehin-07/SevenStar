@@ -334,6 +334,10 @@ window.bfMapsReady = function () {
         bfSetupAC(document.getElementById('bfStop'), document.getElementById('bfStopList'));
     }
 };
+// If Google Maps loaded before this script (async race), fire immediately
+if (window.google && window.google.maps && window.google.maps.places) {
+    window.bfMapsReady();
+}
 
 /* ── Submit: loading state ───────────────────────────────────── */
 (function () {
